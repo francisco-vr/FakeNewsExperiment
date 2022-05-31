@@ -12,7 +12,7 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-      countdown: 60000
+      countdown: 30000
 ---
 
 ```{r setup, include=FALSE}
@@ -30,6 +30,7 @@ style_mono_light(base_color = "#23395b")
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 remotes::install_github("jhelvy/xaringanBuilder")
+remotes::install_github('rstudio/chromote')
 
 pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, ggpubr, fastDummies, xaringanBuilder)
 ```
@@ -47,25 +48,25 @@ class: center, middle
 ![](beamer_presentation_files/estallidosocial.jpg)
 ---
 class: center, middle
-# How does membership in echo chambers and digital citizenship affect our scores distinguishing fake news from real news?
+### How does membership in echo chambers and digital citizenship affect our scores distinguishing fake news from real news?
 
 ---
 background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
 background-size: 140px
 background-position: 90% 8%
-class: left, middle, top
+class: left, top
+
+
 
 # Hypothesis
 
-### 1)There will be less accuracy in rating fake and real news when it comes to rating counter-thinking headlines over like-minded news headlines or control group.
+### 1)There will be less accuracy in rating fake and real news when it comes to rating political opposite's view news headlines over like-minded news headlines or control group.
 
 
 #### 1.a)Those who have a high level of echo chamber membership will not exhibit greater differences in the headline hit rate between like-minded and contrarian thinking, compared to the control group.
 
 #### 1.b)Those with higher levels of digital citizenship will have greater accuracy in rating false and true headlines in all conditions
 
-???
-recuerda ser bacán
 
 ---
 
@@ -85,9 +86,13 @@ Experimental survey
 
 .pull-right[
 
-- 690 participant in a survey experiment
+- 690 participant in a survey experiment from CESS Santiago de Chile's poll.
 
-- Block randomization with Eco Chamber membership and levels of digital citizenship (both binaries)
+- Block randomization with Eco Chamber membership and levels of digital citizenship (both binaries: 1 = Hight Eco Chamber membership; 1 = High Digital Citizenship levels)
+
+- We showed to participants 7 different news headlines, and asked them to rate them as true or false. We have three experimental conditions
+
+- We also ask about gender, income, education and age range
 
 ]
 
@@ -102,43 +107,7 @@ class: center, middle
 ![Descriptive results with Kruskall-Wallis test and Wilcoxon test](beamer_presentation_files/Experimento2.png)
 ---
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# READ DF
-
-df <-readRDS("beamer_presentation_files/DF-final.RDS")
-
-# make some dummies
-
-df$SexDum <- if_else(df$GenRecod == "Femenino",
-                     true = 1, false = 0)
-
-df <-fastDummies::dummy_cols(df, select_columns = 'Age')
-df <-fastDummies::dummy_cols(df, select_columns = 'Educ')
-df <-fastDummies::dummy_cols(df, select_columns = 'E2Treat')
-df <-fastDummies::dummy_cols(df, select_columns = 'ideologia')
-df <-dplyr::select(df, -Age_1, -Educ_1, -E2Treat_Control, -ideologia_centro)
-
-
-# Regresion with balanced covariates
-
-df$SC0 <-as.numeric(df$SC0)
-
-Model1 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto, data = df)
-Model2 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex, data = df)
-Model3 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex, data = df)
-Model4 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age_2 + Age_3 + Age_4,
-              data = df)
-Model5 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age_2 + Age_3 + Age_4 + Educ_2
-             + Educ_3 + Educ_4 + Educ_5, data = df)
-Model6 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age_2 + Age_3 + Age_4 + Educ_2
-             + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno,
-             data = df)
-
-Reg1Bal <-modelsummary::msummary(list(Model1, Model2, Model3), stars = TRUE)
-Reg1Bal
-```
-
-Put regression tables 
+![](beamer_presentation_files/Rplot.png)
 
 ---
 background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
@@ -187,5 +156,6 @@ p2 <- ggdraw() + draw_image("https://pkg.garrickadenbuie.com/xaringanthemer/logo
 
 plot_grid(p1, p2)
 ```
+
 
 
