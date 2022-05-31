@@ -10,23 +10,17 @@ ipak <- function(pkg){
 }
 
 # usage
-packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "patchwork","stringr",
-              "tidyr","kableExtra","psych", "MASS", "foreign", "data.table","gtools","lubridate","AER",
-              "xtable","pBrackets","Hmisc","ri","ggpubr", "stargazer", "Rmisc","wesanderson", "gridExtra","ggmosaic",
-              "vcd", "plyr", "ggannotate","scales", "fastDummies")
+packages <- c("tidyverse","dplyr", "patchwork","kableExtra","MASS","ggpubr","fastDummies")
 ipak(packages)
 
 # READ DF
 
-df <-readRDS("Data/Analysis-Data/DF-final.RDS")
+df <-readRDS("Data/DF-final.RDS")
 
 # make some dummies
 
 df$SexDum <- if_else(df$GenRecod == "Femenino",
                      true = 1, false = 0)
-
-table(df$HomoIndex)
-
 
 df <-fastDummies::dummy_cols(df, select_columns = 'Age')
 df <-fastDummies::dummy_cols(df, select_columns = 'Educ')
@@ -50,7 +44,7 @@ Model6 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age
              + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno,
              data = df)
 
-Reg1Bal <-modelsummary::modelsummary(list(Model1, Model2, Model3), statistic = 'p.value')
+Reg1Bal <-modelsummary::modelsummary(list(Model1, Model2, Model3), statistic = 'p.value', stars = TRUE)
 Reg1Bal
 # Regresion with unbalanced covariates
 
