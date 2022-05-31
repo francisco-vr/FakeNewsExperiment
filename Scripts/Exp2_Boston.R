@@ -44,7 +44,7 @@ Model6 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age
              + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno,
              data = df)
 
-Reg1Bal <-stargazer::stargazer(Model1, Model2, Model3)
+Reg1Bal <-modelsummary::msummary(list(Model1, Model2, Model3), stars = TRUE)
 Reg1Bal
 
 
