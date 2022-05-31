@@ -1,0 +1,191 @@
+---
+title: "Belief in fake news. Echo chambers and digital citizenship Effects identifying fake news"
+subtitle: "Evidence from Chile"
+author: "Francisco Villarroel - Denise Laroze"
+institute: "CICS, UDD / FAE - USACH"
+date: "2016/12/12 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      countdown: 60000
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+```{r xaringan-themer, include=FALSE, warning=FALSE, echo=FALSE, message=FALSE}
+library(xaringanthemer)
+style_mono_accent(
+  base_color = "#23395b",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Fira Mono")
+)
+style_mono_light(base_color = "#23395b")
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+remotes::install_github("jhelvy/xaringanBuilder")
+
+pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, ggpubr, fastDummies, xaringanBuilder)
+```
+
+background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
+background-size: 140px
+background-position: 90% 8%
+class: center, middle
+
+# ¿Can we identify fake or real news if are related to our opinion?
+
+[Poner fotos de los procesos políticos que se han ocurrido en Chile y la batalla por la información que la apareja]
+
+![](beamer_presentation_files/CC.jpg)
+![](beamer_presentation_files/estallidosocial.jpg)
+---
+class: center, middle
+# How does membership in echo chambers and digital citizenship affect our scores distinguishing fake news from real news?
+
+---
+background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
+background-size: 140px
+background-position: 90% 8%
+class: left, middle, top
+
+# Hypothesis
+
+### 1)There will be less accuracy in rating fake and real news when it comes to rating counter-thinking headlines over like-minded news headlines or control group.
+
+
+#### 1.a)Those who have a high level of echo chamber membership will not exhibit greater differences in the headline hit rate between like-minded and contrarian thinking, compared to the control group.
+
+#### 1.b)Those with higher levels of digital citizenship will have greater accuracy in rating false and true headlines in all conditions
+
+???
+recuerda ser bacán
+
+---
+
+class: inverse,left,  middle
+
+# Methods
+
+.pull-left[
+
+Sample
+
+Randomization
+
+Experimental survey
+
+]
+
+.pull-right[
+
+- 690 participant in a survey experiment
+
+- Block randomization with Eco Chamber membership and levels of digital citizenship (both binaries)
+
+]
+
+---
+background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
+background-size: 140px
+background-position: 90% 8%
+class: center, middle
+
+## Results
+
+![Descriptive results with Kruskall-Wallis test and Wilcoxon test](beamer_presentation_files/Experimento2.png)
+---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# READ DF
+
+df <-readRDS("beamer_presentation_files/DF-final.RDS")
+
+# make some dummies
+
+df$SexDum <- if_else(df$GenRecod == "Femenino",
+                     true = 1, false = 0)
+
+df <-fastDummies::dummy_cols(df, select_columns = 'Age')
+df <-fastDummies::dummy_cols(df, select_columns = 'Educ')
+df <-fastDummies::dummy_cols(df, select_columns = 'E2Treat')
+df <-fastDummies::dummy_cols(df, select_columns = 'ideologia')
+df <-dplyr::select(df, -Age_1, -Educ_1, -E2Treat_Control, -ideologia_centro)
+
+
+# Regresion with balanced covariates
+
+df$SC0 <-as.numeric(df$SC0)
+
+Model1 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto, data = df)
+Model2 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex, data = df)
+Model3 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex, data = df)
+Model4 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age_2 + Age_3 + Age_4,
+              data = df)
+Model5 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age_2 + Age_3 + Age_4 + Educ_2
+             + Educ_3 + Educ_4 + Educ_5, data = df)
+Model6 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + Age_2 + Age_3 + Age_4 + Educ_2
+             + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno,
+             data = df)
+
+Reg1Bal <-modelsummary::msummary(list(Model1, Model2, Model3), stars = TRUE)
+Reg1Bal
+```
+
+Put regression tables 
+
+---
+background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
+background-size: 140px
+background-position: 90% 8%
+class: center, left, top
+
+## Discussion
+
+- 
+- Motivated skepticism (Taber & Lodge, 2006)
+ 
+---
+
+# Some Tips
+
+- A countdown timer can be added to every page of the slides using the `countdown` option under `nature`, e.g. if you want to spend one minute on every page when you give the talk, you can set:
+
+    ```yaml
+    output:
+      xaringan::moon_reader:
+        nature:
+          countdown: 60000
+    ```
+
+    Then you will see a timer counting down from `01:00`, to `00:59`, `00:58`, ... When the time is out, the timer will continue but the time turns red.
+    
+---
+
+---
+class: inversed, center, middle
+
+# ¡Thank You!
+
+Slide created by [**xaringan**](https://github.com/yihui/xaringan) package.
+
+
+El  chakra viene de [remark.js](https://remarkjs.com), [**knitr**](https://yihui.org/knitr/), y [R Markdown](https://rmarkdown.rstudio.com).
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+
+p1 <- ggdraw() + draw_image("https://user-images.githubusercontent.com/163582/45438104-ea200600-b67b-11e8-80fa-d9f2a99a03b0.png", scale = 0.3)
+p2 <- ggdraw() + draw_image("https://pkg.garrickadenbuie.com/xaringanthemer/logo.png", scale = 0.3)
+
+plot_grid(p1, p2)
+```
+
+
