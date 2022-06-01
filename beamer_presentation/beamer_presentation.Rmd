@@ -44,10 +44,9 @@ class: center, middle
 
 [Poner fotos de los procesos políticos que se han ocurrido en Chile y la batalla por la información que la apareja]
 
-![](beamer_presentation_files/CC.jpg)
-![](beamer_presentation_files/estallidosocial.jpg)
 ---
 class: center, middle
+
 ### How does membership in echo chambers and digital citizenship affect our scores distinguishing fake news from real news?
 
 ---
@@ -118,6 +117,17 @@ class:left, middle
 - We also ask about gender, income, education and age range
 
 ]
+---
+class: center, middle
+
+![](beamer_presentation_files/treatment_tables.png^)
+
+
+---
+class: center, middle
+
+![](beamer_presentation_files/headlines sets.png)
+
 
 ---
 background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
@@ -127,7 +137,7 @@ class: center, middle
 
 ## Results
 
-![Descriptive results with Kruskall-Wallis test and Wilcoxon test](beamer_presentation_files/Experimento2.png)
+![](beamer_presentation_files/Plot2English.png)
 ---
 
 ![](beamer_presentation_files/Rplot02.png)
@@ -162,11 +172,16 @@ p2 <- ggdraw() + draw_image("https://pkg.garrickadenbuie.com/xaringanthemer/logo
 
 plot_grid(p1, p2)
 ```
+---
+class: inverted, center, middle
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(xaringanBuilder)
-build_pdf("beamer_presentation/beamer_presentation.Rmd")
+# Appendix
 
-```
+---
+background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
+background-size: 140px
+background-position: 90% 8%
+class: center, left, top
+
 
 
