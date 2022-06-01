@@ -34,12 +34,11 @@ class: center, middle, inverse, title-slide
 
 
 
-background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
-background-size: 140px
-background-position: 90% 8%
-class: center, middle
+class: left, botton
 
-# ¿Can we identify fake or real news if are related to our opinion?
+![](beamer_presentation_files/social_proces.png)
+
+Several social and political process in Chile and Social media are central. However, fake news impact to people who participate in eco Chambers and diferent digital activist
 
 
 ---
@@ -50,6 +49,21 @@ class: center, middle
 #### How does membership in echo chambers and digital citizenship affect our scores distinguishing fake news from real news?
 
 ---
+class: left, middle
+
+.pull-left[
+
+## Concept of Echo chambers and Digital Citizenship
+
+]
+
+.pull-right[
+
+- Friendship and resource network made up of like-minded people. Includes political homophily, social identity and confirmation bias (Boutyline et.al, 2017; Wollebæk et. al, 2019). Often produces by algorythms (Pariser, 2011)
+
+- Type of political participation in digital platforms. includes technological skills, valuation of collective action in digital media and participation in them (Choi, M, 2016; Choi et.al, 2018; Chadwick, 2013; Castells, 2009). 
+]
+---
 background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
 background-size: 140px
 background-position: 90% 8%
@@ -57,7 +71,7 @@ class: left, middle
 
 .pull-left[
 
-# ¿What do we know about the relationship beetween echo chambers and misinformation?
+## ¿What do we know about the relationship beetween echo chambers and misinformation?
 
 ]
 
@@ -96,37 +110,29 @@ class:left, middle
 
 # Methods
 
-.pull-left[
-
 **Sample**
+
+Survey Experiment (n= 690) CESS Santiago de Chile's poll.
 
 **Randomization**
 
+Block randomization with Eco Chamber membership and levels of digital citizenship (both binaries)
+
+
 **Experimental survey**
 
-]
+ Socio-demographic characterization
 
-.pull-right[
+ We showed to participants 7 different news headlines, and asked them to rate them as true or false. We have three experimental conditions
 
-- 690 participant in a survey experiment from CESS Santiago de Chile's poll.
+**Analysis**
 
-- Block randomization with Eco Chamber membership and levels of digital citizenship (both binaries: 1 = Hight Eco Chamber membership; 1 = High Digital Citizenship levels)
-
-- We showed to participants 7 different news headlines, and asked them to rate them as true or false. We have three experimental conditions
-
-- We also ask about gender, income, education, Ideology and age range
-
-]
----
-class: center, middle
-
-![](beamer_presentation_files/treatment_tables.png)
-
+ Differences between averages by treatment, Kruskall-Walis and Wilcoxon test. And Regression models (balanced and unbalanced) with *Maximun Likehood* estimation
 
 ---
 class: center, middle
 
-![](beamer_presentation_files/headlines sets.png)
+![](beamer_presentation_files/treatments_table.png)
 
 
 ---
@@ -139,8 +145,9 @@ class: center, middle
 
 ![](beamer_presentation_files/Plot2English.png)
 ---
+class: middle, center
 
-![](beamer_presentation_files/Rplot02.png)
+![](beamer_presentation_files/regression_balanced.png)
 
 ---
 background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
@@ -164,7 +171,7 @@ class:left, middle
 
 - This is the first step to understand the trench warfare that has been taking place in Chile since the social mobilizations of October 2019. Biased information indicates limited deliberation and increased intolerance.
 
-- invites us to look at political polarization from another perspective: is it a matter of exaggerating the other, or of overestimating our own position?
+- This invites us to look at political polarization from another angle: Is it a question of misunderstanding the other, or overestimating our own position?
 ---
 class: inversed, center, middle
 background-image: url(https://user-images.githubusercontent.com/163582/45438104-ea200600-b67b-11e8-80fa-d9f2a99a03b0.png)
@@ -209,6 +216,16 @@ class: inverted, center, middle
 - Taber, C. S., &amp; Lodge, M. (2006). Motivated Skepticism in the Evaluation of Political Beliefs. American Journal of Political Science, 50(3), 755-769.
 
 ---
+class: center, top
+
+##**Set of headlines news by ideology**
+
+![](beamer_presentation_files/headlines sets.png)
+
+---
+class: top, center
+
+![](beamer_presentation_files/regression-non-balanced.png)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -339,7 +356,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     slide_number_div(i).appendChild(timer);
   });
-})(30000);
+})(60000);
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
