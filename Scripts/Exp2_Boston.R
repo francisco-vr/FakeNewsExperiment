@@ -58,29 +58,37 @@ cm <-c('(Intercept)' = 'Constant', 'E2Treat_Afin' = 'T1 Like-Minded', 'E2Treat_O
 cap <-'regression table with balanced variables'
 
 
-Reg1Bal <-modelsummary::msummary(list(Model1, Model2, Model3),
-                                 output = "gt", coef_map = cm, title = cap,
-                                 starts = TRUE, statistic = 'p.value')
-Reh1Bal <-Reg1Bal%>%
-  tab_footnote(footnote = md("A very important variable."))
-
-Reg1Bal
+Reg1Bal <-stargazer::stargazer(Model1, Model2, Model3,
+                               title = "Success score distinguishing fake news from real news",
+                               dep.var.labels = "Success score",
+                               covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
+                               "High Digital citizenship","Constant"),
+                               star.cutoffs = c(0.05, 0.01, 0.001),
+                               column.sep.width = "1pt",
+                               notes.label = "Significance levels",
+                               type = "html",
+                               out = "beamer_presentation/beamer_presentation_files/regression_balanced.html")
 
 ## Not balanced regression
 
-ct <-c('(Intercept)' = 'Constant', 'E2Treat_Afin' = 'T1 Like-Minded', 'E2Treat_Opuesto' = 'T2 Opposite',
-       'HomoIndex' = 'High Eco Chamber', 'DigitIndex' = 'High Digital Citizenship', 'SexDum' = 'Women', 'Age_2' = '30 to 40 years',
-       'Age_3' = '41 to 65 years', 'Age_4' = '66+ years', 'Educ_2' = 'Elemental School', 'Educ_3' = 'Secondary School',
-       'Educ_4' = 'Graduate', 'Educ_5' = 'Postgraduate', 'ideologia_Izquierda' = 'left-wing', 'ideologia_Derecha' = 'right-wing',
-       'ideologia_Ninguno' = 'Without Ideology', 'NivEco_2' = '$224.001 - $448-000', 'NivEco_3' = '$448.001 - $1.000.000',
-       'NivEco_4' = '$1.000.001 - $3.000.000', 'NivEco_5' = '$3.000,000+')
 
-titulo <-'Regression with not-balanced variables'
+Reg1NoBal <-stargazer::stargazer(Model1, Model2, Model3, Model4, Model5, Model6, Model7, Model8,
+                                 title = "Success score distinguishing fake news from real news. Non-balanced variables",
+                                 dep.var.labels = "Success score",
+                                 covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
+                                                      "High Digital citizenship","Female", "30 to 40 years", "41 to 65 years",
+                                                      "66+ years", "Elemental School", "Secondary School", "Graduate",
+                                                      "Postgraduate","Left-wing", "Right-wing","Without Ideology", "$224.001 - $448-000",
+                                                      "$448.001 - $1.000.000", "$1.000.001 - $3.000.000", "$3.000,000+","Constant"),
+                                 star.cutoffs = c(0.05, 0.01, 0.001),
+                                 column.sep.width = "1pt",
+                                 notes.label = "Significance levels",
+                                 type = "html",
+                                 out = "beamer_presentation/beamer_presentation_files/regression-non-balanced.html")
 
-Reg1NoBal <-modelsummary::msummary(list(Model1, Model2, Model3, Model4, Model5, Model6, Model7, Model8),
-                                   output = "gt", title = titulo, coef_map = 'ct', Starts = TRUE)
+#Baseline Variables: T0-Control Group, Low Eco Chamber membership and Digital Citizenship,
+#\n Gender: Men, Age: 18-29 years, Education: No-Education, Ideology: Center, Income: >$224.001
 
-Reg1NoBal
 library(xaringanBuilder)
 
 build_pdf("beamer_presentation/beamer_presentation.Rmd")

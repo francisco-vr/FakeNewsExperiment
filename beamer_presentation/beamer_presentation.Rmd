@@ -13,7 +13,13 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       countdown: 60000
+    seal: false
 ---
+class:left, top, .bg_karl
+background-image: url(https://blog.ida.cl/wp-content/uploads/sites/5/2020/11/ida-twitterFakenews-blog.png)
+background-size: 1350px
+background-position: 1% 20%
+
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -29,12 +35,35 @@ style_mono_accent(
 style_mono_light(base_color = "#23395b")
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-remotes::install_github("jhelvy/xaringanBuilder")
 remotes::install_github('rstudio/chromote')
 
 pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, ggpubr, fastDummies, xaringanBuilder)
 ```
+```{css, echo = F}
+.bg_karl {
+  position: relative;
+  z-index: 1;
+}
 
+.bg_karl::before {    
+      content: "";
+      background-image: url('https://blog.ida.cl/wp-content/uploads/sites/5/2020/11/ida-twitterFakenews-blog.png');
+      background-size: cover;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      opacity: 0.5;
+      z-index: -1;
+}
+```
+
+## Belief in fake news. Echo chambers and digital citizenship Effects identifying fake news.
+#### Francisco Villarroel (UDD, Chile) 
+#### Denise Laroze (USACH, Chile)
+
+---
 class: left, botton
 
 ![](beamer_presentation_files/social_proces.png)
@@ -49,8 +78,6 @@ class: center, middle
 
 #### How does membership in echo chambers and digital citizenship affect our scores distinguishing fake news from real news?
 
-???
-Cómo la membresía a cámaras de eco y la ciudadanía digital afectan nuestro puntaje distinguiendo noticias falsas de verdaderas?
 
 ---
 class: left, middle
@@ -105,15 +132,6 @@ class: left, top
 
 ##### 1.b)Those with higher levels of digital citizenship will have greater accuracy in rating false and true headlines in all conditions
 
-???
-La hipótesis general es que cuando se enfrentan a pensamiento político opuesto, habrá más fallos distinguiendo noticias falsas de verdaderas (por temas de sesgo extra-grupal)
-
-???
-Quienes pertenecen a cámaras de eco tendrán misma tasa de acierto en cualquier tratamiento
-
-???
-Quienes tengan niveles de ciudadanía digital tendrán mejor desempeño en todos las condiciones
-
 
 ---
 background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
@@ -144,23 +162,22 @@ Block randomization with Eco Chamber membership and levels of digital citizenshi
 
 ---
 class: center, middle
-
-![](beamer_presentation_files/treatments_table.png)
-
+background-image: url(beamer_presentation_files/treatments_table.png)
+background-size: contain
 
 ---
-background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
-background-size: 140px
-background-position: 90% 8%
+background-image: url(beamer_presentation_files/Plot2English.png)
+background-size: contain
+background-position: 50% 50%
 class: center, middle
 
-## Results
 
-![](beamer_presentation_files/Plot2English.png)
 ---
+background-image: url(beamer_presentation_files/regression_balanced.png)
+background-size: contain
+background-position: 50% 50%
 class: middle, center
 
-![](beamer_presentation_files/regression_balanced.png)
 
 ---
 background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
@@ -172,7 +189,7 @@ class:left, top
 
 - We find Evidence to intra-group biased new's consumption, supporting by others studies (eg: Osmundsen et.al, 2021; Pereira et.al, 2021)
 
-- *Motivated skepticism* (Taber & Lodge, 2006). Motivated Excepticism is a concept used to describe the process by which people pay more attention to and are better informed about content that is opposed to their thinking, so as to be able to debate more fiercely with them.
+- *Motivated skepticism* (Taber & Lodge, 2006). Motivated skepticism is a concept used to describe the process by which people pay more attention to and are better informed about content that is opposed to their thinking, so as to be able to debate more fiercely with them.
 
 - Researchers who had not considered this concept come to the same finding (eg. Allen et.al, 2021; Pennycook & Rand, 2019), and so do we.
 
@@ -240,13 +257,15 @@ class: left, top
 Chambers: The Emotional Basis for Online Behavior. Social Media + Society, 5(2).
 
 ---
-class: center, top
-
-##**Set of headlines news by ideology**
-
-![](beamer_presentation_files/headlines sets.png)
-
----
+background-image: url(beamer_presentation_files/headline_sets.png)
+background-size: contain
+background-position: 50% 50%
 class: top, center
 
-![](beamer_presentation_files/regression-non-balanced.png)
+---
+background-image: url(beamer_presentation_files/regression-non-balanced.png)
+background-size: contain
+background-position: 50% 50%
+class: top, center
+
+---
