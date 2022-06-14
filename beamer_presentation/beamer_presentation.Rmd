@@ -37,7 +37,7 @@ style_mono_light(base_color = "#23395b")
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 remotes::install_github('rstudio/chromote')
 
-pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, ggpubr, fastDummies, xaringanBuilder)
+pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, ggpubr, fastDummies, renderthis)
 ```
 ```{css, echo = F}
 .bg_karl {
@@ -60,7 +60,7 @@ pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, 
 ```
 
 ## Belief in fake news. Echo chambers and digital citizenship Effects identifying fake news.
-#### Francisco Villarroel (UDD, Chile) 
+#### Francisco Villarroel (UDD/USACH, Chile) 
 #### Denise Laroze (USACH, Chile)
 
 ---
@@ -72,6 +72,9 @@ Several social and political process in Chile and Social media are central. Howe
 
 
 ---
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
 class: center, middle
 
 ### Main Question
@@ -80,6 +83,9 @@ class: center, middle
 
 
 ---
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
 class: left, middle
 
 .pull-left[
@@ -95,9 +101,9 @@ class: left, middle
 - Type of political participation in digital platforms. includes technological skills, valuation of collective action in digital media and participation in them (Choi, M, 2016; Choi et.al, 2018; Chadwick, 2013; Castells, 2009). 
 ]
 ---
-background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
-background-size: 140px
-background-position: 90% 8%
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
 class: left, middle
 
 .pull-left[
@@ -116,34 +122,35 @@ class: left, middle
 
 
 ---
-background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
-background-size: 140px
-background-position: 90% 8%
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
 class: left, top
 
 
 
 ## Hypothesis
 
-#### 1)There will be less accuracy in rating fake and real news when it comes to rating political opposite's view news headlines over like-minded news headlines or control group.
+
+#### 1)There will be less accuracy in rating fake and real news  in "Opposite political view" experimental condition in comparison with "like-minded" experimental condition and control group.
 
 
 ##### 1.a)Those who have a high level of echo chamber membership will not exhibit greater differences in the headline hit rate between like-minded and contrarian thinking, compared to the control group.
 
+
 ##### 1.b)Those with higher levels of digital citizenship will have greater accuracy in rating false and true headlines in all conditions
 
-
 ---
-background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
-background-size: 140px
-background-position: 90% 8%
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
 class:left, middle
 
 # Methods
 
 **Sample**
 
-Survey Experiment (n= 690) CESS Santiago de Chile's poll.
+Online Survey Experiment (n= 690) with CESS Santiago de Chile's poll.
 
 **Randomization**
 
@@ -152,13 +159,28 @@ Block randomization with Eco Chamber membership and levels of digital citizenshi
 
 **Experimental survey**
 
- Socio-demographic characterization
-
- We showed to participants 7 different news headlines, and asked them to rate them as true or false. We have three experimental conditions
-
+Socio-demographic characterization: Age range, gender, income, educational level, political ideology ("Left wing", "Right wing", "Center", "without ideology") + Fake news experiment**
+ 
 **Analysis**
 
- Differences between averages by treatment, Kruskall-Walis and Wilcoxon test. And Regression models (balanced and unbalanced) with *Maximun Likehood* estimation
+ Differences between averages by treatment, *Kruskall-Walis* and *Wilcoxon test*. And Regression models (balanced and unbalanced) with *Maximun Likehood* estimation
+---
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
+class:left, top
+
+## Experimental task
+
+- Every participant received 7 headlines and we ask to evaluate if they're true or false
+
+- if they're correct, them scoring 1. if there's incorrect, they scores zero.
+
+- Maximun score of 7 and minimum is zero. 
+
+## Validation process
+
+- Two pre-test to evaluate the headline's relevance and difficulty
 
 ---
 class: center, middle
@@ -173,16 +195,9 @@ class: center, middle
 
 
 ---
-background-image: url(beamer_presentation_files/regression_balanced.png)
-background-size: contain
-background-position: 50% 50%
-class: middle, center
-
-
----
-background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
-background-size: 140px
-background-position: 90% 8%
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
 class:left, top
 
 ## Discussion
@@ -194,9 +209,9 @@ class:left, top
 - Researchers who had not considered this concept come to the same finding (eg. Allen et.al, 2021; Pennycook & Rand, 2019), and so do we.
 
 ---
-background-image: url(https://complejidadsocial.udd.cl/wp-content/themes/cics/images/backgrounds/logo2017a.png)
-background-size: 140px
-background-position: 90% 8%
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
 class:left, middle
 
 - This is the first step to understand the trench warfare that has been taking place in Chile since the social mobilizations of October 2019. Biased information indicates limited deliberation and increased intolerance.
@@ -210,13 +225,69 @@ background-position: 50% 80%
 
 # ¡Thank You!
 
-This Slide has created with [**xaringan**](https://github.com/yihui/xaringan), [**XaringanThemer**](https://pkg.garrickadenbuie.com/xaringanthemer/index.html) and [**XaringanBuilder**](https://github.com/jhelvy/xaringanBuilder) packages.
+This Slide has created with [**xaringan**](https://github.com/yihui/xaringan) and [**XaringanThemer**](https://pkg.garrickadenbuie.com/xaringanthemer/index.html)
 
 ---
 class: inverted, center, middle
 
 # Appendix
 
+---
+background-image: url(beamer_presentation_files/regression_balanced.png)
+background-size: contain
+background-position: 50% 50%
+class: middle, center
+---
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
+class: left, Top
+
+## Some Insights about non-balances regression
+
+- There a critical pint in the age-range. Younger people scores better. people to 45years+ tend to decrease the scoring.
+
+- People with more education scoring better.
+
+- There's no evidence of variations in political ideology and educational levels
+
+---
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
+class: left, Top
+
+## Eco Chamber membership Scale
+
+- Using a recent validated scale<sup>*</sup> about reinforcement opinion in social media
+
+- 7 items with 1 to 10 range por each item (total Range: 7 to 70)
+
+- Low Eco Chamber Membership: 7 to 39
+- High Ecochamber Membership: 40 to 70
+
+.footnote[[*] Kaakinen, M., Sirola, A., Savolainen, I., & Oksanen, A. (2020). Shared identity and shared
+information in social media: Development and validation of the identity bubble
+reinforcement scale. Media Psychology, 23(1).]
+
+---
+background-image: url(beamer_presentation_files/logo-dark-small.png)
+background-size: 40px
+background-position: 95% 8%
+class: left, Top
+
+## Digital Citizenship scale
+
+- Using a Scale development by Choi<sup>*</sup> and reduced since 34 items to 14.
+
+- Each item are with a 7 point scale (1 to 7). Total range: 14 to 98
+
+- Low levels of digital citizenship: 14 to 62
+- High levels of Digital citizenship: 63 to 98
+
+.footnote[[*] Choi, M., Glassman, M., & Cristol, D. (2017). What it means to be a citizen in the internet age:
+Development of a reliable and valid digital citizenship scale. Computers & Education, 107,
+100-112.]
 ---
 
 **References:**
@@ -263,9 +334,9 @@ background-position: 50% 50%
 class: top, center
 
 ---
-background-image: url(beamer_presentation_files/regression-non-balanced.png)
+background-image: url(https://raw.githubusercontent.com/francisco-vr/Homophily-and-Political-behaviour/main/Results/Tables/sample-descriptives.jpg)
 background-size: contain
 background-position: 50% 50%
 class: top, center
 
----
+

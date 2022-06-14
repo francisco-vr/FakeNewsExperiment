@@ -89,7 +89,7 @@ Reg1NoBal <-stargazer::stargazer(Model1, Model2, Model3, Model4, Model5, Model6,
 #Baseline Variables: T0-Control Group, Low Eco Chamber membership and Digital Citizenship,
 #\n Gender: Men, Age: 18-29 years, Education: No-Education, Ideology: Center, Income: >$224.001
 
-library(xaringanBuilder)
+library(renderthis)
 
-build_pdf("beamer_presentation/beamer_presentation.Rmd")
+to_pdf("beamer_presentation/beamer_presentation.Rmd")
 
