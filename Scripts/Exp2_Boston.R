@@ -1,6 +1,5 @@
 ## Experiment 2 - Belief in fake news
 
-remotes::install_github("mattcowgill/ggannotate")
 
 ipak <- function(pkg){
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
@@ -17,9 +16,23 @@ packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "pa
               "vcd", "plyr", "ggannotate","scales", "fastDummies","gt")
 ipak(packages)
 
+
 # READ DF
 
-df <-readRDS("Data/DF-final.RDS")
+df <-readRDS("Data/FNDF.RDS")
+
+# Create false or true scores
+
+
+df <-df%>%
+  nrow()%>%
+  dplyr::mutate(SC0False = as.matrix.data.frame(E2TC_2:E2TC_8, E2TC_10, df$E2TC_11, df$E2T1a_2:df$E2T1a_5, df$E2T1b_2:df$E2T1b_5, df$E2T1c_2:df$E2T1b_4,
+      df$E2T1b_6, df$E2T1d_2:df$E2T1d_4, df$E2T1d_6, df$E2T2a_2:df$E2T2a_5, df$E2T2b_2:df$E2T2b_5, df$E2T2b_8:df$E2T2b_10,
+      df$E2T2c_2:df$E2T2c_5))%>%
+  rowSums(SC0False)
+
+
+table(df$E2TC_1)
 
 # Plots for descriptive analysis
 
@@ -178,11 +191,71 @@ Reg1NoBal <-stargazer::stargazer(MLModel4, PoModel4, MLModel5, PoModel5, MLModel
 #Baseline Variables: T0-Control Group, Low Eco Chamber membership and Digital Citizenship,
 #\n Gender: Men, Age: 18-29 years, Education: No-Education, Ideology: Center, Income: >$224.001
 
+## Surprise levels
+
+compE3 <-list(c("Afin","Control"), c("Control", "Opuesto"))
+              
+E2Sur <-ggplot(data = df, aes(x = factor(E2Treat), y = as.numeric(end_4), color = as.numeric(end_4))) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.1) +
+  stat_summary(aes(label= round(..y.., 2)), fun=mean, geom="text", size=5, hjust= 1.5, vjust = -1) +
+  theme_bw() +
+  theme(legend.position = "null") +
+  labs(title = "Surprise levels after show they own results",
+       x = "", y = "Surprise levels",
+       caption = "Fuente: Elaboración propia") +
+  theme(plot.title = element_text(hjust = .5, size = 14),
+        plot.caption = element_text(face = "italic")) +
+  stat_compare_means(comparisons = compE3) +
+  stat_compare_means(method = "t.test", label.y = 110)
+
+
+E2SurDigi <-ggplot(data = df, aes(x = factor(E2Treat), y = as.numeric(end_4), color = as.numeric(end_4))) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.1) +
+  stat_summary(aes(label= round(..y.., 2)), fun=mean, geom="text", size=5, hjust= 1.5, vjust = -1) +
+  theme_bw() +
+  theme(legend.position = "null") +
+  labs(title = "Surprise levels after show they own results",
+       x = "", y = "Surprise levels",
+       caption = "Fuente: Elaboración propia") +
+  theme(plot.title = element_text(hjust = .5, size = 14),
+        plot.caption = element_text(face = "italic")) +
+  stat_compare_means(comparisons = compE3) +
+  stat_compare_means(method = "t.test", label.y = 110) +  
+facet_wrap(~DigitIndex, nrow = 1,labeller = labeller(DigitIndex = c('0'="Baja Ciudanía Digital",
+                                                                      '1'="Alta Ciudadanía Digital"))) 
+
+
+
+E2SurHomo <-ggplot(data = df, aes(x = factor(E2Treat), y = as.numeric(end_4), color = as.numeric(end_4))) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.1) +
+  stat_summary(aes(label= round(..y.., 2)), fun=mean, geom="text", size=5, hjust= 1.5, vjust = -1) +
+  theme_bw() +
+  theme(legend.position = "null") +
+  labs(title = "Surprise levels after show they own results",
+       x = "", y = "Surprise levels",
+       caption = "Fuente: Elaboración propia") +
+  theme(plot.title = element_text(hjust = .5, size = 14),
+        plot.caption = element_text(face = "italic")) +
+  stat_compare_means(comparisons = compE3) +
+  stat_compare_means(method = "t.test", label.y = 110) + 
+  facet_wrap(~HomoIndex, nrow = 1,labeller = labeller(HomoIndex = c('0'="Baja membresia a Cámaras de eco",
+                                                                    '1'="Alta membresia a Cámaras de eco")))
+
+PlotE2Sur <-(E2Sur / E2SurDigi | E2SurHomo)
+PlotE3Fear<-PlotE3Fear + plot_annotation(title = 'Experimento N°3: Distribución de temor según condición experimental, \n subdidido por Ciudadanía digital y membresía a Cámaras de eco',
+                                         theme = theme(plot.title = element_text(size = 18,face = 'bold')))
+
+ggsave(PlotE3Fear, filename = "Results/Plots/E3FearSub.png",
+       dpi = 400, width = 14, height = 11)
 
 
 ## transform html beamer to pdf 
 
-library(renderthis)
+#library(renderthis)
 
-to_pdf("beamer_presentation/beamer_presentation.Rmd")
+#to_pdf("beamer_presentation/beamer_presentation.Rmd")
+
 
