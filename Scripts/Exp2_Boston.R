@@ -1,3 +1,8 @@
+
+
+
+
+
 ## Experiment 2 - Belief in fake news
 
 
@@ -13,7 +18,7 @@ ipak <- function(pkg){
 packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "patchwork","stringr",
               "tidyr","kableExtra","psych", "MASS", "foreign", "data.table","gtools","lubridate","AER",
               "xtable","pBrackets","Hmisc","ri","ggpubr", "stargazer", "Rmisc","wesanderson", "gridExtra","ggmosaic",
-              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt")
+              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt", "MASS")
 ipak(packages)
 
 
@@ -30,7 +35,8 @@ tmp<-df[,c(paste0("E2TC_",2:8), "E2TC_10", "E2TC_11", paste0("E2T1a_", 2:5), pas
 
 tmp <- mutate_all(tmp, function(x) as.numeric(as.character(x)))
 
-tmp2<-ifelse(tmp==1, 1, 0)
+tmp<-ifelse(tmp==1, 1, 0)
+tmp<-as.data.frame(tmp2)
 
 tmp[is.na(tmp)] <- 0
 tmp$SumFalse<- rowSums(tmp)
