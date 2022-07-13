@@ -24,15 +24,20 @@ df <-readRDS("Data/FNDF.RDS")
 # Create false or true scores
 
 
-df <-df%>%
-  nrow()%>%
-  dplyr::mutate(SC0False = as.matrix.data.frame(E2TC_2:E2TC_8, E2TC_10, df$E2TC_11, df$E2T1a_2:df$E2T1a_5, df$E2T1b_2:df$E2T1b_5, df$E2T1c_2:df$E2T1b_4,
-      df$E2T1b_6, df$E2T1d_2:df$E2T1d_4, df$E2T1d_6, df$E2T2a_2:df$E2T2a_5, df$E2T2b_2:df$E2T2b_5, df$E2T2b_8:df$E2T2b_10,
-      df$E2T2c_2:df$E2T2c_5))%>%
-  rowSums(SC0False)
+tmp<-df[,c(paste0("E2TC_",2:8), "E2TC_10", "E2TC_11", paste0("E2T1a_", 2:5), paste0("E2T1b_", 2:5), paste0("E2T1c_", 2:4),
+           "E2T1b_6", paste0("E2T1d_", 2:4), "E2T1d_6",  paste0("E2T2a_",2:5), paste0("E2T2b_", 2:5), paste0("E2T2b_", 8:10),  paste0("E2T2c_",2:5))]
 
 
-table(df$E2TC_1)
+tmp <- mutate_all(tmp, function(x) as.numeric(as.character(x)))
+
+tmp2<-ifelse(tmp==1, 1, 0)
+
+tmp[is.na(tmp)] <- 0
+tmp$SumFalse<- rowSums(tmp)
+
+df$SumFalse<-tmp$SumFalse
+rm(tmp)
+
 
 # Plots for descriptive analysis
 
@@ -46,7 +51,7 @@ df$SC0 <-as.numeric(df$SC0)
 
 E2general<-df%>%
   dplyr::filter(!is.na(E2Treat))%>%
-  ggplot(data = df, mapping = aes(x = E2Treat, y = as.numeric(SC0), fill = E2Treat)) +
+  ggplot(data = df, mapping = aes(x = E2Treat, y = SC0, fill = E2Treat)) +
   stat_boxplot(geom ='errorbar', width = 0.6) +
   geom_boxplot() +
   geom_hline(yintercept = mean(as.numeric(df$SC0)), linetype = 2) +
@@ -60,6 +65,8 @@ E2general<-df%>%
         plot.caption = element_text(face = "italic")) +
   stat_compare_means(comparisons = compE2, label = "p.signif") +
   stat_compare_means(label.y = 9)
+E2general
+
 
 E2homo <-ggplot(data = df, mapping = aes(x = E2Treat, y = SC0, fill = E2Treat)) +
   stat_boxplot(geom ='errorbar', width = 0.6) +

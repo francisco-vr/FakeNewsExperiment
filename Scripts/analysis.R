@@ -9,7 +9,7 @@
 
 # load DF
 
-df <-readRDS("Data/Analysis-Data/DF-final.RDS")
+df <-readRDS("Data/DF-final.RDS")
 
 ### SAMPLE DESCRIPTIVES ###
 

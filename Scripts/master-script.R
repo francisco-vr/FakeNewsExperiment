@@ -18,7 +18,7 @@ ipak <- function(pkg){
 # usage
 packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "patchwork","stringr",
               "tidyr","kableExtra","psych", "MASS", "foreign","wesanderson","ggpubr", "Rmisc",
-              "data,table","gtools","lubridate","AER","xtable","pBrackets","Hmisc","ri","ggpubr")
+              "data.table","gtools","lubridate","AER","xtable","pBrackets","Hmisc","ri2","ggpubr")
 ipak(packages)
 
 
