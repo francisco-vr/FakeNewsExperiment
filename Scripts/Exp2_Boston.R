@@ -1,7 +1,4 @@
 
-library(MASS)
-library(FindIt)
-
 setwd("~/GitHub/FakeNewsExperiment")
 
 ## Experiment 2 - Belief in fake news
@@ -19,7 +16,7 @@ ipak <- function(pkg){
 packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "patchwork","stringr",
               "tidyr","kableExtra","psych", "MASS", "foreign", "data.table","gtools","lubridate","AER",
               "xtable","pBrackets","Hmisc","ri2","ggpubr", "stargazer", "Rmisc","wesanderson", "gridExtra","ggmosaic",
-              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt", "MASS")
+              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt", "MASS", "FindIt")
 ipak(packages)
 
 
@@ -31,7 +28,8 @@ df <-readRDS("Data/FNDF.RDS")
 
 
 tmp<-df[,c(paste0("E2TC_",2:8), "E2TC_10", "E2TC_11", paste0("E2T1a_", 2:5), paste0("E2T1b_", 2:5), paste0("E2T1c_", 2:4),
-           "E2T1b_6", paste0("E2T1d_", 2:4), "E2T1d_6",  paste0("E2T2a_",2:5), paste0("E2T2b_", 2:5), paste0("E2T2b_", 8:10),  paste0("E2T2c_",2:5))]
+           "E2T1b_6", paste0("E2T1d_", 2:4), "E2T1d_6",  paste0("E2T2a_",2:5), paste0("E2T2b_", 2:5), paste0("E2T2b_", 8:10),
+           paste0("E2T2c_",2:5))]
 
 
 tmp <- mutate_all(tmp, function(x) as.numeric(as.character(x)))
@@ -44,6 +42,13 @@ tmp$SumFalse<- rowSums(tmp)
 
 df$SumFalse<-tmp$SumFalse
 rm(tmp)
+
+# True headlines
+
+# E2TC__1,E2TC_9,E2TC_12,E2T1a_1,E2T1a_6,E2T1a_7,E2T1b_1,E2T1b_6,E2T1b_7,E2T1c_1,E2T1c_5,E2T1c_7,E2T1d_1.E2T1d_5.E2T1d_7,
+# E2T2a_1,E2T2a_6,E2T2a_7, E2T2b_1, E2T2b_6,E2T2b_7,E2T2b_11,E2T2b_12,E2T2c_1.E2T2c_1.E2T2c_6,E2T2c_7
+
+
 
 
 # Plots for descriptive analysis
@@ -205,66 +210,6 @@ Reg1NoBal <-stargazer::stargazer(MLModel4, PoModel4, MLModel5, PoModel5, MLModel
 #Baseline Variables: T0-Control Group, Low Eco Chamber membership and Digital Citizenship,
 #\n Gender: Men, Age: 18-29 years, Education: No-Education, Ideology: Center, Income: >$224.001
 
-## Surprise levels
-
-compE3 <-list(c("Afin","Control"), c("Control", "Opuesto"))
-              
-E2Sur <-ggplot(data = df, aes(x = factor(E2Treat), y = as.numeric(end_4), color = as.numeric(end_4))) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_jitter(width = 0.1) +
-  stat_summary(aes(label= round(..y.., 2)), fun=mean, geom="text", size=5, hjust= 1.5, vjust = -1) +
-  theme_bw() +
-  theme(legend.position = "null") +
-  labs(title = "Surprise levels after show they own results",
-       x = "", y = "Surprise levels",
-       caption = "Fuente: Elaboración propia") +
-  theme(plot.title = element_text(hjust = .5, size = 14),
-        plot.caption = element_text(face = "italic")) +
-  stat_compare_means(comparisons = compE3) +
-  stat_compare_means(method = "t.test", label.y = 110)
-
-
-E2SurDigi <-ggplot(data = df, aes(x = factor(E2Treat), y = as.numeric(end_4), color = as.numeric(end_4))) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_jitter(width = 0.1) +
-  stat_summary(aes(label= round(..y.., 2)), fun=mean, geom="text", size=5, hjust= 1.5, vjust = -1) +
-  theme_bw() +
-  theme(legend.position = "null") +
-  labs(title = "Surprise levels after show they own results",
-       x = "", y = "Surprise levels",
-       caption = "Fuente: Elaboración propia") +
-  theme(plot.title = element_text(hjust = .5, size = 14),
-        plot.caption = element_text(face = "italic")) +
-  stat_compare_means(comparisons = compE3) +
-  stat_compare_means(method = "t.test", label.y = 110) +  
-facet_wrap(~DigitIndex, nrow = 1,labeller = labeller(DigitIndex = c('0'="Baja Ciudanía Digital",
-                                                                      '1'="Alta Ciudadanía Digital"))) 
-
-
-
-E2SurHomo <-ggplot(data = df, aes(x = factor(E2Treat), y = as.numeric(end_4), color = as.numeric(end_4))) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_jitter(width = 0.1) +
-  stat_summary(aes(label= round(..y.., 2)), fun=mean, geom="text", size=5, hjust= 1.5, vjust = -1) +
-  theme_bw() +
-  theme(legend.position = "null") +
-  labs(title = "Surprise levels after show they own results",
-       x = "", y = "Surprise levels",
-       caption = "Fuente: Elaboración propia") +
-  theme(plot.title = element_text(hjust = .5, size = 14),
-        plot.caption = element_text(face = "italic")) +
-  stat_compare_means(comparisons = compE3) +
-  stat_compare_means(method = "t.test", label.y = 110) + 
-  facet_wrap(~HomoIndex, nrow = 1,labeller = labeller(HomoIndex = c('0'="Baja membresia a Cámaras de eco",
-                                                                    '1'="Alta membresia a Cámaras de eco")))
-
-PlotE2Sur <-(E2Sur / E2SurDigi | E2SurHomo)
-PlotE3Fear<-PlotE3Fear + plot_annotation(title = 'Experimento N°3: Distribución de temor según condición experimental, \n subdidido por Ciudadanía digital y membresía a Cámaras de eco',
-                                         theme = theme(plot.title = element_text(size = 18,face = 'bold')))
-
-ggsave(PlotE3Fear, filename = "Results/Plots/E3FearSub.png",
-       dpi = 400, width = 14, height = 11)
-
 
 ## transform html beamer to pdf 
 
@@ -304,10 +249,6 @@ summary(frol3<-polr(as.factor(SumFalse) ~ E2Treat+ ideologia, data = df, Hess=TR
 summary(frol4<-polr(as.factor(SumFalse) ~ E2Treat+ ideologia, data = df, Hess=TRUE))
 summary(frol5<-polr(as.factor(SumFalse) ~ E2Treat+ IncomeRecod, data = df, Hess=TRUE))
 summary(frol5<-polr(as.factor(SumFalse) ~ E2Treat+ DigitIndex, data = df, Hess=TRUE)) ### Non significant on it's own
-
-
-
-
 
 
 ###################################
