@@ -16,7 +16,7 @@ ipak <- function(pkg){
 packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "patchwork","stringr",
               "tidyr","kableExtra","psych", "MASS", "foreign", "data.table","gtools","lubridate","AER",
               "xtable","pBrackets","Hmisc","ri2","ggpubr", "stargazer", "Rmisc","wesanderson", "gridExtra","ggmosaic",
-              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt", "MASS", "FindIt")
+              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt", "MASS", "FindIt","modelsummary")
 ipak(packages)
 
 
@@ -62,6 +62,18 @@ table(df$SumFalse)
 rm(Tmp2)
 
 
+### create Echochambers*ideologi interaction
+
+df$echo_ideology <-as.factor(ifelse((df$HomoIndex == 1 & df$ideologia == "Izquierda"),'HighECH_Left',
+                                    ifelse((df$HomoIndex == 1 & df$ideologia == "Derecha"), 'HighECH_Right',
+                                    ifelse((df$HomoIndex == 1 & df$ideologia == "Ninguno"), 'HighECH_Without',
+                                    ifelse((df$HomoIndex == 1 & df$ideologia == "centro"), 'HighECH_Center',
+                                    ifelse((df$HomoIndex == 0 & df$ideologia == "Izquierda"), 'LowECH_Left',
+                                    ifelse((df$HomoIndex == 0 & df$ideologia == "Derecha"), 'LowECH_Right',
+                                    ifelse((df$HomoIndex == 0 & df$ideologia == "Ninguno"), 'LowECH_Without',
+                                    ifelse((df$HomoIndex == 0 & df$ideologia == "centro"), 'LowECH_Center',NA)))))))))
+
+table(df$echo_ideology)
 # make some dummies for regression tables
 
 df$SexDum <- if_else(df$GenRecod == "Femenino",
@@ -72,6 +84,8 @@ df <-fastDummies::dummy_cols(df, select_columns = 'Educ')
 df <-fastDummies::dummy_cols(df, select_columns = 'E2Treat')
 df <-fastDummies::dummy_cols(df, select_columns = 'ideologia')
 df <-fastDummies::dummy_cols(df, select_columns = 'NivEco')
-df <-dplyr::select(df, -Age_1, -Educ_1, -E2Treat_Control, -ideologia_centro, -NivEco_1)
-
+df <-fastDummies::dummy_cols(df, select_columns = 'echo_ideology')
+df <-dplyr::select(df, -Age_1, -Educ_1, -E2Treat_Control, -ideologia_centro, -NivEco_1, -echo_ideology_LowECH_Left,
+                   -echo_ideology_LowECH_Right, -echo_ideology_LowECH_Without, -echo_ideology_LowECH_Center,
+                   -echo_ideology_HighECH_Center)
 
