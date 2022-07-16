@@ -91,7 +91,44 @@ summary(ol4<-polr(as.factor(SC0) ~ E2Treat+ ideologia, data = df, Hess=TRUE))
 summary(ol5<-polr(as.factor(SC0) ~ E2Treat+ IncomeRecod, data = df, Hess=TRUE))
 
 
+##
 
+# create true headlines scores
+
+TmpTrue <-df%>%
+  dplyr::select(E2TC_1, E2TC_9, E2TC_12, E2T1a_1, E2T1a_6, E2T1a_7, E2T1b_1, E2T1b_6, E2T1b_7, E2T1c_1, E2T1c_5, E2T1c_7,
+                E2T1d_1, E2T1d_5, E2T1d_7, E2T2a_1, E2T2a_6, E2T2a_7, E2T2b_1, E2T2b_6, E2T2b_7, E2T2b_11, E2T2b_12, E2T2c_1,
+                E2T2c_6, E2T2c_7)
+
+TmpTrue<-ifelse(TmpTrue==1, 1, 0)
+
+
+as.data.frame(TmpTrue)
+
+TmpTrue$SumTrue <-rowSums(TmpTrue)
+
+df$SumTrue<-TmpTrue$SumTrue
+
+table(df$SumTrue)
+
+#Create false headlines scores
+
+TmpFalse <-df%>%
+  dplyr::select(E2TC_2:E2TC_8, E2TC_10, E2TC_11, E2T1a_2:E2T1a_5, E2T1b_2:E2T1b_5, E2T1c_2:E2T1c_4, E2T1c_6, E2T1d_2:E2T1d_4,
+                E2T1d_6, E2T2a_2:E2T2a_5, E2T2b_2:E2T2b_5, E2T2b_8, E2T2b_9, E2T2b_10, E2T2c_2:E2T2c_5)
+
+TmpFalse<-ifelse(TmpFalse==1, 1, 0)
+TmpFalse<-as.data.frame(TmpFalse)
+
+tmp[is.na(tmp)] <- 0
+tmp$SumFalse<- rowSums(tmp)
+
+df$SumFalse<-tmp$SumFalse
+
+
+
+# E2TC_1,E2TC_9,E2TC_12,E2T1a_1,E2T1a_6,E2T1a_7,E2T1b_1,E2T1b_6,E2T1b_7,E2T1c_1,E2T1c_5,E2T1c_7,E2T1d_1.E2T1d_5.E2T1d_7,
+# E2T2a_1,E2T2a_6,E2T2a_7, E2T2b_1, E2T2b_6,E2T2b_7,E2T2b_11,E2T2b_12,E2T2c_1,E2T2c_1,E2T2c_6,E2T2c_7
 
 
 

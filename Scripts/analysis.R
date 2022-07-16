@@ -1,706 +1,349 @@
-########################################################################################################
-### Analysis Data                                                                                   ####          
-### Septiember 2021                                                                                 ####
-### Francisco Villarroel                                                                            ####
-### df Name: “Aves del mismo plumaje se emocionan juntas” Encuesta experimental sobre la            ####
-### influencia de la homofília en la construcción de conductas políticas en el Chile Contemporáneo. ####
-########################################################################################################
+## Regresion with balanced covariates
 
+#Maximum likehood 
 
-# load DF
-
-df <-readRDS("Data/DF-final.RDS")
-
-### SAMPLE DESCRIPTIVES ###
-
-dfreduct <-dplyr::select(df, AgeRecod:ideologia,HomoIndex,DigitIndex)
-
-view(dfSummary(dfreduct))
-
-
-### TESTING RANDOMIZATION ###
-
-##################
-## Experiment 1 ##
-##################
-
-# Treatment by Age #
-
-df$AgeRecod <- ordered(df$AgeRecod, levels = c("18 a 29 años", "30 a 40 años", "41 a 65 años", "+ 66 años"))
-AE1Age <-ctable(df$AgeRecod, df$E1Treat, dnn = c('Grupo etáreo', 'Tratamiento'), style = 'rmarkdown', prop = "r", useNA = "no",
-                justify = "c", headings = FALSE)
-
-
-# Treatment by Gender #
-
-df$GenRecod <-ordered(df$GenRecod, levels = c("Femenino", "Masculino","Otro"))
-AE1Gen <-ctable(df$GenRecod, df$E1Treat, dnn = c('Género', 'Tratamiento'), style = 'rmarkdown', prop = "r", useNA = "no",
-                headings = FALSE)
-
-
-# Treatment by Income #
-
-
-df$IncomeRecod <-ordered(df$IncomeRecod, levels = c("Menos de $224.000","Entre $224.001 - $448.000",
-                                                    "Ente $448.001 y $1.000.000","Entre $1.000.001 - $3.000.000",
-                                                    "Más de $3.000.000"))
-AE1Inc <-ctable(df$IncomeRecod, df$E1Treat, dnn = c('Ingreso', 'Tratamiento'), style = 'rmarkdown', prop = "r", useNA = "no",
-                headings = FALSE)
-
-
-# Treatment by political position #
-df$ideologia <-ordered(df$ideologia, levels = c("Izquierda","Derecha","centro","Ninguno"))
-AE1Pol <-ctable(df$ideologia, df$E1Treat, dnn = c('Posición Política', 'Tratamiento'), style = 'rmarkdown',
-                prop = "r", useNA = "no", headings = FALSE)
-
-##################
-## Experiment 2 ##
-##################
-
-
-# Treatment by Age #
-
-AE2Age <-ctable(df$AgeRecod, df$E2Treat, dnn = c('Grupo etáreo', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                useNA = "no", headings = FALSE)
-
-
-# Treatment by Gender #
-
-AE2Gen <-ctable(df$GenRecod, df$E2Treat, dnn = c('Género', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                useNA = "no", headings = FALSE)
-
-# Treatment by Income #
-
-AE2Inc <-ctable(df$IncomeRecod, df$E2Treat,dnn = c('Ingreso', 'Tratamiento'),style = 'rmarkdown', prop = "r",
-                useNA = "no", headings = FALSE)
-
-# Treatment by political position #
-
-AE2Pol <-ctable(df$ideologia, df$E2Treat, dnn = c('Posición Política', 'Tratamiento'), style = 'rmarkdown',
-                prop = "r", useNA = "no", headings = FALSE)
-
-
-##################
-## Experiment 3 ##
-##################
-
-# Treatment by Age #
-
-AE3Age <-ctable(df$Age, df$E3Treat, dnn = c('Grupo etáreo', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                useNA = "no", headings = FALSE)
-
-# Treatment by Gender #
-
-AE3Gen <-ctable(df$GenRecod, df$E3Treat, dnn = c('Género', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                useNA = "no", headings = FALSE)
-
-# Treatment by Income #
-
-AE3Inc <-ctable(df$IncomeRecod, df$E3Treat,dnn = c('Ingreso', 'Tratamiento'), style = 'rmarkdown', prop = "r", useNA = "no",
-                headings = FALSE)
-
-# Treatment by political position #
-
-AE3Pol <-ctable(df$ideologia, df$E3Treat, dnn = c('Posición Política', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                useNA = "no", headings = FALSE)
-
-##################
-## Experiment 4 ##
-##################
-
-
-# Treatment by Age #
-
-AE4Age <-ctable(df$Age, df$E4Treat, dnn = c('Grupo etáreo', 'Tratamiento'), style = 'rmarkdown', prop = "r", useNA = "no",
-                headings = FALSE)
-
-
-# Treatment by Gender #
-
-AE4Gen <-ctable(df$GenRecod, df$E4Treat, dnn = c('Género', 'Tratamiento'), style = 'rmarkdown', prop = "r", useNA = "no",
-                headings = FALSE)
-
-# Treatment by Income #
-
-AE4Inc <-ctable(df$IncomeRecod, df$E4Treat,dnn = c('Ingreso', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                useNA = "no", headings = FALSE)
-
-# Treatment by political position #
-
-AE4Pol <-print(ctable(df$ideologia, df$E4Treat,dnn = c('Posición Política', 'Tratamiento'), style = 'rmarkdown',
-                      prop = "r", useNA = "no", headings = FALSE), method = 'render')
-
-### Diferencias entre Medias (cuadros decentes)  ###
-
-
-######################
-### first outcomes ###
-######################
-
-## ARREGLAR LOS GROUP_BY DE CASI TODOS (MENOS LOS DOS PRIMEROS EXPERIMENTOS) PORQUE NO FUNCIONAN
-
-## Experiment 1 ##
-
-detach("package:ggpubr", unload = TRUE)
-
-q = c(.25, .5, .75)
-
-E1 <-df%>%
-  dplyr::group_by("Tratamiento" = E1Treat)%>%
-  dplyr::summarize(Media = mean(E1, na.rm = T), "Desviacion Estandar" = sd(E1, na.rm = T),
-                   "Quantil 25%" = quantile(E1, probs = q[1]), "Quantil 50%" = quantile(E1, probs = q[2]),
-                   "Quantil 75%" = quantile(E1, probs = q[3]))
-
-xtable(E1, caption = "Resultados descriptivos de Experimento N°1: Ira por cercanía social")
-
-## Kruskal wallis test ##
-
-kruskal.test(E1 ~ E1Treat, data = df)
-pairwise.wilcox.test(df$E1, df$E1Treat)
-
-E1Homo <-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex, "Tratamiento" =E1Treat,)%>%
-  dplyr::summarize(Media = mean(E1, na.rm = T), desviacion = sd(E1, na.rm = T), "Quantil 25%" = quantile(E1, probs = q[1]),
-                   "Quantil 50%" = quantile(E1, probs = q[2]), "Quantil 75%" = quantile(E1, probs = q[3]))
-
-xtable(E1Homo, caption = "Resultados descriptivos de Experimento N°1 subdividido por niveles de Membresía a Cámaras de Eco")
-
-
-E1Digit <-df%>%
-  dplyr::group_by("Ciudadanía Digital"=DigitIndex,"Tratamiento"=E1Treat,)%>%
-  dplyr::summarize(Media = mean(E1, na.rm = T), desviacion = sd(E1, na.rm = T), "Quantil 25%" = quantile(E1, probs = q[1]),
-                   "Quantil 50%" = quantile(E1, probs = q[2]), "Quantil 75%" = quantile(E1, probs = q[3]))
-
-xtable(E1Digit, caption = "Resultados descriptivos de Experimento N°1 subdividido por niveles de Ciudadanía Digital")
-
-
-# Regresion with balanced covariates
-
-
-# Regresion with unbalanced covariates
-
-
-## Experiment 2 ##
 df$SC0 <-as.numeric(df$SC0)
 
-E2 <-df%>%
-  dplyr::group_by("Tratamiento"=E2Treat)%>%
-  dplyr::summarise(Media = mean(SC0, na.rm = T),
-            Desviacion = sd(SC0, na.rm = T),"Quantil 25%" = quantile(E1, probs = q[1]),
-            "Quantil 50%" = quantile(E1, probs = q[2]),
-            "Quantil 75%" = quantile(E1, probs = q[3]))
+MLModel1 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto, data = df)
+MLModel2 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex, data = df)
+MLModel3 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex, data = df)
+MLModel4 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex, data = df)
+MLModel5 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum, data = df)
+MLModel6 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
+MLModel7 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
+               + Educ_3 + Educ_4 + Educ_5, data = df)
+MLModel8 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
+               + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno,
+               data = df)
+MLModel9 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
+               + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno
+               + NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
 
-xtable(E2)
 
+#Poisson estimation
 
-## Kruskal wallis test ##
+PoModel1 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto, family = poisson, data = df)
+PoModel2 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex, family = poisson, data = df)
+PoModel3 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex, family = poisson, data = df)
+PoModel4 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex, family = poisson, data = df)
+PoModel5 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum, family = poisson, data = df)
+PoModel6 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, family = poisson, data = df)
+PoModel7 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
+               + Educ_3 + Educ_4 + Educ_5,family = poisson, data = df)
+PoModel8 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
+               + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno, family = poisson,
+               data = df)
+PoModel9 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
+               + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno
+               + NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, family = poisson, data = df)
 
-kruskal.test(SC0 ~ E2Treat, data = df)
-pairwise.wilcox.test(df$SC0, df$E2Treat)
 
+#Create regression tables
 
-E2Homo <-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex,"Tratamiento"=E2Treat)%>%
-  dplyr::summarise(Media = mean(SC0, na.rm = T),
-                   Desviacion = sd(SC0, na.rm = T), "Quantil 25%" = quantile(E1, probs = q[1]), "Quantil 50%" = quantile(E1, probs = q[2]),
-                   "Quantil 75%" = quantile(E1, probs = q[3]))
+cm <-c('(Intercept)' = 'Constant', 'E2Treat_Afin' = 'T1 Like-Minded', 'E2Treat_Opuesto' = 'T2 Opposite',
+       'HomoIndex' = 'High Eco Chamber', 'DigitIndex' = 'High Digital Citizenship')
 
-xtable(E2Homo)
+cap <-'regression table with balanced variables'
 
 
+Reg1Bal <-stargazer::stargazer(MLModel1,PoModel1, MLModel2, PoModel2, MLModel3, PoModel3,MLModel4, PoModel4,
+                               title = "Success score distinguishing fake news from real news",
+                               dep.var.labels = "Success score",
+                               covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
+                                                    "High Digital citizenship","Constant"),
+                               star.cutoffs = c(0.05, 0.01, 0.001),
+                               column.sep.width = "1pt",
+                               notes = "Base variables: Control Group",
+                               notes.label = "Significance levels",
+                               type = "html",
+                               out = "beamer_presentation/beamer_presentation_files/regression_balanced.html")
 
+## Not balanced regression
 
-E2Digit<-df%>%
-  dplyr::group_by("Ciudadanía Digital"=DigitIndex,"Tratamiento"=E2Treat)%>%
-  dplyr::summarise(Media = mean(SC0, na.rm = T),
-                   Desviacion = sd(SC0, na.rm = T),"Quantil 25%" = quantile(E1, probs = q[1]), "Quantil 50%" = quantile(E1, probs = q[2]),
-                   "Quantil 75%" = quantile(E1, probs = q[3]))
 
-xtable(E2Digit)
+Reg1NoBal <-stargazer::stargazer(MLModel4, PoModel4, MLModel5, PoModel5, MLModel6, PoModel6, MLModel7, PoModel7, MLModel8,PoModel8, MLModel9, PoModel9,
+                                 title = "Success score distinguishing fake news from real news. Non-balanced variables",
+                                 dep.var.labels = "Success score",
+                                 covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
+                                                      "High Digital citizenship","Female", "30 to 40 years", "41 to 65 years",
+                                                      "66+ years", "Elemental School", "Secondary School", "Graduate",
+                                                      "Postgraduate","Left-wing", "Right-wing","Without Ideology", "$224.001 - $448-000",
+                                                      "$448.001 - $1.000.000", "$1.000.001 - $3.000.000", "$3.000,000+","Constant"),
+                                 star.cutoffs = c(0.05, 0.01, 0.001),
+                                 column.sep.width = "1pt",
+                                 notes.label = "Significance levels",
+                                 type = "html",
+                                 out = "beamer_presentation/beamer_presentation_files/regression-non-balanced.html")
 
+#Baseline Variables: T0-Control Group, Low Eco Chamber membership and Digital Citizenship,
+#\n Gender: Men, Age: 18-29 years, Education: No-Education, Ideology: Center, Income: >$224.001
 
 
-## Experiment 3 ##
+## transform html beamer to pdf 
 
-## Mantain or broke ties ##
+#library(renderthis)
 
-E3 <-ctable(df$E3, df$E3Treat, dnn = c('Probabilidad de romper lazos', 'Tratamiento'), prop = "c",useNA = "no",
-            chisq = T, headings = TRUE, style = 'rmarkdown')
+#to_pdf("beamer_presentation/beamer_presentation.Rmd")
 
-##by echo chambers
 
-E3Homo ->ordered(df$E3, levels = c("Romper lazos", "Mantener Lazos"))%>%
-  stby(data = list(x= df$E3, y = df$E3Treat),
-       INDICES = df$HomoIndex,
-       FUN = ctable,
-       dnn = c('Probabilidad de romper lazos', 'Tratamiento'),
-       prop = "c",
-       chisq = TRUE)
 
-E3Digi <-ordered(df$E3, levels = c("Romper lazos", "Mantener Lazos"))%>%
-  stby(data = list(x= df$E3, y = df$E3Treat),
-       INDICES = df$DigitIndex,
-       FUN = ctable,
-       dnn = c('Probabilidad de romper lazos', 'Tratamiento'),
-       prop = "c",
-       chisq = TRUE)
+##### Robustness tests
 
-## by type of social tie and type of argumentation
 
-E3Friend <-ctable(df$E3, df$E3TTie, dnn = c('Probabilidad de romper lazos', 'Tratamiento'), useNA = "no", chisq = T,
-                  OR = T, RR = T, headings = FALSE, style = 'rmarkdown')
+### Ordered logit
+summary(ol1<-polr(as.factor(SC0) ~ E2Treat+ SexDum +AgeRecod + EducRec + ideologia + IncomeRecod + DigitIndex, data = df, Hess=TRUE))
+summary(ol2<-polr(as.factor(SC0) ~ E2Treat+ AgeRecod + ideologia + IncomeRecod , data = df, Hess=TRUE))
+summary(ol3<-polr(as.factor(SC0) ~ E2Treat+ ideologia, data = df, Hess=TRUE))
+summary(ol4<-polr(as.factor(SC0) ~ E2Treat+ ideologia, data = df, Hess=TRUE))
+summary(ol5<-polr(as.factor(SC0) ~ E2Treat+ IncomeRecod, data = df, Hess=TRUE))
 
-E3Arg <-ctable(df$E3, df$E3TArg, dnn = c('Probabilidad de romper lazos', 'Tratamiento'), useNA = "no", chisq = T,
-               OR = T, RR = T, headings = FALSE, style = 'rmarkdown')
+### Negative binomial model
 
-## subdivided by digital citizenship - social ties
 
-levels(df$E3) <-c("Mantener Lazos", "Romper lazos")
+summary(nb1 <- glm.nb(SC0 ~ E2Treat+ SexDum +AgeRecod + EducRec + ideologia + IncomeRecod + DigitIndex, data=df))
+summary(nb2 <- glm.nb(SC0 ~ E2Treat+ SexDum + DigitIndex, data=df))
+summary(nb3 <- glm.nb(SC0 ~ E2Treat+ AgeRecod + ideologia + IncomeRecod, data=df))
+summary(nb4 <- glm.nb(SC0 ~ E2Treat+ SexDum +AgeRecod + EducRec + ideologia + IncomeRecod, data=df))
+summary(nb5 <- glm.nb(SC0 ~ E2Treat+ SexDum +AgeRecod + EducRec + ideologia + IncomeRecod, data=df))
 
 
-E3FrHomo<-ordered(df$E3, levels = c("Romper lazos", "Mantener Lazos"))%>%
-  stby(data = list(x= df$E3, y = df$E3TTie),
-       INDICES = df$HomoIndex,
-       FUN = ctable,
-       dnn = c('Probabilidad de romper lazos', 'Tratamiento'),
-       prop = "c",
-       chisq = TRUE,
-       OR = TRUE,
-       RR = TRUE)
+##################################
+# False Responses
+##################################
 
+summary(frol1<-polr(as.factor(SumFalse) ~ E2Treat+ SexDum +AgeRecod + EducRec + ideologia + IncomeRecod + DigitIndex, data = df, Hess=TRUE))
+summary(frol2<-polr(as.factor(SumFalse) ~ E2Treat+ AgeRecod + ideologia + IncomeRecod + DigitIndex, data = df, Hess=TRUE))
+summary(frol3<-polr(as.factor(SumFalse) ~ E2Treat+ ideologia, data = df, Hess=TRUE))
+summary(frol4<-polr(as.factor(SumFalse) ~ E2Treat+ ideologia, data = df, Hess=TRUE))
+summary(frol5<-polr(as.factor(SumFalse) ~ E2Treat+ IncomeRecod, data = df, Hess=TRUE))
+summary(frol5<-polr(as.factor(SumFalse) ~ E2Treat+ DigitIndex, data = df, Hess=TRUE)) ### Non significant on it's own
 
 
-E3FrDigi <-ordered(df$E3, levels = c("Mantener Lazos", "Romper lazos"))%>%
-                     stby(data=list(x = df$E3, y = df$E3TTie),
-                          INDICES = df$DigitIndex,
-                          FUN = ctable,
-                          dnn = c('Probabilidad de romper lazos', 'Tratamiento'),
-                          prop = "c",
-                          chisq = TRUE,
-                          OR = TRUE,
-                          RR = TRUE)
+###################################
+#### Ramdomization inference estimations
+#########################################
 
-## subdivided by argumentation
 
-E3ArgHomo <-ordered(df$E3, levels = c("Romper lazos", "Mantener Lazos"))%>%
-  stby(data=list(x = df$E3, y = df$E3TArg),
-       INDICES = df$HomoIndex,
-       FUN = ctable,
-       dnn = c('Probabilidad de romper lazos', 'Tratamiento'),
-       prop = "c",
-       chisq = TRUE,
-       OR = TRUE,
-       RR = TRUE)
-
-
-E3ArgDigi <-ordered(df$E3, levels = c("1", "0"))%>%
-  stby(data=list(x = df$E3, y = df$E3TArg),
-       INDICES = df$DigitIndex,
-       FUN = ctable,
-       dnn = c('Probabilidad de romper lazos', 'Tratamiento'),
-       prop = "c",
-       chisq = TRUE,
-       OR = TRUE,
-       RR = TRUE)
-
-# Regresion model
-
-df$E3 <-as.factor(df$E3)
-E3M1 <-glm(E3 ~ E3Treat, data = df, family = "binomial")
-E3M2 <-glm(E3 ~ E3Treat + HomoIndex, data = df, family = "binomial")
-E3M3 <-glm(E3 ~ E3Treat + HomoIndex + DigitIndex, data = df, family = "binomial")
-E3M4 <-glm(E3 ~ E3Treat + HomoIndex + DigitIndex + AgeRecod, data = df, family = "binomial")
-E3M5 <-glm(E3 ~ E3Treat + HomoIndex + DigitIndex + AgeRecod + EducRec, data = df, family = "binomial")
-E3M6 <-glm(E3 ~ E3Treat + HomoIndex + DigitIndex + AgeRecod + EducRec + GenRecod, data = df, family = "binomial")
-E3M7 <-glm(E3 ~ E3Treat + HomoIndex + DigitIndex + AgeRecod + EducRec + GenRecod + ideologia, data = df, family = "binomial")
-
-
-# Logistic regression with balanced covariates
-
-summary(E3M1)
-
-E3ReBa <-stargazer(E3M1, E3M2, E3M3,
-          title = "Probabilidad de romper lazos sociales por facebook, con covariables balanceadas",
-          dep.var.caption = "Probabilidad de ruptura",
-          dep.var.labels = c("Modelo 1", "Modelo 2", "Modelo 3"),
-          covariate.labels = c("Amigo - Arg. validado", "Conocido- Arg. de fake News", "Conocido - Arg. validado",
-                               "Pertenencia a cámaras de eco", "Ciudadanía Digital", "Constante"),
-          star.cutoffs = c(0.05, 0.01, 0.001),
-          column.sep.width = "1pt",
-          notes.label = "Niveles de significancia",
-          type = "latex",
-          out = "Results/Tables/E3-balanced.html")
-
-
-# Logistic regression with unbalanced covariates
-
-E3ReUn <-stargazer(E3M1, E3M2, E3M3,E3M4, E3M5, E3M6, E3M7,
-          title = "Probabilidad de romper lazos sociales por facebook, con covariables bañanceadas y sin balancear ",
-          dep.var.caption = "Probabilidad de ruptura",
-          dep.var.labels = c("Modelo 1", "Modelo 2", "Modelo 3"),
-          covariate.labels = c("Amigo - Arg. validado", "Conocido- Arg. de fake News", "Conocido - Arg. validado",
-                               "Pertenencia a cámaras de eco", "Ciudadanía digital", "18 a 29 años", "30 a 40 años",
-                               "41 a 65 años","Educación Media", "Postgrado", "Sin Estudios",
-                               "Educación Superior", "Masculino", "Otros géneros", "Derecha", "Izquierda",
-                               "Ninguna ideología","Constante"),
-          column.sep.width = "1pt",
-          star.cutoffs = c(0.05, 0.01, 0.001),
-          notes.label = "Niveles de significancia",
-          type = "latex",
-          out = "Results/Tables/E3-unbalanced.html")
-
-
-
-
-#Emotions #
-
-# Angry
-E3Angry <-df%>%
-  dplyr::group_by("Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Angry, na.rm = T), "Desviacion Estandar" = sd(E3Angry, na.rm = T),
-                   "Quantil 25%" = quantile(E3Angry, probs = q[1]), "Quantil 50%" = quantile(E3Angry, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Angry, probs = q[3]))
-
-xtable(E1Digit, caption = "Resultados descriptivos de Experimento N°2: Niveles de Ira según tratamiento")
-
-
-E3AngryHomo <-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex, "Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Angry, na.rm = T), "Desviacion Estandar" = sd(E3Angry, na.rm = T),
-                   "Quantil 25%" = quantile(E3Angry, probs = q[1]), "Quantil 50%" = quantile(E3Angry, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Angry, probs = q[3]))
 
-E3AngryDigit <-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Angry, na.rm = T), "Desviacion Estandar" = sd(E3Angry, na.rm = T),
-                   "Quantil 25%" = quantile(E3Angry, probs = q[1]), "Quantil 50%" = quantile(E3Angry, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Angry, probs = q[3]))
+#################### RI ####################
 
-kruskal.test(E3Angry ~ E3Treat, data = df)
-pairwise.wilcox.test(df$E3Angry, df$E3Treat)
-
-# Joy-Hapiness
-
-E3Joy <-df%>%
-  dplyr::group_by("Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Joy, na.rm = T), "Desviacion Estandar" = sd(E3Joy, na.rm = T),
-                   "Quantil 25%" = quantile(E3Joy, probs = q[1]), "Quantil 50%" = quantile(E3Joy, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Joy, probs = q[3]))
-
-kruskal.test(E3Joy ~ E3Treat, data = df)
-pairwise.wilcox.test(df$E3Joy, df$E3Treat)
-
-E3JoyHomo<-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex,"Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Joy, na.rm = T), "Desviacion Estandar" = sd(E3Joy, na.rm = T),
-                   "Quantil 25%" = quantile(E3Joy, probs = q[1]), "Quantil 50%" = quantile(E3Joy, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Joy, probs = q[3]))
-
-E3JoyDigit<-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Joy, na.rm = T), "Desviacion Estandar" = sd(E3Joy, na.rm = T),
-                   "Quantil 25%" = quantile(E3Joy, probs = q[1]), "Quantil 50%" = quantile(E3Joy, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Joy, probs = q[3]))
-
-
-# sadness
-
-E3Sad <-df%>%
-  dplyr::group_by("Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Sad, na.rm = T), "Desviacion Estandar" = sd(E3Sad, na.rm = T),
-                   "Quantil 25%" = quantile(E3Sad, probs = q[1]), "Quantil 50%" = quantile(E3Sad, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Sad, probs = q[3]))
-
-kruskal.test(E3Sad ~ E3Treat, data = df)
-pairwise.wilcox.test(df$E3Sad, df$E3Treat)
-
-E3SadHomo <-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex,"Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Sad, na.rm = T), "Desviacion Estandar" = sd(E3Sad, na.rm = T),
-                   "Quantil 25%" = quantile(E3Sad, probs = q[1]), "Quantil 50%" = quantile(E3Sad, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Sad, probs = q[3]))
-
-
-E3SadDigit <-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Sad, na.rm = T), "Desviacion Estandar" = sd(E3Sad, na.rm = T),
-                   "Quantil 25%" = quantile(E3Sad, probs = q[1]), "Quantil 50%" = quantile(E3Sad, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Sad, probs = q[3]))
-
-# Fear
-
-E3Fear <-df%>%
-  dplyr::group_by("Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Fear, na.rm = T), "Desviacion Estandar" = sd(E3Fear, na.rm = T),
-                   "Quantil 25%" = quantile(E3Fear, probs = q[1]), "Quantil 50%" = quantile(E3Fear, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Fear, probs = q[3]))
-
-kruskal.test(E3Fear ~ E3Treat, data = df)
-pairwise.wilcox.test(df$E3Fear, df$E3Treat)
-
-E3FearHomo<-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex,"Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Fear, na.rm = T), "Desviacion Estandar" = sd(E3Fear, na.rm = T),
-                   "Quantil 25%" = quantile(E3Fear, probs = q[1]), "Quantil 50%" = quantile(E3Fear, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Fear, probs = q[3]))
-
-E3FearDigit <-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E3Treat)%>%
-  dplyr::summarize(Media = mean(E3Fear, na.rm = T), "Desviacion Estandar" = sd(E3Fear, na.rm = T),
-                   "Quantil 25%" = quantile(E3Fear, probs = q[1]), "Quantil 50%" = quantile(E3Fear, probs = q[2]),
-                   "Quantil 75%" = quantile(E3Fear, probs = q[3]))
-## Experiment 4 ##
-
-# get a talk or avoid conversation
-
-E4 <-ctable(df$E4, df$E4Treat, prop = "c", dnn = c('Probabilidad de discutir', 'tratamiento'),
-            chisq = T, useNA = "no", headings = FALSE, style = 'rmarkdown')
-
-# by tie or political/non-political
-
-E4Fam<-ctable(df$E4, df$E4TFam, dnn = c('Discusión o evasión','Tratamiento'),chisq = T, OR=TRUE, RR=TRUE,
-                                        useNA = "no", headings = FALSE, style = 'rmarkdown')
-
-E4Pol<-ctable(df$E4, df$E4TPol, dnn = c('Discusión o evasion', 'Tratamiento'), chisq = T, OR=TRUE, RR=TRUE,
-                                        useNA = "no", headings = FALSE, style = 'rmarkdown')
-
-
-#subdivided by digital citizenship
-
-levels(df$E4) <-c("Evadir Discusión", "Discutir abiertamente")
-
-
-E4FamHomo<-ordered(df$E4, levels = c("1", "0"))%>%
-  stby(data = list(x= df$E4, y = df$E4TFam),
-       INDICES = df$HomoIndex,
-       FUN = ctable,
-       dnn = c('Probabilidad de discusión', 'Tratamiento'),
-       prop = "c",
-       chisq = TRUE,
-       OR = TRUE,
-       RR = TRUE)
-
-E4FamDigi <-ordered(df$E4, levels = c("1", "0"))%>%
-  stby(data = list(x= df$E4, y = df$E4TFam),
-                 INDICES = df$DigitIndex,
-                 FUN = ctable,
-                 dnn = c('Probabilidad de discusión', 'Tratamiento'),
-                 prop = "c",
-                 chisq = TRUE,
-                 OR = TRUE,
-                 RR = TRUE)
-
-## subdivided by echo chambers
-
-E4PolHomo <-ordered(df$E4, levels = c("1", "0"))%>%
-  stby(data = list(x= df$E4, y = df$E4TPol),
-                 INDICES = df$HomoIndex,
-                 FUN = ctable,
-                 dnn = c('Probabilidad de discusión', 'Tratamiento'),
-                 prop = "c",
-                 chisq = TRUE,
-                 OR = TRUE,
-                 RR = TRUE)
-
-E4PolDigi <-ordered(df$E4, levels = c("Discutir abiertamente", "Evadir Discusión"))%>%
-  stby(data = list(x= df$E4, y = df$E4TPol),
-                 INDICES = df$DigitIndex,
-                 FUN = ctable,
-                 dnn = c('Probabilidad de discusión', 'Tratamiento'),
-                 prop = "C",
-                 chisq = TRUE,
-                 OR = TRUE,
-                 RR = TRUE)
-
-
-### Regression ###
-E4M1 <-glm(E4 ~ E4Treat, data = df, family = "binomial")
-E4M2 <-glm(E4 ~ E4Treat + HomoIndex, data = df, family = "binomial")
-E4M3 <-glm(E4 ~ E4Treat + HomoIndex + DigitIndex, data = df, family = "binomial")
-E4M4 <-glm(E4 ~ E4Treat + HomoIndex + DigitIndex + AgeRecod, data = df, family = "binomial")
-E4M5 <-glm(E4 ~ E4Treat + HomoIndex + DigitIndex + AgeRecod + EducRec, data = df, family = "binomial")
-E4M6 <-glm(E4 ~ E4Treat + HomoIndex + DigitIndex + AgeRecod + EducRec + GenRecod, data = df, family = "binomial")
-E4M7 <-glm(E4 ~ E4Treat + HomoIndex + DigitIndex + AgeRecod + EducRec + GenRecod + ideologia, data = df, family = "binomial")
-
-#regresion with balanced covariates
-E4ReBa <-stargazer(E4M1, E4M2, E4M3,
-          title = "Probabilidad de discutir con lazos sociales cercanos por opiniones opuestas, con covariables balanceadas",
-          dep.var.caption = "Probabilidad de discutir",
-          covariate.labels = c("Amigo - Tema político", "Familiar - Tema no político", "Familiar - Tema político",
-                               "Pertenencia a cámaras de eco", "Ciudadanía digital", "Constante"),
-          notes.label = "Niveles de significancia",
-          column.sep.width = "1pt",
-          type = "latex",
-          out = "Results/Tables/E4-balanced.html")
-
-#regresion with UNbalanced covariates
-E4ReUn <-stargazer(E4M1, E4M2, E4M3,E4M4, E4M5, E4M6, E4M7,
-          title = "Probabilidad de discutir con lazos sociales cercanos por opiniones opuestas, con covariables balanceadas y sin balancear",
-          dep.var.caption = "Probabilidad de discutir",
-          covariate.labels = c("Amigo - Tema político", "Familiar - Tema no político", "Familiar - Tema político",
-                               "Pertenencia a cámaras de eco", "Ciudadanía digital", "18 a 29 años", "30 a 40 años",
-                               "41 a 65 años","Educación Media", "Postgrado", "Sin Estudios",
-                               "Educación Superior", "Masculino", "Otros géneros", "Derecha", "Izquierda",
-                               "Ninguna ideología","Constante"),
-          notes.label = "Niveles de significancia",
-          column.sep.width = "1pt",
-          type = "latex",
-          out = "Results/Tables/E4-unbalanced.html")
-
-
-# Emotions Experiment 4
-
-# Angry
-
-E4Angry <-df%>%
-  dplyr::group_by("Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Angry, na.rm = T), "Desviacion Estandar" = sd(E4Angry, na.rm = T),
-                   "Quantil 25%" = quantile(E4Angry, probs = q[1]), "Quantil 50%" = quantile(E4Angry, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Angry, probs = q[3]))
-
-kruskal.test(E4Angry ~ E4Treat, data = df)
-pairwise.wilcox.test(df$E4Angry, df$E4Treat)
-
-E4AngryHomo <-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex, "Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Angry, na.rm = T), "Desviacion Estandar" = sd(E4Angry, na.rm = T),
-                   "Quantil 25%" = quantile(E4Angry, probs = q[1]), "Quantil 50%" = quantile(E4Angry, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Angry, probs = q[3]))
+df$SC0n<-as.numeric(df$SC0)
 
-E4AngryDigit <-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Angry, na.rm = T), "Desviacion Estandar" = sd(E4Angry, na.rm = T),
-                   "Quantil 25%" = quantile(E4Angry, probs = q[1]), "Quantil 50%" = quantile(E4Angry, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Angry, probs = q[3]))
+### 
+declaration<-declare_ra(N=690, prob_each=c(0.34, 0.66), simple=TRUE)
+declaration
 
+#df$above_med_correct<-ifelse(df$SC0n>4, 1, 0)
 
+out <- conduct_ri(SC0n ~ E2Treat_Afin + ideologia + IncomeRecod,
+                  declaration = declaration,
+                  assignment = "E2Treat_Afin",
+                  sharp_hypothesis = 0,
+                  data = df)
 
+summary(out)
+plot(out)
+tidy(out)
 
-# Joy-Hapiness
 
-E4Joy <-df%>%
-  dplyr::group_by("Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Joy, na.rm = T), "Desviacion Estandar" = sd(E4Joy, na.rm = T),
-                   "Quantil 25%" = quantile(E4Joy, probs = q[1]), "Quantil 50%" = quantile(E4Joy, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Joy, probs = q[3]))
+### Opuesto
+declaration<-declare_ra(N=690, prob_each=c(0.34, 0.66), simple=TRUE)
+declaration
 
-kruskal.test(E4Joy ~ E4Treat, data = df)
-pairwise.wilcox.test(df$E4Joy, df$E4Treat)
+#df$above_med_correct<-ifelse(df$SC0n>4, 1, 0)
 
-E4JoyHomo<-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex,"Tratamientos"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Joy, na.rm = T), "Desviacion Estandar" = sd(E4Joy, na.rm = T),
-                   "Quantil 25%" = quantile(E4Joy, probs = q[1]), "Quantil 50%" = quantile(E4Joy, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Joy, probs = q[3]))
-
+out2 <- conduct_ri(SC0n ~ E2Treat_Opuesto,
+                   declaration = declaration,
+                   assignment = "E2Treat_Opuesto",
+                   sharp_hypothesis = 0,
+                   data = df)
 
-E4JoyDigit<-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Joy, na.rm = T), "Desviacion Estandar" = sd(E4Joy, na.rm = T),
-                   "Quantil 25%" = quantile(E4Joy, probs = q[1]), "Quantil 50%" = quantile(E4Joy, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Joy, probs = q[3]))
+summary(out2)
+plot(out2)
+tidy(out)
 
 
-# sadness
 
-E4Sad <-df%>%
-  dplyr::group_by("Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Sad, na.rm = T), "Desviacion Estandar" = sd(E4Sad, na.rm = T),
-                   "Quantil 25%" = quantile(E4Sad, probs = q[1]), "Quantil 50%" = quantile(E4Sad, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Sad, probs = q[3]))
 
+###########################
+#### interaction effects
+###########################
+library(BayesTree)
 
+set.seed(89)
 
-kruskal.test(E4Sad ~ E4Treat, data = df)
-pairwise.wilcox.test(df$E4Sad, df$E4Treat)
+# Data set up including calculating ability rank
+df.b <- df
 
-E4SadHomo<-df%>%
-  dplyr::group_by("Cámaras de eco"=HomoIndex,"Tratamiento" = E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Sad, na.rm = T), "Desviacion Estandar" = sd(E4Sad, na.rm = T),
-                   "Quantil 25%" = quantile(E4Sad, probs = q[1]), "Quantil 50%" = quantile(E4Sad, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Sad, probs = q[3]))
 
+################## Efect de noticias afines e interacción con ecochambers
+df.b$treat.het <- as.factor(df.b$E2Treat_Opuesto) #dummy tratment variable
 
-E4SadDigit <-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Sad, na.rm = T), "Desviacion Estandar" = sd(E4Sad, na.rm = T),
-                   "Quantil 25%" = quantile(E4Sad, probs = q[1]), "Quantil 50%" = quantile(E4Sad, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Sad, probs = q[3]))
+df.b$AgeRecod <- as.factor(df.b$AgeRecod)
+df.b$ideologia <- as.factor(df.b$ideologia)
+df.b$IncomeRecod <- as.factor(df.b$IncomeRecod)
+df.b$HomoIndex <- as.factor(df.b$HomoIndex)
 
-# Fear
 
-E4Fear<-df%>%
-  dplyr::group_by("Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Fear, na.rm = T), "Desviacion Estandar" = sd(E4Fear, na.rm = T),
-                   "Quantil 25%" = quantile(E4Fear, probs = q[1]), "Quantil 50%" = quantile(E4Fear, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Fear, probs = q[3]))
+# Define model variables incl. outcome as column 1
+vars <- c("SC0n", "treat.het", "AgeRecod", "ideologia", "IncomeRecod",  "HomoIndex" )
 
+df.b <- df.b[,vars]
+df.b <- df.b[complete.cases(df.b),]
 
-kruskal.test(E4Fear ~ E4Treat, data = df)
-pairwise.wilcox.test(df$E4Fear, df$E4Treat)
+# Separate outcome and training data
+y <- df.b$SC0n
+train <- df.b[,-1]
 
-E4FearHomo<-df%>%
-  dplyr::group_by("Cámaras de eco" = HomoIndex,"Tratamiento" = E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Fear, na.rm = T), "Desviacion Estandar" = sd(E4Fear, na.rm = T),
-                   "Quantil 25%" = quantile(E4Fear, probs = q[1]), "Quantil 50%" = quantile(E4Fear, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Fear, probs = q[3]))
-E4FearDigit <-df%>%
-  dplyr::group_by("Ciud. digital"=DigitIndex,"Tratamiento"=E4Treat)%>%
-  dplyr::summarize(Media = mean(E4Fear, na.rm = T), "Desviacion Estandar" = sd(E4Fear, na.rm = T),
-                   "Quantil 25%" = quantile(E4Fear, probs = q[1]), "Quantil 50%" = quantile(E4Fear, probs = q[2]),
-                   "Quantil 75%" = quantile(E4Fear, probs = q[3]))
+# Gen. test data where those treated become untreated, for use in calculating ITT
+test <- train
+test$treat.het <- ifelse(test$treat.het == 1,0,ifelse(test$treat.het == 0,1,NA))
 
+# Run BART for predicted values of observed and synthetic observations
+bart.out <- bart(x.train = train, y.train = y, x.test = test)
 
-## Create new data frame
+# Recover CATE estimates and format into dataframe
+# Logic: Take predictions for those actually treated and minus counterfactual
+#        Then take counterfactually treated and deduct prediction for those actually in control
+CATE <- c(bart.out$yhat.train.mean[train$treat.het == 1] - bart.out$yhat.test.mean[test$treat.het == 0],
+          bart.out$yhat.test.mean[test$treat.het == 1] - bart.out$yhat.train.mean[train$treat.het == 0])
 
+CATE_df <- data.frame(CATE = CATE)
+covars <- rbind(train[train$treat.het == 1,c(2:5)], test[test$treat.het==1,c(2:5)])
 
-finalDF <-saveRDS(finalDF, file = "Data/Analysis-Data/DF-final.RDS")
+CATE_df <- cbind(CATE_df,covars)
+CATE_df <- CATE_df[order(CATE_df$CATE),]
+CATE_df$id <- c(1:length(CATE))
 
+# Descriptive results reported in main text:
+mean(CATE_df$CATE)
+summary(CATE_df$CATE)
 
-## Save all tables to use ##
+# Proportion of CATEs that are negative:
+sum(CATE_df$CATE < 0)/nrow(CATE_df)
+sum(CATE_df$CATE < mean(CATE_df$CATE))/nrow(CATE_df)
 
+# Ecochamber - Homo prob below mean
+sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex =="1" )/sum(CATE_df$HomoIndex == "1")
 
-anexo <-list(AE1Age, AE1Gen, AE1Inc, AE1Pol, AE2Age, AE2Gen, AE2Inc, AE2Pol, AE3Age, AE2Gen, AE3Inc, AE3Pol,
-             AE4Age, AE4Gen, AE4Inc, AE4Pol)
+# Echochamber - Hetero prop. below mean
+sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex == "0" )/sum(CATE_df$HomoIndex =="0")
 
-TablaExperi <-list(E1, E1Homo, E1Digit,E2, E2Homo, E2Digit,E3, E3Friend, E3Arg,E3FrHomo,E3FrDigi, E3ArgHomo, E3ArgDigi,E3ReBa,E3ReUn,E4,
-                   E4Fam,E4Pol, E4FamHomo,E4FamDigi,E4PolHomo, E4PolDigi,E4ReBa, E4ReUn)
 
-TablaEmo <-list(E3Angry, E3AngryHomo, E3AngryDigit, E3Joy, E3JoyHomo, E3JoyDigit, E3Sad, E3SadHomo, E3SadDigit,
-                E3Fear, E3FearHomo, E3FearDigit, E4Angry, E4AngryHomo, E4AngryDigit, E4Joy, E4JoyHomo, E4JoyDigit,
-                E4Sad, E4SadHomo, E4SadDigit, E4Fear, E4FearHomo, E4FearDigit)
+# CATE Heterogeneity plot
+hist <- CATE_df
 
-#testing block randomization
+effectsPlot <- ggplot(hist, aes(x=id, y = CATE)) +
+  geom_line() +
+  geom_hline(yintercept= 0, linetype="dashed", color="red") +
+  geom_hline(yintercept = mean(hist$CATE), color = "blue") +
+  labs(x="Individual",y = "CATE") +
+  theme_minimal() +
+  scale_x_continuous(limits = c(0,nrow(train)))
+#ggsave(effectsPlot, filename= "test.pdf")
+# Mode histogram 
 
-E1BHomo <-ctable(df$HomoIndex, df$E1Treat, dnn = c('Cámaras de Eco', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                 useNA = "no", headings = FALSE)
-E1BDigi <-ctable(df$DigitIndex, df$E1Treat, dnn = c('Ciudadanía Digital','Tratamiento'), style = 'rmarkdown', prop = "r",
-                 useNA = "no",headings = FALSE)
+modePlot <- ggplot(hist, aes(x=id, fill=factor(HomoIndex))) +
+  geom_histogram(binwidth = 60,position="stack") +
+  theme(legend.position="bottom") +
+  labs(y = "Count", x = "Individual")+
+  scale_x_continuous(limits = c(0,nrow(train)))#+
+#scale_fill_discrete(name = "", labels = c("0", "Male"))
+#scale_fill_manual(name="Mode", values=colours) +
+# +
+#scale_x_continuous(limits = c(0,5220))
 
-E2BHomo <-ctable(df$HomoIndex, df$E2Treat,dnn = c('Cámaras de Eco', 'Tratamiento'), style = 'rmarkdown', prop = "r",useNA = "no")
-E2BDigi <-ctable(df$DigitIndex, df$E2Treat, dnn = c('Ciudadanía Digital','Tratamiento'), style = 'rmarkdown', prop = "r",
-                 useNA = "no",headings = FALSE)
+# Combine all plots into one chart
+homoindex_het <- ggarrange(effectsPlot, modePlot,
+                           ncol = 1, nrow = 2, heights = c(2,2))
 
-E3BHomo <-ctable(df$HomoIndex, df$E3Treat,dnn = c('Cámaras de Eco', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                 useNA = "no", headings = FALSE)
-E3BDigi <-ctable(df$DigitIndex, df$E3Treat, dnn = c('Ciudadanía Digital','Tratamiento'), style = 'rmarkdown', prop = "r",
-                 useNA = "no", headings = FALSE)
+#ggsave(homoindex_het_opuesto, filename = "gender_het1_alltreats.pdf", path=fig.path, device = "pdf", height = 8, width = 6, dpi = 300)
 
-E4BHomo <-ctable(df$HomoIndex, df$E4Treat,dnn = c('Cámaras de Eco', 'Tratamiento'), style = 'rmarkdown', prop = "r",
-                 useNA = "no", headings = FALSE)
-E4BDigi <-ctable(df$DigitIndex, df$E4Treat, dnn = c('Ciudadanía Digital','Tratamiento'), style = 'rmarkdown', prop = "r",
-                 useNA = "no", headings = FALSE)
 
-tablaBlock <-list(E1BHomo,E1BDigi,E2BHomo,E2BDigi,E3BHomo,E3BDigi,E4BHomo,E4BDigi)
 
-#Save tables
 
-saveRDS(anexo, file="Results/Tables/Tabla-anexos.rds")
-saveRDS(TablaExperi, file = "Results/Tables/Tabla-resultados-experimentos.rds")
-saveRDS(TablaEmo, file = "Results/Tables/Tabla-emociones.rds")
-saveRDS(tablaBlock, file = "Results/Tables/tabla-bloques.rds")
+################## Efect de noticias afines e interacción con ecochambers
 
-#############################
+df.b<-df
+df.b$treat.het <- as.factor(df.b$E2Treat_Afin) #dummy tratment variable
 
+df.b$AgeRecod <- as.factor(df.b$AgeRecod)
+df.b$ideologia <- as.factor(df.b$ideologia)
+df.b$IncomeRecod <- as.factor(df.b$IncomeRecod)
+df.b$HomoIndex <- as.factor(df.b$HomoIndex)
 
 
+# Define model variables incl. outcome as column 1
+vars <- c("SC0n", "treat.het", "AgeRecod", "ideologia", "IncomeRecod",  "HomoIndex" )
+
+df.b <- df.b[,vars]
+df.b <- df.b[complete.cases(df.b),]
+
+# Separate outcome and training data
+y <- df.b$SC0n
+train <- df.b[,-1]
+
+# Gen. test data where those treated become untreated, for use in calculating ITT
+test <- train
+test$treat.het <- ifelse(test$treat.het == 1,0,ifelse(test$treat.het == 0,1,NA))
+
+# Run BART for predicted values of observed and synthetic observations
+bart.out <- bart(x.train = train, y.train = y, x.test = test)
+
+# Recover CATE estimates and format into dataframe
+# Logic: Take predictions for those actually treated and minus counterfactual
+#        Then take counterfactually treated and deduct prediction for those actually in control
+CATE <- c(bart.out$yhat.train.mean[train$treat.het == 1] - bart.out$yhat.test.mean[test$treat.het == 0],
+          bart.out$yhat.test.mean[test$treat.het == 1] - bart.out$yhat.train.mean[train$treat.het == 0])
+
+CATE_df <- data.frame(CATE = CATE)
+covars <- rbind(train[train$treat.het == 1,c(2:5)], test[test$treat.het==1,c(2:5)])
+
+CATE_df <- cbind(CATE_df,covars)
+CATE_df <- CATE_df[order(CATE_df$CATE),]
+CATE_df$id <- c(1:length(CATE))
+
+# Descriptive results reported in main text:
+mean(CATE_df$CATE)
+summary(CATE_df$CATE)
+
+# Proportion of CATEs that are negative:
+sum(CATE_df$CATE < 0)/nrow(CATE_df)
+sum(CATE_df$CATE < mean(CATE_df$CATE))/nrow(CATE_df)
+
+# Ecochamber - Homo prob below mean
+sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex =="1" )/sum(CATE_df$HomoIndex == "1")
+
+# Echochamber - Hetero prop. below mean
+sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex == "0" )/sum(CATE_df$HomoIndex =="0")
+
+
+# CATE Heterogeneity plot
+hist <- CATE_df
+
+effectsPlot <- ggplot(hist, aes(x=id, y = CATE)) +
+  geom_line() +
+  geom_hline(yintercept= 0, linetype="dashed", color="red") +
+  geom_hline(yintercept = mean(hist$CATE), color = "blue") +
+  labs(x="Individual",y = "CATE") +
+  theme_minimal() +
+  scale_x_continuous(limits = c(0,nrow(train)))
+#ggsave(effectsPlot, filename= "test.pdf")
+# Mode histogram 
+
+modePlot <- ggplot(hist, aes(x=id, fill=factor(HomoIndex))) +
+  geom_histogram(binwidth = 60,position="stack") +
+  theme(legend.position="bottom") +
+  labs(y = "Count", x = "Individual")+
+  scale_x_continuous(limits = c(0,nrow(train)))#+
+#scale_fill_discrete(name = "", labels = c("0", "Male"))
+#scale_fill_manual(name="Mode", values=colours) +
+# +
+#scale_x_continuous(limits = c(0,5220))
+
+# Combine all plots into one chart
+homoindex_het <- ggarrange(effectsPlot, modePlot,
+                           ncol = 1, nrow = 2, heights = c(2,2))
+
+homoindex_het
+#ggsave(homoindex_het_afin, filename = "gender_het1_alltreats.pdf", path=fig.path, device = "pdf", height = 8, width = 6, dpi = 300)
