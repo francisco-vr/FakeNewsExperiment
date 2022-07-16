@@ -95,40 +95,80 @@ summary(ol5<-polr(as.factor(SC0) ~ E2Treat+ IncomeRecod, data = df, Hess=TRUE))
 
 # create true headlines scores
 
-TmpTrue <-df%>%
+Tmp1 <-df%>%
   dplyr::select(E2TC_1, E2TC_9, E2TC_12, E2T1a_1, E2T1a_6, E2T1a_7, E2T1b_1, E2T1b_6, E2T1b_7, E2T1c_1, E2T1c_5, E2T1c_7,
                 E2T1d_1, E2T1d_5, E2T1d_7, E2T2a_1, E2T2a_6, E2T2a_7, E2T2b_1, E2T2b_6, E2T2b_7, E2T2b_11, E2T2b_12, E2T2c_1,
                 E2T2c_6, E2T2c_7)
 
-TmpTrue<-ifelse(TmpTrue==1, 1, 0)
 
+Tmp1<-ifelse(Tmp1==1, 1, 0)
+Tmp1 <-as.data.frame(Tmp1)
 
-as.data.frame(TmpTrue)
+Tmp1[is.na(Tmp1)] <- 0
+Tmp1$SumTrue <-rowSums(Tmp1)
 
-TmpTrue$SumTrue <-rowSums(TmpTrue)
-
-df$SumTrue<-TmpTrue$SumTrue
+df$SumTrue<-Tmp1$SumTrue
 
 table(df$SumTrue)
+rm(Tmp1)
 
 #Create false headlines scores
 
-TmpFalse <-df%>%
+Tmp2 <-df%>%
   dplyr::select(E2TC_2:E2TC_8, E2TC_10, E2TC_11, E2T1a_2:E2T1a_5, E2T1b_2:E2T1b_5, E2T1c_2:E2T1c_4, E2T1c_6, E2T1d_2:E2T1d_4,
                 E2T1d_6, E2T2a_2:E2T2a_5, E2T2b_2:E2T2b_5, E2T2b_8, E2T2b_9, E2T2b_10, E2T2c_2:E2T2c_5)
 
-TmpFalse<-ifelse(TmpFalse==1, 1, 0)
-TmpFalse<-as.data.frame(TmpFalse)
+Tmp2<-ifelse(Tmp2==1, 1, 0)
+Tmp2<-as.data.frame(Tmp2)
+
+Tmp2[is.na(Tmp2)] <- 0
+Tmp2$SumFalse<- rowSums(Tmp2)
+
+df$SumFalse<-Tmp2$SumFalse
+
+table(df$SumFalse)
+
+rm(Tmp2)
+
+
+
+
+tmp<-df[,c(paste0("E2TC_",2:8), "E2TC_10", "E2TC_11", paste0("E2T1a_", 2:5), paste0("E2T1b_", 2:5), paste0("E2T1c_", 2:4),
+           "E2T1b_6", paste0("E2T1d_", 2:4), "E2T1d_6",  paste0("E2T2a_",2:5), paste0("E2T2b_", 2:5), paste0("E2T2b_", 8:10),
+           paste0("E2T2c_",2:5))]
+
+
+tmp <- mutate_all(tmp, function(x) as.numeric(as.character(x)))
+
+tmp<-ifelse(tmp==1, 1, 0)
+tmp<-as.data.frame(tmp)
 
 tmp[is.na(tmp)] <- 0
 tmp$SumFalse<- rowSums(tmp)
 
 df$SumFalse<-tmp$SumFalse
+rm(tmp)
 
+# create true headlines scores
+
+tmp<-df[,c(paste0("E2TC_1"), paste0("E2TC_9"), paste0("E2TC_12"), paste0("E2T1a_1"), paste0("E2T1a_6"), paste0("E2T1a_7"),
+           "E2T1b_6", paste0("E2T1d_", 2:4), "E2T1d_6",  paste0("E2T2a_",2:5), paste0("E2T2b_", 2:5), paste0("E2T2b_", 8:10),
+           paste0("E2T2c_",2:5))]
+
+
+tmp <- mutate_all(tmp, function(x) as.numeric(as.character(x)))
+
+tmp<-ifelse(tmp==1, 1, 0)
+tmp<-as.data.frame(tmp)
+
+tmp[is.na(tmp)] <- 0
+tmp$SumFalse<- rowSums(tmp)
+
+max(tmp$SumFalse)
+
+tmp2 <-df[,c(paste0(E2TC_1),)]
 
 
 # E2TC_1,E2TC_9,E2TC_12,E2T1a_1,E2T1a_6,E2T1a_7,E2T1b_1,E2T1b_6,E2T1b_7,E2T1c_1,E2T1c_5,E2T1c_7,E2T1d_1.E2T1d_5.E2T1d_7,
 # E2T2a_1,E2T2a_6,E2T2a_7, E2T2b_1, E2T2b_6,E2T2b_7,E2T2b_11,E2T2b_12,E2T2c_1,E2T2c_1,E2T2c_6,E2T2c_7
-
-
 
