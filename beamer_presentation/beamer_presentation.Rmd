@@ -419,41 +419,90 @@ class: inverse, centre, middle
 class: center, middle
 
 
+```{r, echo=FALSE, fig.align='center', out.width="70%"}
 
-![](beamer_presentation_files/E2General.png)
+knitr::include_graphics("beamer_presentation_files/E2General.png")
 
----
-class: center, middle
+```
 
-
-
-![](beamer_presentation_files/E2RegBasic.png)
-
----
-class: center, middle
-
-
-![](beamer_presentation_files/E2Eco.png)
----
-
-![](beamer_presentation_files/E2RegHomo.png)
-
----
-class: center, middle
-
-![](beamer_presentation_files/E2Digit.png)
----
-class: center, middle
-
-
-![](beamer_presentation_files/E2RegDigit.png)
 
 
 ---
 class: center, middle
 
 
-![](beamer_presentation_files/Reg1Mix.png)
+```{r, echo=FALSE, fig.align='center', out.width="70%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegBasic.png")
+
+```
+
+
+---
+class: center, middle
+
+
+
+```{r, echo=FALSE, fig.align='center', out.width="80%"}
+
+knitr::include_graphics("beamer_presentation_files/E2Eco.png")
+
+```
+
+---
+class: center, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="80%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegHomo.png")
+
+```
+
+
+---
+class: center, middle
+
+
+```{r,echo=FALSE, fig.align='center', out.width="80%"}
+
+knitr::include_graphics("beamer_presentation_files/E2Digit.png")
+
+```
+
+
+---
+class: center, middle
+
+
+
+```{r,echo=FALSE, fig.align='center', out.width="80%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegDigit.png")
+
+```
+
+
+---
+class: center, middle
+
+
+```{r,echo=FALSE, fig.align='center', out.width="80%"}
+
+knitr::include_graphics("beamer_presentation_files/Reg1Mix.png")
+
+```
+
+---
+class: center, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="80%"}
+
+knitr::include_graphics("beamer_presentation_files/CATE_Eco.png")
+
+```
+
 
 
 ---
