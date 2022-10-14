@@ -25,6 +25,9 @@ E2general<-df%>%
   stat_compare_means(label.y = 10)
 E2general
 
+ggsave(E2general, filename = "beamer_presentation/beamer_presentation_files/Plot1General.png",
+       dpi = 400, width = 15, height = 9)
+
 
 E2homo <-ggplot(data = df, mapping = aes(x = E2Treat, y = SC0, fill = E2Treat)) +
   stat_boxplot(geom ='errorbar', width = 0.6) +

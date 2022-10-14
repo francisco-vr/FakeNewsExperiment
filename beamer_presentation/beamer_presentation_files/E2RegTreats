@@ -1,0 +1,38 @@
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: vie, oct 14, 2022 - 12:42:47
+\begin{table}[!htbp] \centering 
+  \caption{Success score distinguishing fake news from real news} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{1pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{Success score} \\ 
+\\[-1.8ex] & \textit{normal} & \textit{OLS} \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ Like-Minded & $-$0.456$^{***}$ & $-$0.456$^{***}$ \\ 
+  & (0.124) & (0.124) \\ 
+  & & \\ 
+ Opposite & 0.197 & 0.197 \\ 
+  & (0.126) & (0.126) \\ 
+  & & \\ 
+ Constant & 3.942$^{***}$ & 3.942$^{***}$ \\ 
+  & (0.089) & (0.089) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 690 & 690 \\ 
+R$^{2}$ &  & 0.041 \\ 
+Adjusted R$^{2}$ &  & 0.038 \\ 
+Log Likelihood & $-$1,178.278 &  \\ 
+Akaike Inf. Crit. & 2,362.556 &  \\ 
+Residual Std. Error &  & 1.336 (df = 687) \\ 
+F Statistic &  & 14.790$^{***}$ (df = 2; 687) \\ 
+\hline 
+\hline \\[-1.8ex] 
+Significasnce levels & \multicolumn{2}{r}{$^{*}$p$<$0.05; $^{**}$p$<$0.01; $^{***}$p$<$0.001} \\ 
+ & \multicolumn{2}{r}{Base variables: Control Group} \\ 
+\end{tabular} 
+\end{table} 

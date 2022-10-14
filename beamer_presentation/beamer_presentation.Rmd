@@ -419,7 +419,42 @@ class: inverse, centre, middle
 class: center, middle
 
 
-![](beamer_presentation_files/Plot1General.png)
+
+![](beamer_presentation_files/E2General.png)
+
+---
+class: center, middle
+
+poner tabla de regresión
+
+
+![](beamer_presentation_files/E2RegBasic.png)
+
+---
+class: center, middle
+
+
+![](beamer_presentation_files/E2Eco.png)
+---
+Tabla de regresión con eco chambers
+
+---
+class: center, middle
+
+![](beamer_presentation_files/E2Digit.png)
+---
+class: center, middle
+
+
+tabla de regresión con ciudadanía digital
+
+
+---
+class: center, middle
+
+
+tabla de regresión con tratamientos más variables balanceadas juntas
+
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
