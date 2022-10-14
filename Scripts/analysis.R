@@ -81,9 +81,9 @@ Reg1NoBal <-stargazer::stargazer(MLModel4, PoModel4, MLModel5, PoModel5, MLModel
 
 ## transform html beamer to pdf 
 
-#library(renderthis)
+library(renderthis)
 
-#to_pdf("beamer_presentation/beamer_presentation.Rmd")
+to_pdf("beamer_presentation/beamer_presentation.Rmd")
 
 
 

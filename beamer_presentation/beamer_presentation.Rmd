@@ -73,6 +73,7 @@ knitr::include_graphics("beamer_presentation_files/logo_usach.png")
 ```
 
 
+
 ---
 class: left, middle
 
@@ -87,24 +88,24 @@ knitr::include_graphics("beamer_presentation_files/media_literacy.png")
 ]
 
 .pull-right[
+
 <div style="text-align: justify">
-Growing evidence suggests the existence of fake news is problematic (Sunstein, 2009; Lazer et.al, 2018), polarizing (Osmundsen et. al., 2021) and erodes democracy (Lance & Livingston, 2018. Partisanship increase from this years and Eco chambers participans and digital activist promotes this.
+Growing evidence suggests the existence of fake news is problematic (Sunstein, 2014; Lazer et.al, 2018), polarizing (Spohr, 2019; Osmundsen et. al., 2021) and erodes democracy (Lance & Livingston, 2018). Partisanship increase from this years and Eco chambers participants and digital activist promotes it.
 </div>
 
+<br>
+
+<div style="text-align: justify">
+Are echo chambers and group polarization causing problems in processing information to participate in discussion in the public space?
+</div>
+
+<br>
+
+This leads us to analyze how people and their partisanship interpret the information circulating in social media.
+
+
+
 ]
-
----
-background-image: url(beamer_presentation_files/logo_usach.png)
-background-size: 110px
-background-position: 97% 2%
-class: center, middle
-
-### Main Question
-
---
-#### How partisanship affects when we have to distinguishing fake news from real news?
-
-#### How does membership in echo chambers and digital citizenship affect this phenomenon?
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
@@ -113,6 +114,44 @@ background-position: 97% 2%
 class: left, middle
 
 ### First theories conducting this research
+
+
+.pull-left[
+
+![](beamer_presentation_files/boutyline.png)
+![](beamer_presentation_files/ackland.png)
+
+
+]
+
+
+.pull-right[
+
+- More political homophilia, more reinforcement in the group's opinions.
+
+- in Homophilic networks: "At the same time, political homophily may also insulate individuals from exposure to false or offensive information" (2)
+
+- Homophily makes you "lose perspective" of politically opposing information.
+
+]
+
+
+---
+class: inverse, centre, middle
+
+
+## But ...
+
+
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: left, middle
+
+### But fake news evidence said the opposite (although ambiguously)
+
 
 <div style="text-align: justify">
 
@@ -136,40 +175,7 @@ class: left, middle
 ![](beamer_presentation_files/rand2.png)
 
 ]
----
-class: inverse, centre, middle
 
-
-## But ...
-
-
-
----
-background-image: url(beamer_presentation_files/logo_usach.png)
-background-size: 110px
-background-position: 97% 2%
-class: left, middle
-
-### Another theories about homophily and political attitudes
-
-.pull-left[
-
-![](beamer_presentation_files/boutyline.png)
-![](beamer_presentation_files/ackland.png)
-
-
-]
-
-
-.pull-right[
-
-- More political homophilia, more reinforcement in the group's opinions.
-
-- in Homophilic networks: "At the same time, political homophily may also insulate individuals from exposure to false or offensive information" (2)
-
-- Homophily makes you "lose perspective" of politically opposing information.
-
-]
 ---
 class: inverse, centre, middle
 
@@ -178,8 +184,21 @@ class: inverse, centre, middle
 
 --
 
-####Using the methodologies to the first group we try to test the second group hypothesis
+####Using the methodologies to the second group we try to test the first group hypothesis
 
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: center, middle
+
+### Main Question
+
+--
+#### How partisanship affects when we have to distinguishing fake news from real news?
+
+#### How does membership in echo chambers and digital citizenship affect this phenomenon?
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
@@ -246,7 +265,7 @@ class: left, top
 
 ## Hypothesis, we expect:
 
-Following the political homophilly effects:
+Following the political homophily effects (Wollebaek et.al, 2019; Boutyline & Willer, 2017; Ackland & Shorish, 2014)
 #### <div style="text-align: justify"> 1) respondents will be less likely to accurately categorize fake and real news when asked to review news headlines with taking points associated with parties that oppose their political self-placement.
 </div>
 
@@ -286,13 +305,17 @@ Block randomization with Eco Chamber membership and levels of digital citizenshi
 
 **Experimental survey**
 
+<div style="text-align: justify">
 Socio-demographic characterization: Age range, gender, income, educational level, political ideology ("Left wing", "Right wing", "Center", "without ideology") + Fake news experiment
+<div>
 
 --
  
 **Analysis**
 
- Differences between averages by treatment, *Kruskall-Walis* and *Wilcoxon test*. And Regression models (balanced and unbalanced) with *Maximun Likehood* estimation
+<div style="text-align: justify">
+Differences between averages by treatment, *Kruskall-Walis* and *Wilcoxon test*. And Regression models (balanced and unbalanced) with *Maximun Likehood* estimation
+<div> 
  
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
@@ -307,11 +330,11 @@ background-position: 97% 2%
 
 --
 
->We will show you below 7 different headlines that are circulating in Social Media, some of which are true and others false. You will have to indicate if they are true or false.
+>_We will show you below 7 different headlines that are circulating in Social Media, some of which are true and others false. You will have to indicate if they are true or false._
 
->(At the end of this survey you will be shown your results).
+>_(At the end of this survey you will be shown your results).
 
->How do you classify them?
+>_How do you classify them?_
 
 --
 
@@ -397,7 +420,6 @@ class: center, middle
 
 
 ![](beamer_presentation_files/Plot1General.png)
-
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
