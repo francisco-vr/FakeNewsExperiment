@@ -425,7 +425,6 @@ class: center, middle
 ---
 class: center, middle
 
-poner tabla de regresión
 
 
 ![](beamer_presentation_files/E2RegBasic.png)
@@ -454,7 +453,7 @@ class: center, middle
 class: center, middle
 
 
-tabla de regresión con tratamientos más variables balanceadas juntas
+![](beamer_presentation_files/Reg1Mix.png)
 
 
 ---

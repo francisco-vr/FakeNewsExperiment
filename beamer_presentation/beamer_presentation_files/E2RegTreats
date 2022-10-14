@@ -1,6 +1,6 @@
 
 % Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
-% Date and time: vie, oct 14, 2022 - 13:51:20
+% Date and time: vie, oct 14, 2022 - 14:19:18
 \begin{table}[!htbp] \centering 
   \caption{Success score distinguishing fake news from real news} 
   \label{} 
@@ -13,29 +13,32 @@
 \\[-1.8ex] & \textit{normal} & \textit{OLS} \\ 
 \\[-1.8ex] & (1) & (2)\\ 
 \hline \\[-1.8ex] 
- Like-Minded & $-$0.458$^{***}$ & $-$0.458$^{***}$ \\ 
+ Like-Minded & $-$0.457$^{***}$ & $-$0.457$^{***}$ \\ 
   & (0.124) & (0.124) \\ 
   & & \\ 
- Opposite & 0.193 & 0.193 \\ 
+ Opposite & 0.196 & 0.196 \\ 
   & (0.127) & (0.127) \\ 
   & & \\ 
- High Digital Citizenship & $-$0.071 & $-$0.071 \\ 
-  & (0.106) & (0.106) \\ 
+ High Eco Chamber & 0.045 & 0.045 \\ 
+  & (0.108) & (0.108) \\ 
   & & \\ 
- Constant & 3.989$^{***}$ & 3.989$^{***}$ \\ 
-  & (0.114) & (0.114) \\ 
+ High Digital Citizenship & $-$0.085 & $-$0.085 \\ 
+  & (0.112) & (0.112) \\ 
+  & & \\ 
+ Constant & 3.975$^{***}$ & 3.975$^{***}$ \\ 
+  & (0.119) & (0.119) \\ 
   & & \\ 
 \hline \\[-1.8ex] 
 Observations & 690 & 690 \\ 
 R$^{2}$ &  & 0.042 \\ 
-Adjusted R$^{2}$ &  & 0.038 \\ 
-Log Likelihood & $-$1,178.055 &  \\ 
-Akaike Inf. Crit. & 2,364.110 &  \\ 
-Residual Std. Error &  & 1.336 (df = 686) \\ 
-F Statistic &  & 10.000$^{***}$ (df = 3; 686) \\ 
+Adjusted R$^{2}$ &  & 0.037 \\ 
+Log Likelihood & $-$1,177.968 &  \\ 
+Akaike Inf. Crit. & 2,365.936 &  \\ 
+Residual Std. Error &  & 1.337 (df = 685) \\ 
+F Statistic &  & 7.534$^{***}$ (df = 4; 685) \\ 
 \hline 
 \hline \\[-1.8ex] 
 Significance levels & \multicolumn{2}{r}{$^{*}$p$<$0.05; $^{**}$p$<$0.01; $^{***}$p$<$0.001} \\ 
- & \multicolumn{2}{r}{Base variables: Control Group, and Low Digital Citizenship} \\ 
+ & \multicolumn{2}{r}{Base variables: Control Group, Low Eco Chamber and Low Digital Citizenship} \\ 
 \end{tabular} 
 \end{table} 
