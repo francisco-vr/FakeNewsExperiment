@@ -436,7 +436,8 @@ class: center, middle
 
 ![](beamer_presentation_files/E2Eco.png)
 ---
-Tabla de regresión con eco chambers
+
+![](beamer_presentation_files/E2RegHomo.png)
 
 ---
 class: center, middle
@@ -446,7 +447,7 @@ class: center, middle
 class: center, middle
 
 
-tabla de regresión con ciudadanía digital
+![](beamer_presentation_files/E2RegDigit.png)
 
 
 ---
