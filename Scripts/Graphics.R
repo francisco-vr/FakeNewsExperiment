@@ -16,7 +16,7 @@ E2general<-df%>%
   scale_fill_manual(values = wes_palette(n=3, name="Darjeeling1"), guide = "none") +
   stat_summary(fun=mean, geom="point") +
   stat_summary(aes(label= round(..y.., 2)), fun=mean, geom="text", size=7, vjust = -2) +
-  labs(title = "Accuracy scores of news headlines",
+  labs(title = "Accuracy scores of news headlines \n General results",
        x = "Treatment", y = "Score (max 7)",
        caption = "NS = No Statistical significance; * ≤.05; ** ≤.01; *** ≤.001") +
   theme(plot.title = element_text(hjust = .5, size = 16, face = "bold"),

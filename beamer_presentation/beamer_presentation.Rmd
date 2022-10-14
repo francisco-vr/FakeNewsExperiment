@@ -12,13 +12,9 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-      countdown: 60000
     seal: false
 ---
-class:left, top, .bg_karl
-background-image: url(https://blog.ida.cl/wp-content/uploads/sites/5/2020/11/ida-twitterFakenews-blog.png)
-background-size: 1350px
-background-position: 1% 20%
+class:center, top, bg_karl
 
 
 ```{r setup, include=FALSE}
@@ -54,39 +50,141 @@ pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, 
       right: 0px;
       bottom: 0px;
       left: 0px;
-      opacity: 0.5;
+      opacity: 0.15;
       z-index: -1;
 }
 ```
 
-## Belief in fake news. Echo chambers and digital citizenship Effects identifying fake news.
+### Trust in my Fake News, Scepticism about yours: Experimental Evidence on how Ideological Congruence and Echo Chambers alter Beliefs in Fake News
+
+<br>
+<br>
+
 #### Francisco Villarroel (UDD/USACH, Chile) 
 #### Denise Laroze (USACH, Chile)
 
+
+<br>
+<br>
+<br>
+```{r,echo=FALSE, fig.align='center', out.width="25%"}
+
+knitr::include_graphics("beamer_presentation_files/logo_usach.png")
+```
+
+
 ---
-class: left, botton
+class: left, middle
 
-![](beamer_presentation_files/social_proces.png)
 
-Several social and political process in Chile and Social media are central. Partisanship increase from this years and Eco chambers participans and digital activist promotes this.
+.pull-left[
+```{r, echo=FALSE, out.width="120%", fig.align='left'}
 
+knitr::include_graphics("beamer_presentation_files/media_literacy.png")
+
+```
+
+]
+
+.pull-right[
+<div style="text-align: justify">
+Growing evidence suggests the existence of fake news is problematic (Sunstein, 2009; Lazer et.al, 2018), polarizing (Osmundsen et. al., 2021) and erodes democracy (Lance & Livingston, 2018. Partisanship increase from this years and Eco chambers participans and digital activist promotes this.
+</div>
+
+]
 
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 ### Main Question
 
 --
-#### How does membership in echo chambers and digital citizenship increases our partisanship when we have to distinguishing fake news from real news?
+#### How partisanship affects when we have to distinguishing fake news from real news?
+
+#### How does membership in echo chambers and digital citizenship affect this phenomenon?
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: left, middle
+
+### First theories conducting this research
+
+<div style="text-align: justify">
+
+.pull-left[
+
+- First research we visited was that it was more cognitive laziness than ideological biases.
+
+- Using a simple but robust method, they measure the level of belief in fake news by modulating the response times and self-reflection capacity of the classification.
+
+- Other studies have shown other attributes such as not believing in science as relevant factors for believing in fake news.
+
+]
+
+</div>
+
+
+
+.pull-right[
+
+![](beamer_presentation_files/rand.png)
+![](beamer_presentation_files/rand2.png)
+
+]
+---
+class: inverse, centre, middle
+
+
+## But ...
+
 
 
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: left, middle
+
+### Another theories about homophily and political attitudes
+
+.pull-left[
+
+![](beamer_presentation_files/boutyline.png)
+![](beamer_presentation_files/ackland.png)
+
+
+]
+
+
+.pull-right[
+
+- More political homophilia, more reinforcement in the group's opinions.
+
+- in Homophilic networks: "At the same time, political homophily may also insulate individuals from exposure to false or offensive information" (2)
+
+- Homophily makes you "lose perspective" of politically opposing information.
+
+]
+---
+class: inverse, centre, middle
+
+
+## So...
+
+--
+
+####Using the methodologies to the first group we try to test the second group hypothesis
+
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: left, middle
 
 .pull-left[
@@ -95,9 +193,12 @@ class: left, middle
 
 ]
 
+--
+
+<div style="text-align: justify">
+
 .pull-right[
 
---
 
 - Friendship and resource network made up of like-minded people. Includes political homophily, social identity and confirmation bias (Boutyline et.al, 2017; Wollebæk et. al, 2019). Often produces by algorythms (Pariser, 2011)
 
@@ -105,56 +206,68 @@ class: left, middle
 - Type of political participation in digital platforms. includes technological skills, valuation of collective action in digital media and participation in them (Choi, M, 2016; Choi et.al, 2018; Chadwick, 2013; Castells, 2009). 
 ]
 
+</div>
+
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: left, middle
 
 .pull-left[
 
-## ¿What do we know about the relationship beetween echo chambers and misinformation?
+## ¿What do we know about the relationship between echo chambers and misinformation?
 
 ]
 
 --
 
+<div style="text-align: justify">
+
 .pull-right[
 
-- **Information bias**: endemic consumption of information that is politically similar to one's own thinking and the distancing, rejection or impossibility of consuming information of different political thinking. (Currarini & Mengel, 2016; Halbestam & Knight, 2016)
+- **Information bias**: Endemic consumption of information that is politically similar to one's own thinking and the distancing, rejection or impossibility of consuming information of different political thinking. (Currarini & Mengel, 2016; Halbestam & Knight, 2016)
 
 
-- **Spread of Misinformation**: those who belong to echo chambers spread information faster, generate rumors and reach audiences that do not directly exceed those rumors (Choi et. al. 2020)
+- **Spread of Misinformation**: Those who belong to echo chambers spread information faster, generate rumors and reach audiences that do not directly access those rumors (Choi et. al. 2020)
 
 ]
 
+</div>
+
 
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: left, top
 
 
 
-## Hypothesis
+## Hypothesis, we expect:
 
 
-#### 1)There will be less accuracy in rating fake and real news  in "Opposite political view" experimental condition in comparison with "like-minded" experimental condition and control group.
+
+#### <div style="text-align: justify"> 1) respondents will be less likely to accurately categorize fake and real news when asked to review news headlines with taking points associated with parties that oppose their political self-placement.
+</div>
+
 
 --
 
-##### 1.a)Those who have a high level of echo chamber membership will not exhibit greater differences in the headline hit rate between like-minded and contrarian thinking, compared to the control group.
 
+
+##### <div style="text-align: justify">1.a) no differences in accuracy across respondents with high and low levels of echo chamber membership </div>
 
 --
 
-##### 1.b)Those with higher levels of digital citizenship will have greater accuracy in rating false and true headlines in all conditions
+
+##### <div style="text-align: justify"> 1.b) respondents with higher levels of digital citizenship will be more likely to accurately categorize fake and real news than citizen with low levels of digital citizenship </div>
+
 
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class:left, middle
 
 # Methods
@@ -182,25 +295,32 @@ Socio-demographic characterization: Age range, gender, income, educational level
 **Analysis**
 
  Differences between averages by treatment, *Kruskall-Walis* and *Wilcoxon test*. And Regression models (balanced and unbalanced) with *Maximun Likehood* estimation
+ 
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
-class:left, top
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 
 ## Experimental task
 
 --
 
-
 - Every participant received 7 headlines and we ask to evaluate if they're true or false
 
 --
 
-- if they're correct, them scoring 1. if there's incorrect, they scores zero.
+>We will show you below 7 different headlines that are circulating in Social Media, some of which are true and others false. You will have to indicate if they are true or false.
+
+>(At the end of this survey you will be shown your results).
+
+>How do you classify them?
+
+--
+
+- if they're correct, them scoring 1. if there's incorrect, them scores zero.
 
 
-- Maximun score of 7 and minimum is zero. 
+- Maximun score is 7 and minimum is zero. 
 
 --
 
@@ -210,22 +330,75 @@ class:left, top
 
 - Two pre-test to evaluate the headline's relevance and difficulty
 
----
-class: center, middle
-background-image: url(beamer_presentation_files/treatments_table.png)
-background-size: contain
 
 ---
-background-image: url(beamer_presentation_files/Plot1.png)
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: left, Top
+
+## Eco Chamber membership Scale
+
+- Using a recent validated scale<sup>*</sup> about reinforcement opinion in social media
+
+- 7 items with 1 to 10 range por each item (total Range: 7 to 70)
+
+- Low Eco Chamber Membership: 7 to 39
+- High Ecochamber Membership: 40 to 70
+
+.footnote[[*] Kaakinen, M., Sirola, A., Savolainen, I., & Oksanen, A. (2020). Shared identity and shared
+information in social media: Development and validation of the identity bubble
+reinforcement scale. Media Psychology, 23(1).]
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: left, Top
+
+## Digital Citizenship scale
+
+- Using a Scale development by Choi<sup>*</sup> and reduced since 34 items to 14.
+
+- Each item are with a 7 point scale (1 to 7). Total range: 14 to 98
+
+- Low levels of digital citizenship: 14 to 62
+- High levels of Digital citizenship: 63 to 98
+
+.footnote[[*] Choi, M., Glassman, M., & Cristol, D. (2017). What it means to be a citizen in the internet age:
+Development of a reliable and valid digital citizenship scale. Computers & Education, 107,
+100-112.]
+
+---
+class: center, middle
+background-image: url()
+
+
+### Creating treatments
+
+![](beamer_presentation_files/treatments_table.png)
+
+
+---
+class: center, top
+
+
+### Headlines examples
+
+
+![](beamer_presentation_files/headline_sets.png)
+
+---
+background-image: url(beamer_presentation_files/Plot1General.png)
 background-size: contain
 background-position: 50% 50%
 class: center, middle
 
 
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class:left, top
 
 ## Discussion
@@ -237,9 +410,9 @@ class:left, top
 - Researchers who had not considered this concept come to the same finding (eg. Allen et.al, 2021; Pennycook & Rand, 2019), and so do we.
 
 ---
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class:left, middle
 
 - This is the first step to understand the trench warfare that has been taking place in Chile since the social mobilizations of October 2019. Biased information indicates limited deliberation and increased intolerance.
@@ -290,9 +463,9 @@ background-position: 50% 50%
 class: middle, center
 
 ---
-background-image: url(beamer_presentation/beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: left, Top
 
 ## Some Insights about non-balances regression
@@ -303,43 +476,6 @@ class: left, Top
 
 - There's no evidence of variations in political ideology and educational levels
 
----
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
-class: left, Top
-
-## Eco Chamber membership Scale
-
-- Using a recent validated scale<sup>*</sup> about reinforcement opinion in social media
-
-- 7 items with 1 to 10 range por each item (total Range: 7 to 70)
-
-- Low Eco Chamber Membership: 7 to 39
-- High Ecochamber Membership: 40 to 70
-
-.footnote[[*] Kaakinen, M., Sirola, A., Savolainen, I., & Oksanen, A. (2020). Shared identity and shared
-information in social media: Development and validation of the identity bubble
-reinforcement scale. Media Psychology, 23(1).]
-
----
-background-image: url(beamer_presentation_files/logo-dark-small.png)
-background-size: 40px
-background-position: 95% 8%
-class: left, Top
-
-## Digital Citizenship scale
-
-- Using a Scale development by Choi<sup>*</sup> and reduced since 34 items to 14.
-
-- Each item are with a 7 point scale (1 to 7). Total range: 14 to 98
-
-- Low levels of digital citizenship: 14 to 62
-- High levels of Digital citizenship: 63 to 98
-
-.footnote[[*] Choi, M., Glassman, M., & Cristol, D. (2017). What it means to be a citizen in the internet age:
-Development of a reliable and valid digital citizenship scale. Computers & Education, 107,
-100-112.]
 ---
 
 **References:**
@@ -378,12 +514,6 @@ class: left, top
 
 - Wollebæk, D., Karlsen, R., Steen-Johnsen, K., & Enjolras, B. (2019). Anger, Fear, and Echo
 Chambers: The Emotional Basis for Online Behavior. Social Media + Society, 5(2).
-
----
-background-image: url(beamer_presentation_files/headline_sets.png)
-background-size: contain
-background-position: 50% 50%
-class: top, center
 
 ---
 background-image: url(https://raw.githubusercontent.com/francisco-vr/Homophily-and-Political-behaviour/main/Results/Tables/sample-descriptives.jpg)
