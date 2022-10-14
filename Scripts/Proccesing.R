@@ -61,6 +61,13 @@ table(df$SumFalse)
 
 rm(Tmp2)
 
+#Create covid variables
+
+A <-df%>%
+  dplyr::mutate(Cov1 = ifelse(E2TC_1 == 2 | E2T1a_1 == 2 | E2T1b_1 == 2 | E2T1c_1 == 2 | E2T1d_1 == 2 | E2T2a_1 == 2 | E2T2b_1 == 2 | E2T2c_1 == 2, 1,
+                              ifelse(E2TC_1 == 1 | E2T1a_1 == 1 | E2T1b_1 == 1 | E2T1c_1 == 1 | E2T1d_1 == 1 | E2T2a_1 == 1 | E2T2b_1 == 1 | E2T2c_1 == 1,0,NA)))
+
+table(A$Cov1)
 
 # make some dummies for regression tables
 
