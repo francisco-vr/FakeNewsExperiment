@@ -272,7 +272,7 @@ Following the political homophily effects (Wollebaek et.al, 2019; Boutyline & Wi
 
 --
 
-According to the literature on the effects of echo chambers
+According to the same literature:
 ##### <div style="text-align: justify">1.a) no differences in accuracy across respondents with high and low levels of echo chamber membership </div>
 
 --
@@ -332,7 +332,7 @@ background-position: 97% 2%
 
 >_We will show you below 7 different headlines that are circulating in Social Media, some of which are true and others false. You will have to indicate if they are true or false._
 
->_(At the end of this survey you will be shown your results).
+>_(At the end of this survey you will be shown your results)._
 
 >_How do you classify them?_
 
