@@ -391,8 +391,11 @@ Development of a reliable and valid digital citizenship scale. Computers & Educa
 100-112.]
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
-background-image: url()
+
 
 
 ### Creating treatments
@@ -401,6 +404,9 @@ background-image: url()
 
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, top
 
 
@@ -409,6 +415,9 @@ class: center, top
 
 ![](beamer_presentation_files/headline_sets.png)
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: inverse, centre, middle
 
 
@@ -416,10 +425,13 @@ class: inverse, centre, middle
 
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
-```{r, echo=FALSE, fig.align='center', out.width="70%"}
+```{r, echo=FALSE, fig.align='center', out.width="75%"}
 
 knitr::include_graphics("beamer_presentation_files/E2General.png")
 
@@ -428,6 +440,9 @@ knitr::include_graphics("beamer_presentation_files/E2General.png")
 
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
@@ -439,17 +454,23 @@ knitr::include_graphics("beamer_presentation_files/E2RegBasic.png")
 
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
 
-```{r, echo=FALSE, fig.align='center', out.width="80%"}
+```{r, echo=FALSE, fig.align='center', out.width="100%"}
 
 knitr::include_graphics("beamer_presentation_files/E2Eco.png")
 
 ```
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
@@ -461,10 +482,13 @@ knitr::include_graphics("beamer_presentation_files/E2RegHomo.png")
 
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
-```{r,echo=FALSE, fig.align='center', out.width="80%"}
+```{r,echo=FALSE, fig.align='center', out.width="100%"}
 
 knitr::include_graphics("beamer_presentation_files/E2Digit.png")
 
@@ -472,6 +496,9 @@ knitr::include_graphics("beamer_presentation_files/E2Digit.png")
 
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
@@ -484,6 +511,9 @@ knitr::include_graphics("beamer_presentation_files/E2RegDigit.png")
 
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
@@ -494,6 +524,9 @@ knitr::include_graphics("beamer_presentation_files/Reg1Mix.png")
 ```
 
 ---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
 class: center, middle
 
 
@@ -503,7 +536,88 @@ knitr::include_graphics("beamer_presentation_files/CATE_Eco.png")
 
 ```
 
+---
+class: inverse, centre, middle
 
+
+## There's any difference distinguishing true or false headlines?
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="70%"}
+
+knitr::include_graphics("beamer_presentation_files/E2GeneralTRUE.png")
+
+```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="110%"}
+
+knitr::include_graphics("beamer_presentation_files/E2EcoTRUE.png")
+
+```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="110%"}
+
+knitr::include_graphics("beamer_presentation_files/E2DigitTRUE.png")
+
+```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="90%"}
+
+knitr::include_graphics("beamer_presentation_files/E2GeneralFALSE.png")
+
+```
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="110%"}
+
+knitr::include_graphics("beamer_presentation_files/E2EcoFALSE.png")
+
+```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="110%"}
+
+knitr::include_graphics("beamer_presentation_files/E2DigitFALSE.png")
+
+```
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)

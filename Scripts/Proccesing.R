@@ -22,7 +22,7 @@ ipak(packages)
 
 # READ DF
 
-df <-readRDS("Data/FNDF.RDS")
+df <-readRDS("Data/DFNEW.RDS")
 
 # create true headlines scores
 
@@ -32,7 +32,7 @@ Tmp1 <-df%>%
                 E2T2c_6, E2T2c_7)
 
 
-Tmp1<-ifelse(Tmp1==1, 1, 0)
+Tmp1<-ifelse(Tmp1==2, 1, 0)
 Tmp1 <-as.data.frame(Tmp1)
 
 Tmp1[is.na(Tmp1)] <- 0
@@ -41,6 +41,7 @@ Tmp1$SumTrue <-rowSums(Tmp1)
 df$SumTrue<-Tmp1$SumTrue
 
 table(df$SumTrue)
+
 rm(Tmp1)
 
 #Create false headlines scores
@@ -49,7 +50,7 @@ Tmp2 <-df%>%
   dplyr::select(E2TC_2:E2TC_8, E2TC_10, E2TC_11, E2T1a_2:E2T1a_5, E2T1b_2:E2T1b_5, E2T1c_2:E2T1c_4, E2T1c_6, E2T1d_2:E2T1d_4,
                 E2T1d_6, E2T2a_2:E2T2a_5, E2T2b_2:E2T2b_5, E2T2b_8, E2T2b_9, E2T2b_10, E2T2c_2:E2T2c_5)
 
-Tmp2<-ifelse(Tmp2==1, 1, 0)
+Tmp2<-ifelse(Tmp2==2, 1, 0)
 Tmp2<-as.data.frame(Tmp2)
 
 Tmp2[is.na(Tmp2)] <- 0
@@ -64,10 +65,14 @@ rm(Tmp2)
 #Create covid variables
 
 A <-df%>%
-  dplyr::mutate(Cov1 = ifelse(E2TC_1 == 2 | E2T1a_1 == 2 | E2T1b_1 == 2 | E2T1c_1 == 2 | E2T1d_1 == 2 | E2T2a_1 == 2 | E2T2b_1 == 2 | E2T2c_1 == 2, 1,
-                              ifelse(E2TC_1 == 1 | E2T1a_1 == 1 | E2T1b_1 == 1 | E2T1c_1 == 1 | E2T1d_1 == 1 | E2T2a_1 == 1 | E2T2b_1 == 1 | E2T2c_1 == 1,0,NA)))
+  dplyr::mutate(Cov1 = ifelse(E2TC_1==2 | E2T1a_1==2 | E2T1b_1==2 | E2T1c_1==2 | E2T1d_1==2 | E2T2a_1==2 |
+                                E2T2b_1==2 | E2T2c_1==2, 1,
+                              ifelse(E2TC_1==1 | E2T1a_1==1 | E2T1b_1==1 | E2T1c_1==1 | E2T1d_1==1 | E2T2a_1==1 |
+                                       E2T2b_1==1 | E2T2c_1==1, 0,NA)))
 
 table(A$Cov1)
+
+table(df$E2T1a_1)
 
 # make some dummies for regression tables
 
@@ -81,7 +86,7 @@ df <-fastDummies::dummy_cols(df, select_columns = 'ideologia')
 df <-fastDummies::dummy_cols(df, select_columns = 'NivEco')
 df <-dplyr::select(df, -Age_1, -Educ_1, -E2Treat_Control, -ideologia_centro, -NivEco_1)
 
-# explote echo chambers membership by ideology
 
-datasummary_crosstab(HomoIndex*ideologia ~ AgeRecod, data = df)
+df <-saveRDS(df, file = "Data/DFNEW.RDS")
+
 
