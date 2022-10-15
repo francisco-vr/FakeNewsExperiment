@@ -4,20 +4,227 @@
 
 df$SC0 <-as.numeric(df$SC0)
 
-MLModel1 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto, data = df)
-MLModel2 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex, data = df)
-MLModel3 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex, data = df)
-MLModel4 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex, data = df)
-MLModel5 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum, data = df)
-MLModel6 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
-MLModel7 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
-               + Educ_3 + Educ_4 + Educ_5, data = df)
-MLModel8 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
-               + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno,
-               data = df)
+MLModel1 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
+MLModelHomo <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+MLModelDigit <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                     NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+
+
+
 MLModel9 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
                + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno
                + NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+#OLS Estimation
+
+LiModel1 <-lm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
+
+LiModelHomo <-lm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                   NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+LiModelDigit <-lm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+
+#General table
+
+stargazer::stargazer(MLModel1, LiModel1,
+                     title = "Success score distinguishing fake news from real news",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
+                                          "Female", "30 to 40 years", "41 to 65 years",
+                                          "66+ years", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneral.html")
+
+# with Eco Chamber 
+
+stargazer::stargazer(MLModelHomo, LiModelHomo,
+                     title = "Success score distinguishing fake news from real news",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
+                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+                                          "Mid-High Income", "Highest Income", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegHomo.html")
+
+
+# With digital citizenship
+
+stargazer::stargazer(MLModelDigit, LiModelDigit,
+                     title = "Success score distinguishing fake news from real news",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Digital Citizenship", "Female", "30 to 40 years",
+                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+                                          "Mid-High Income", "Highest Income", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, Low citizenship,", "18 to 29 years, lowest income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegDigit.html")
+
+
+
+########################################
+## true or false headlines regression###
+########################################
+
+df <-readRDS("Data/DFNEW.RDS")
+
+### TRUE HEADLINES ### 
+
+#Maximum likehood 
+df$SumTrue <-as.numeric(df$SumTrue)
+
+MLModel1TRUE <-glm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                     NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+MLModelHomoTRUE <-glm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+MLModelDigitTRUE <-glm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                     NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+
+#OLS
+LiModel1TRUE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                       NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+LiModelHomoTRUE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                   NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+LiModelDigitTRUE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+## Regression
+
+#General table
+
+stargazer::stargazer(MLModel1TRUE, LiModel1TRUE,
+                     title = "Success score distinguishing True headlines",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
+                                          "Female", "30 to 40 years", "41 to 65 years",
+                                          "66+ years", "Low income", "Low - Mid Income", 
+                                          "Mid-High Income", "Highest Income", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneralTRUE.html")
+
+# with Eco Chamber 
+
+stargazer::stargazer(MLModelHomoTRUE, LiModelHomoTRUE,
+                     title = "Success score distinguishing true headlines",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
+                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+                                          "Mid-High Income", "Highest Income", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegHomoTRUE.html")
+
+
+# With digital citizenship
+
+stargazer::stargazer(MLModelDigit, LiModelDigit,
+                     title = "Success score distinguishing true headlines",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Digital Citizenship", "Female", "30 to 40 years",
+                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+                                          "Mid-High Income", "Highest Income", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, Low citizenship,", "18 to 29 years, lowest income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegDigitTRUE.html")
+
+### FALSE HEADLINES ### 
+
+#Maximum likehood 
+df$SumFalse <-as.numeric(df$SumFalse)
+
+MLModel1FALSE <-glm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
+MLModelHomoFALSE <-glm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                        NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+MLModelDigitFALSE <-glm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                         NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+
+#OLS
+
+LiModel1FALSE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
+
+LiModelHomoFALSE <-lm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                       NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+LiModelDigitFALSE <-lm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
+                        NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+
+## Regression
+
+#General table
+
+stargazer::stargazer(MLModel1FALSE, LiModel1FALSE,
+                     title = "Success score distinguishing false headlines",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
+                                          "Female", "30 to 40 years", "41 to 65 years",
+                                          "66+ years", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneralFALSE.html")
+
+# with Eco Chamber 
+
+stargazer::stargazer(MLModelHomoFALSE, LiModelHomoFALSE,
+                     title = "Success score distinguishing false headlines",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
+                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+                                          "Mid-High Income", "Highest Income", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegHomoFALSE.html")
+
+
+# With digital citizenship
+
+stargazer::stargazer(MLModelDigitFALSE, LiModelDigitFALSE,
+                     title = "Success score distinguishing false headlines",
+                     dep.var.labels = "Success score",
+                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Digital Citizenship", "Female", "30 to 40 years",
+                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+                                          "Mid-High Income", "Highest Income", "Constant"),
+                     star.cutoffs = c(0.05, 0.01, 0.001),
+                     column.sep.width = "1pt",
+                     notes = c("Base variables: Control Group, Low citizenship,", "18 to 29 years, lowest income"),
+                     notes.label = "Significance levels",
+                     type = "html",
+                     out = "beamer_presentation/beamer_presentation_files/E2RegDigitFALSE.html")
+
 
 
 #Poisson estimation
@@ -347,3 +554,13 @@ homoindex_het <- ggarrange(effectsPlot, modePlot,
 
 homoindex_het
 #ggsave(homoindex_het_afin, filename = "gender_het1_alltreats.pdf", path=fig.path, device = "pdf", height = 8, width = 6, dpi = 300)
+
+
+test <-multinom(E2Treat ~ HomoIndex + DigitIndex + SexDum + Age_1 + Age_2 + Age_3 + Age_4 + Educ_1 + Educ_2
+                + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno + ideologia_centro +
+                + NivEco_1 + NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+summary(test)
+
+stargazer::stargazer(test)
+
+table(df$E2Treat)

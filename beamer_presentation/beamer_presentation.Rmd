@@ -443,15 +443,13 @@ knitr::include_graphics("beamer_presentation_files/E2General.png")
 background-image: url(beamer_presentation_files/logo_usach.png)
 background-size: 110px
 background-position: 97% 2%
-class: center, middle
+class: left, middle
 
+```{r, echo=FALSE, fig.align='center', out.width="45%", fig.cap="Also controlling by incomne, ideology and education"}
 
-```{r, echo=FALSE, fig.align='center', out.width="70%"}
-
-knitr::include_graphics("beamer_presentation_files/E2RegBasic.png")
+knitr::include_graphics("beamer_presentation_files/E2RegGeneral.png")
 
 ```
-
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
@@ -474,7 +472,8 @@ background-position: 97% 2%
 class: center, middle
 
 
-```{r, echo=FALSE, fig.align='center', out.width="80%"}
+
+```{r, echo=FALSE, fig.align='center', out.width="38%"}
 
 knitr::include_graphics("beamer_presentation_files/E2RegHomo.png")
 
@@ -503,25 +502,12 @@ class: center, middle
 
 
 
-```{r,echo=FALSE, fig.align='center', out.width="80%"}
+```{r,echo=FALSE, fig.align='center', out.width="37%"}
 
 knitr::include_graphics("beamer_presentation_files/E2RegDigit.png")
 
 ```
 
-
----
-background-image: url(beamer_presentation_files/logo_usach.png)
-background-size: 110px
-background-position: 97% 2%
-class: center, middle
-
-
-```{r,echo=FALSE, fig.align='center', out.width="80%"}
-
-knitr::include_graphics("beamer_presentation_files/Reg1Mix.png")
-
-```
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
@@ -562,12 +548,37 @@ background-position: 97% 2%
 class: centre, middle
 
 
+```{r, echo=FALSE, fig.align='center', out.width="37%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegGeneralTRUE.png")
+
+```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
 ```{r, echo=FALSE, fig.align='center', out.width="110%"}
 
 knitr::include_graphics("beamer_presentation_files/E2EcoTRUE.png")
 
 ```
 
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="39%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegHomoTRUE.png")
+
+```
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
 background-size: 110px
@@ -588,11 +599,38 @@ background-position: 97% 2%
 class: centre, middle
 
 
-```{r, echo=FALSE, fig.align='center', out.width="90%"}
+```{r, echo=FALSE, fig.align='center', out.width="38%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegDigitTRUE.png")
+
+```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="110%"}
 
 knitr::include_graphics("beamer_presentation_files/E2GeneralFALSE.png")
 
 ```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="45%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegGeneralFALSE.png")
+
+```
+
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
 background-size: 110px
@@ -613,11 +651,62 @@ background-position: 97% 2%
 class: centre, middle
 
 
+```{r, echo=FALSE, fig.align='center', out.width="38%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegHomoFALSE.png")
+
+```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
 ```{r, echo=FALSE, fig.align='center', out.width="110%"}
 
 knitr::include_graphics("beamer_presentation_files/E2DigitFALSE.png")
 
 ```
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class: centre, middle
+
+
+```{r, echo=FALSE, fig.align='center', out.width="37%"}
+
+knitr::include_graphics("beamer_presentation_files/E2RegDigitFALSE.png")
+
+```
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 110px
+background-position: 97% 2%
+class:left, top
+
+## Results summary
+
+- People are more likely to misclassify news headlines when it is related to their political ideology
+
+- Contrary to our hypothesis, people have a better performance classifying news headlines of opposite political thought to their own.
+
+- Eco chambers membership increases this difference in performance. 
+
+- These results refute our initial hypotheses
+
+--
+
+but..
+
+--
+
+- People are better able to distinguish false headlines when they are related to their own ideology compared to the opposite group.
+
+- Echo Chambers membership increases these effect on false headlines. Digital Citizen Ship increases just the accuracy classifying falses headlines in like-minded group.
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
@@ -673,26 +762,6 @@ This slide has created with [**xaringan**](https://github.com/yihui/xaringan) an
 class: inverted, center, middle
 
 # Appendix
-
----
-background-image: url(beamer_presentation_files/regression_balanced.png)
-background-size: contain
-background-position: 50% 50%
-class: middle, center
-
----
-background-image: url(beamer_presentation_files/logo_usach.png)
-background-size: 110px
-background-position: 97% 2%
-class: left, Top
-
-## Some Insights about non-balances regression
-
-- There a critical pint in the age-range. Younger people scores better. people to 45years+ tend to decrease the scoring.
-
-- People with more education scoring better.
-
-- There's no evidence of variations in political ideology and educational levels
 
 ---
 
