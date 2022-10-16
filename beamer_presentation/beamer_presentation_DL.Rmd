@@ -639,4 +639,3 @@ background-size: contain
 background-position: 50% 50%
 class: top, center
 
-renderthis::to_pdf()
