@@ -90,18 +90,16 @@ knitr::include_graphics("beamer_presentation_files/media_literacy.png")
 .pull-right[
 
 <div style="text-align: justify">
-Growing evidence suggests the existence of fake news is problematic (Sunstein, 2014; Lazer et.al, 2018), polarizing (Spohr, 2019; Osmundsen et. al., 2021) and erodes democracy (Lance & Livingston, 2018). Partisanship increase from this years and Eco chambers participants and digital activist promotes it.
+Growing evidence suggests the existence of fake news is problematic (Sunstein, 2014; Lazer et.al, 2018), polarizing (Spohr, 2019; Osmundsen et. al., 2021) and erodes democracy (Lance & Livingston, 2018). 
+
+We want to look at how partisanship, echo-chambers and digital activism interacts with fake news. 
 </div>
 
 <br>
 
 <div style="text-align: justify">
-Are echo chambers and group polarization causing problems in processing information to participate in discussion in the public space?
+who is more susceptible to fake news? and is that related to political identity, echo-chamber participation and/or low digital savvy?
 </div>
-
-<br>
-
-This leads us to analyze how people and their partisanship interpret the information circulating in social media.
 
 
 
@@ -196,9 +194,9 @@ class: center, middle
 ### Main Question
 
 --
-#### How partisanship affects distinguishing between fake and real news?
+#### How does partisanship effect the ability to  distinguish between real and fake news?
 
-#### How membership in echo chambers and digital citizenship impact the relationship with partisanship and fake news classification?
+#### How does membership in echo chambers and digital citizenship impact the relationship with partisanship and fake news classification?
 
 ---
 background-image: url(beamer_presentation_files/logo_usach.png)
@@ -208,7 +206,7 @@ class: left, middle
 
 .pull-left[
 
-## Concept of Echo chambers and Digital Citizenship
+## Concept of Echo-Chambers and Digital Citizenship
 
 ]
 
@@ -219,7 +217,7 @@ class: left, middle
 .pull-right[
 
 
-- Friendship and resource network made up of like-minded people. Includes political homophily, social identity and confirmation bias (Boutyline et.al, 2017; Wollebæk et. al, 2019). Often produces by algorithms (Pariser, 2011)
+- Friendship and resource networks made up of like-minded people. Includes political homophily, social identity and confirmation bias (Boutyline et.al, 2017; Wollebæk et. al, 2019). Often produced by algorithms (Pariser, 2011)
 
 
 - Type of political participation in digital platforms. includes technological skills, valuation of collective action in digital media and participation in them (Choi, M, 2016; Choi et.al, 2018; Chadwick, 2013; Castells, 2009). 
@@ -235,7 +233,7 @@ class: left, middle
 
 .pull-left[
 
-## ¿What do we know about the relationship between echo chambers and misinformation?
+## ¿What do we know about the relationship between echo-chambers and misinformation?
 
 ]
 
@@ -248,7 +246,7 @@ class: left, middle
 - **Information bias**: Endemic consumption of information that is politically similar to one's own thinking and the distancing, rejection or impossibility of consuming information of different political thinking. (Currarini & Mengel, 2016; Halbestam & Knight, 2016)
 
 
-- **Spread of Misinformation**: Those who belong to echo chambers spread information faster, generate rumors and reach audiences that do not directly access those rumors (Choi et. al. 2020)
+- **Spread of Misinformation**: Those who belong to echo-chambers spread information faster, generate rumors and reach audiences that do not directly access those rumors (Choi et. al. 2020)
 
 ]
 
@@ -263,7 +261,7 @@ class: left, top
 
 
 
-## Hypothesis:
+## (pre-registered) Hypothesis:
 
 Following the political homophily results (Wollebaek et.al, 2019; Boutyline & Willer, 2017; Ackland & Shorish, 2014), we expected:               
 #### <div style="text-align: justify"> 1) respondents will be less likely to accurately categorize fake and real news when asked to review news headlines with taking points associated with parties that oppose their political self-placement.
@@ -293,20 +291,20 @@ class:left, middle
 
 --
 
-Online Survey Experiment (n= 690)  recruited using CESS USACH's subject pool.
+Online Survey Experiment (n= 690)  recruited using CESS USACH's online subject pool.
 
 --
 
 **Randomization**
 
-Block randomization with eco-chamber membership and levels of digital citizenship (both binaries)
+Block randomization with echo-chamber membership and levels of digital citizenship (both binaries)
 
 --
 
 **Experimental survey**
 
 <div style="text-align: justify">
-Socio-demographic characterization: Age range, gender, income, educational level, political ideology ("Left wing", "Right wing", "Center", "without ideology") + Fake news experiment
+Socio-demographic characterization: Age range, gender, income, educational level, political self-placement ("Left wing", "Right wing", "Center", "without ideology") + Fake news experiment
 <div>
 
 --
@@ -330,7 +328,7 @@ background-position: 97% 2%
 
 --
 
->_We will show you below 7 different headlines that are circulating in Social Media, some of which are true and others false. You will have to indicate if they are true or false._
+>_We will show you 7 different headlines that are circulating in Social Media, some of which are true and others false. You will have to indicate if they are true or false._
 
 >_(At the end of this survey you will be shown your results)._
 
@@ -349,7 +347,7 @@ background-position: 97% 2%
 
 --
 
-- Two pre-test to evaluate the headline's relevance and difficulty
+- Two pre-tests to evaluate the headline's relevance and difficulty
 
 
 ---
