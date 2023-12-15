@@ -18,8 +18,8 @@ ipak <- function(pkg){
 # usage
 packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "patchwork","stringr",
               "tidyr","kableExtra","psych", "MASS", "foreign", "data.table","gtools","lubridate","AER",
-              "xtable","pBrackets","Hmisc","ri","ggpubr", "stargazer", "Rmisc","wesanderson", "gridExtra","ggmosaic",
-              "vcd", "plyr")
+              "xtable","pBrackets","Hmisc","ggpubr", "stargazer", "Rmisc","wesanderson", "gridExtra","ggmosaic",
+              "vcd", "plyr", "ordinal")
 ipak(packages)
 
 
@@ -27,18 +27,27 @@ ipak(packages)
 
 ## Load data ##
 
-thesis <-read.csv("Data/InputData/test5.csv", na.strings=c("","NA") )
+thesis <-read.csv("Data/InputData/test5.csv", na.strings=c("","NA"))
 
 
 # select just the valid surveys
 
 thesis <-thesis%>%
-  slice(-c(1,2))
+  dplyr::slice(-c(1,2))
+
+##delete time duration outliers
+mean_duration <-mean(as.numeric(thesis$Duration..in.seconds.))
+sd_duration <-sd(as.numeric(thesis$Duration..in.seconds.))
+
+threeshold <- sd_duration*3
+
 
 thesis <-filter(thesis, Consent=='1')%>%
-  dplyr::filter(Finished=="1")
+  dplyr::filter(Finished=="1" & abs(as.numeric(Duration..in.seconds.)) < threeshold)
+
 
 thesis <-dplyr::select(thesis, Age:SC0)
+
 
 
 ## Create three new variables: Homophily index, digital citizenship and political position
@@ -81,7 +90,7 @@ table(thesis$AgeRecod)
 
 ## Education ##
 
-thesis <-mutate(thesis, EducRec = dplyr::recode(thesis$Educ, "1" = "Sin Estudios","2" = "Básica","3" = "Media",
+thesis <-mutate(thesis, EducRec = dplyr::recode(thesis$Educ, "1" = "Sin Obligatoria","2" = "Sin Obligatoria","3" = "Obligatoria",
                                                  "4" = "Superior", "5" = "Postgrado"))
 table(thesis$EducRec)
 
@@ -96,6 +105,12 @@ table(thesis$IncomeRecod)
 thesis <-mutate(thesis, GenRecod = dplyr::recode(thesis$Genre, "1" = "Masculino", "2" = "Femenino", "3" = "Otro"))
 table(thesis$GenRecod)
 
+# agrupated genres: masculines vs "others" (femenines + others)
+
+# Agrupar "Masculino" y "Femenino" como una categoría y convertir en dicotómica
+thesis$GenReBinary <- ifelse(thesis$GenRecod %in% c("Otro", "Femenino"), "Otro", "Masculino")
+
+
 ## Political position ##
 
 thesis <-thesis%>%
@@ -106,7 +121,7 @@ thesis <-thesis%>%
 thesis <-mutate(thesis, IdeoRec = car::recode(thesis$Ideolo_1, "1:4 = 1; 5:6 = 2; 7:9 = 3; 0 = 3")) 
 
 # Edit in final DF. "20" shouldn't exist
-thesis <-mutate(thesis, IdeoRec = dplyr::recode(thesis$IdeoRec, "1" = "Izquierda","2" = "centro","3" = "Derecha"))
+thesis <-mutate(thesis, IdeoRec = dplyr::recode(thesis$IdeoRec, "1" = "Izquierda","2" = "Centro","3" = "Derecha"))
 table(thesis$IdeoRec)
 
 thesis<-mutate(thesis, identity = dplyr::recode(thesis$IdePol, "0" = "Ninguno", "1" = ''))
@@ -115,7 +130,7 @@ thesis<-mutate(thesis, identity = dplyr::recode(thesis$IdePol, "0" = "Ninguno", 
 
 thesis <-mutate(thesis, ideologia = coalesce(thesis$IdeoRec, thesis$identity))
 
-table(thesis$Ideologia)
+table(thesis$ideologia)
 
 #Biding variables Experiment 1
 
@@ -141,32 +156,37 @@ table(thesis$E1Treat)
 
 ## Biding outcomes Experiment 2
 
-as.numeric(df$SC0)
+thesis$SC0 <-as.numeric(thesis$SC0)
 
 
 # Merges all treatments columns
 
-thesis$E2Treat <- ifelse(!is.na(thesis$E2T1a_1),'Afin',
-                         ifelse(!is.na(thesis$E2T1b_1),'Afin',
-                                ifelse(!is.na(thesis$E2T2b_2),'Opuesto',
-                                ifelse(!is.na(thesis$E2T1c_1),'Afin',
-                                       ifelse(!is.na(thesis$E2T1c_1),'Afin',
-                                              ifelse(!is.na(thesis$E2T1d_1),'Afin',
-                                              ifelse(!is.na(thesis$E2T2a_1),'Opuesto',
-                                                     ifelse(!is.na(thesis$E2T2b_10),'Opuesto',
-                                                     ifelse(!is.na(thesis$E2T2b_1),'Opuesto',
-                                                            ifelse(!is.na(thesis$E2T2c_1),'Opuesto',
-                                                                   ifelse(!is.na(thesis$E2T2b_3),'Opuesto',
-                                                                   ifelse(!is.na(thesis$E2TC_12),'Control',
-                                                                          ifelse(!is.na(thesis$E2TC_6),'Control',
-                                                                          ifelse(!is.na(thesis$E2TC_2),'Control',NA))))))))))))))
+
+
+
+
+
+#thesis <-thesis%>%
+#  dplyr::mutate(E2Treat = ifelse(E2T1a_1:E2T1a_7, E2T1b_1:E2T1b_7, E2T1c_1E2T1d_1:E2T1d_7 != NA, 'Afin',
+#                                 ifelse(E2T2a_1:E2T2a_7, E2T2b_1:E2T2b_12, E2T2c_1:E2T2c_7, E2T2 != NA, 'opuesto',
+#                                        ifelse(E2TC_1:E2TC_12 != NA, 'control', NA))))
+
+thesis$E2Treat <- ifelse(!is.na(thesis$E2T1a_DO),'Afin',
+                         ifelse(!is.na(thesis$E2T1b_DO),'Afin',
+                                ifelse(!is.na(thesis$E2T2c_DO),'Opuesto',
+                                ifelse(!is.na(thesis$E2T1c_DO),'Afin',
+                                       ifelse(!is.na(thesis$E2T1d_DO),'Afin',
+                                              ifelse(!is.na(thesis$E2T2a_DO),'Opuesto',
+                                                     ifelse(!is.na(thesis$E2T2b_DO),'Opuesto',
+                                                            ifelse(!is.na(thesis$E2T2c_DO),'Opuesto',
+                                                                   ifelse(!is.na(thesis$E2TC_DO),'Control',NA)))))))))
 table(thesis$E2Treat)
 
 thesis <-thesis%>%
   drop_na("E2Treat")
 
-## Biding outcomes Experiment 3
 
+## Biding outcomes Experiment 3
 
 
 # Merges all treatments columns : broke or mantain social ties
@@ -296,15 +316,64 @@ thesis <-mutate(thesis, E4Sad = coalesce(thesis$E4T1a1_5, thesis$E4T1b1_5, thesi
 
 thesis$E4Sad<-as.numeric(thesis$E3Sad)
 
+# Create digital skills from digital citizenship scale (choi et.al, 2015, 2017, etc)
+
+digit <-thesis%>%
+  dplyr::select(DigiCit_1:DigiCit_14)
+
+digit <-lapply(digit, as.numeric)
+
+digit <-as.data.frame(digit)
+
+thesis$skill <-digit$DigiCit_1 + digit$DigiCit_2 + digit$DigiCit_3 #digital skills
+thesis$global <-digit$DigiCit_4 + digit$DigiCit_5   # global problems consciescioness
+thesis$EC <-digit$DigiCit_7 + digit$DigiCit_8 + digit$DigiCit_9 + digit$DigiCit_6  ## critic perspective
+thesis$CA <-digit$DigiCit_10 + digit$DigiCit_11   #digital colective actions
+thesis$DPol <-digit$DigiCit_12 + digit$DigiCit_13 + digit$DigiCit_14     #political activism
+
+
+### CREATE BASE VARIABLES
+
+thesis$ideologia <-factor(thesis$ideologia, levels = c("Izquierda", "Centro", "Derecha", "Ninguno"))
+thesis$EducRec <-factor(thesis$EducRec, levels = c("Sin Obligatoria", "Obligatoria", "Superior", "Postgrado"))
+thesis$AgeRecod <-factor(thesis$AgeRecod, levels = c("18 a 29 años", "30 a 40 años", "41 a 65 años", "+66 años"))
+thesis$IncomeRecod <-factor(thesis$IncomeRecod, levels = c("Menos de $224.000", "Entre $224.001 - $448.000",
+                                                           "Ente $448.001 y $1.000.000","Entre $1.000.001 - $3.000.000",
+                                                           "Más de $3.000.000"))
+
+thesis$GenReBinary<-relevel(factor(thesis$GenReBinary), ref = "Otro")
+thesis$AgeRecod <-relevel(factor(thesis$AgeRecod), ref = "18 a 29 años")
+thesis$ideologia <-relevel(factor(thesis$ideologia), ref = "Derecha")
+thesis$IncomeRecod <-relevel(factor(thesis$IncomeRecod), ref = "Menos de $224.000")
+thesis$EducRec <-relevel(factor(thesis$EducRec), ref = "Sin Obligatoria")
+thesis$E2Treat <-relevel(factor(thesis$E2Treat), ref = "Control")
+
 ## Create new data frame
 
-finalDF <-dplyr::select(thesis,end_4:GenRecod,ideologia:E4Sad)
+finalDF <-dplyr::select(thesis,end_4:GenReBinary,ideologia:CA)
 
 
 
-#save DF
+#save DF final
 
-saveRDS(finalDF, file = "Data/Analysis-Data/DF-final.RDS")
+saveRDS(finalDF, file = "Data/FinalData/DF-final.RDS")
+
+## save fake news DF, with each column by headline to creat SUmFalse and SUmTrue variables
+
+final_fn <-dplyr::select(thesis, E2TC_1:GenReBinary,E2Treat,ideologia,skill:CA)
+
+saveRDS(final_fn, file="Data/IntermediateData/df_fakenews.RDS")
+
+
+### save echo chamber psychometric properties 
+
+echo <-thesis%>%
+  dplyr::select(Homo_1:Homo_7)
+
+saveRDS(echo, "Data/FinalData/echo_chamber_psy.RDS")
+
+
+
 
 
 

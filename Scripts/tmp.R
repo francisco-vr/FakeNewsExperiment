@@ -17,13 +17,13 @@ ipak <- function(pkg){
 packages <- c("tidyverse","dplyr","haven","ggplot2","readxl","summarytools", "patchwork","stringr",
               "tidyr","kableExtra","psych", "MASS", "foreign", "data.table","gtools","lubridate","AER",
               "xtable","pBrackets","Hmisc","ri2","ggpubr", "stargazer", "Rmisc","wesanderson", "gridExtra","ggmosaic",
-              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt", "MASS", "modelsummary")
+              "vcd", "plyr", "ggannotate","scales", "fastDummies","gt", "MASS", "modelsummary", "nnet")
 ipak(packages)
 
 
 # READ DF
 
-df <-readRDS("Data/FNDF.RDS")
+df <-readRDS("Data/DFNEW.RDS")
 
 
 

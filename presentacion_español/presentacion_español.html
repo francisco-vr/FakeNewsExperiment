@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>hola</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francisco Villarroel - Denise Laroze" />
+    <meta name="date" content="2023-12-15" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class:center, top, bg_karl
+
+
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+.bg_karl {
+  position: relative;
+  z-index: 1;
+}
+
+.bg_karl::before {    
+      content: "";
+      background-image: url('https://blog.ida.cl/wp-content/uploads/sites/5/2020/11/ida-twitterFakenews-blog.png');
+      background-size: cover;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      opacity: 0.15;
+      z-index: -1;
+}
+
+&lt;/style&gt;
+
+### Trust in my fake news, sckeptical about yours: experimental evidence on how ideological congruence and echo chambers alter beliefs in fake news
+
+&lt;br&gt;
+&lt;br&gt;
+
+#### Francisco Villarroel (CICS-UDD/MEPOP, Chile),Denise Laroze (CICS-UDD, Chile), Vicente Espinoza (COES, Chile)
+
+
+
+&lt;img src="presentacion_español_files/Logo CICS corto-01 (1).png" width="30%" /&gt;&lt;img src="presentacion_español_files/logo_mepop.png" width="30%" /&gt;
+
+&lt;img src="presentacion_español_files/WEB-1-removebg-preview.png" width="25%" /&gt;
+
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 2% 97%
+class: left, middle
+
+.pull-left[
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="presentacion_español_files/prueba_1.jpeg" width="120%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;div style="text-align: justify"&gt;
+Las noticias falsas son problemáticas (Sunstein, 2014; Lazer et.al, 2018), polarizantes (Spohr, 2019; Osmundsen et. al., 2021) y erosionan la democracia (Lance &amp; Livingston, 2018). &lt;b&gt;El problema principal es que genera incertidumbre informacional&lt;/b&gt;.
+&lt;/div&gt;
+
+&lt;br&gt;
+
+&lt;div style="text-align: justify"&gt;
+Uso de heurísticos para discernir lo que es cierto o falso, y dónde los ciudadanos ponen más atención y gastan recursos cognitivos.
+&lt;/div&gt;
+
+&lt;br&gt;
+
+Las redes sociales se han convertido en una "guerra de trincheras" (Karlsen et.al, 2017), En el cual la posición política importa, pero también el círculo informativo.
+
+]
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: inverse,center, middle
+
+### Preguntas principales
+
+--
+#### De qué manera el partidismo político afecta en la distinción de noticias falsas?
+
+#### Cómo la pertenencia a cámaras de eco modulan este fenómeno?
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: left, middle
+
+### Teoría de razonamiento motivado
+
+
+.pull-left[
+
+&lt;img src="https://i5.walmartimages.com/seo/Cambridge-Studies-in-Public-Opinion-and-Political-Psychology-The-Rationalizing-Voter-Hardcover-9780521763509_79585edd-afe5-4cd4-9e2f-b3df4dc4a6fa_1.977db6865401c1425a1a1949fd9327ac.jpeg?odnHeight=640&amp;odnWidth=640&amp;odnBg=FFFFFF" width="85%" style="display: block; margin: auto;" /&gt;&lt;img src="presentacion_español_files/motivated_reasoning2.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+- Los ciudadanos somos "sesgados". Concepto de _hot cognition_
+
+- Los estímulos políticos tienen cargas emotivas (positivas o negativas). Estas se alojan en nuestra memoria a largo plazo
+
+- Actitudes posteriores estarán condicionadas a la carga emocional previa, buscando mantener y proteger sus pensamientos originales.
+
+- Racionalidad = memoria + emociones
+
+
+]
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: left, middle
+
+### Escepticismo motivado
+
+
+.pull-left[
+
+- Las personas son menos excepticos a creer en información congruente que en la incongruente
+- Las cogniciones calientes hacen que las personas tengan metas partidistas, no de "verdad"
+- "Sesgos de des-confirmación": las personas activamente van a desacreditar información opuesta a su pensamiento
+- Los pensamientos propios son "posesiones que hay que proteger"
+
+
+]
+.pull-right[
+
+&lt;img src="presentacion_español_files/motivated_skepticism.png" width="120%" style="display: block; margin: auto;" /&gt;&lt;img src="presentacion_español_files/motivated_skepticism2.png" width="120%" style="display: block; margin: auto;" /&gt;
+
+]
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: left, middle
+
+### Disputas por la psicología de la desfinformación
+
+&lt;div style="text-align: justify"&gt;
+
+.pull-left[
+
+
+- Lentitud cognitiva predice el grado de disesnimiento de verdad independiente de sesgos ideologicos
+
+- Usando el _cognitive reflection test_ han encontrado que la creencia en noticias falsas está mediada por ese pensamiento lento (tiempos de respuesta para el test)
+
+- Otros estudios en esta misma línea han mostrado que la desconfianza en la ciencia y la creencia en las conspiraciones son relevantes en la creencia de desinformación
+
+]
+
+&lt;/div&gt;
+
+
+
+.pull-right[
+
+&lt;img src="presentacion_español_files/partisan_bias.png" width="100%" style="display: block; margin: auto;" /&gt;&lt;img src="presentacion_español_files/lack_of_partisan.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: left, middle
+
+### La importancia del razonamiento motivado
+
+
+- Los sesgos partidistas se siguen estudiando y siguen siendo importantes al evaluar disernimiento de información
+
+--
+
+- Las mismas personas que han estudiado sobre el problema de reflexión cognitiva han observado en estudios en redes sociales pa aparición de escepticismo motivado (Allen et.al, 2021)
+
+--
+
+- Existe una falta de investigación experimental que una razonamiento motivado y cámaras de eco
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 2% 97%
+class: left, middle
+
+.pull-left[
+
+## Efectos de cámaras de eco
+
+
+&lt;br&gt;
+
+&gt; Redes de amistad y recuersos construidos por personas de pensamiento similar. Incluye homofilia política, identidad social y sesgos de confirmación (Boutyline et.al, 2017; Wollebæk et. al, 2019). A veces causadas por algoritmos (Pariser, 2011)
+
+]
+
+--
+
+&lt;div style="text-align: justify"&gt;
+
+.pull-right[
+
+La literatura ha mostrado que las cámaras de eco producen:
+
+- **Sesgos informativos**: Consumo endémico de información que es consistente políticamente con los individuoos, así como la distancia y rechazo de consumir información de pensamientos políticos diferentes. (Currarini &amp; Mengel, 2016; Halbestam &amp; Knight, 2016)
+
+
+- **Diseminación de desinformación**: Quienes pertenecen a cámaras de eco difunden más desinformación, generan más rumores y estos llegan a gente que habitualmente no accede a ellos(Choi et. al. 2020)
+
+]
+
+&lt;/div&gt;
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: left, top
+
+
+
+## Esperamos que
+
+Siguiendo la teoría de razonamiento motivado:
+##### &lt;div style="text-align: justify"&gt; H1: Las personas tendrán menos éxito diferenciando noticias falsas de verdaderas cuando las noticias con consistentes con la ideología del individuo
+&lt;/div&gt;
+
+
+--
+
+De acuerdo a la literatura de excepticismo motivado:
+##### &lt;div style="text-align: justify"&gt;H2: Los individuos tendrán mejor tasa de acierto diferenciando noticias falsas y verdadeeras cuando es ideológicamente inconsistente con el individuo&lt;/div&gt;
+
+--
+
+Basados en la literatura sobre cámaras de eco, esperamos que:
+##### &lt;div style="text-align: justify"&gt; H3: Individuos con alta membresía a cámaras de eco aumentarán&lt;/div&gt;
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class:left, middle
+
+# Methods
+
+**Sample**
+
+--
+
+- Encuesta experimental online realizado por CESS Santiago (n= 690) utilizando su panel interno.
+
+- Criterio de exclusión: personas menores de 18 años.
+
+- Se hizo muestreo por cuotas para evitar exceso de muestra estudiantil
+
+--
+
+**Randomization**
+
+Aleatorización por bloque por pertenencia a cámaras de eco
+
+--
+
+**Encuesta Experimental**
+
+&lt;div style="text-align: justify"&gt;
+Caracterización sociodemográfica: Tramo etáreo, género, ingreso, nivel educacional, ideología política ("Izquierda", "Derecha", "Centro", "Sin ideología") + Fake news experiment
+&lt;div&gt;
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+
+ 
+**Analysis**
+
+&lt;div style="text-align: justify"&gt;
+Diferencias entre el promedio de acierto por tratamiento. Regresiones lineales con estimación de MCO. Se chequeó también con estimaciónes Ordered Logit y Binomial Negativo
+
+
+&lt;div&gt; 
+
+`$$y_iAccuracy = \beta_0 + \beta_1 Treatment*EchoChamber + \sum_{i=1}controls +\epsilon_1$$`
+
+Se controlará por ideología, educación, si es hombre, tramo etáreo, habilidades digitales, ingreso económico
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+
+## Tarea experimental
+
+--
+
+- Cada participante recibe 7 titulares y se les pide evaluarlos si son verdaderos o falsos. 
+
+--
+
+&gt;_Le mostraremos 7 titulares diferentes que han circulado en redes sociales, de los cuales algunos son verdaderos y falsos._
+
+&gt;_(Al final de la encuesta le mostraremos sus resultados)._
+
+&gt;_¿Cómo los clasifica?_
+
+--
+
+- Si están correctos, se les da un punto. Si está incorrecto, tiene 0 puntos.
+
+
+- El puntaje máximo es 7 y el mínimo es cero. 
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: left, Top
+
+## Information reinforcement bubble scale (IRBS-7)
+
+- Usamos una escala validada en Finlandia y EEUU&lt;sup&gt;*&lt;/sup&gt; Sobre reforzamiento de opinión en redes sociales, que es una escala de pertenencia a cámaras de eco
+
+- escala acordada de 7 ítemes con 10 puntos por ítem (total: 7 a 70)
+
+- Baja pertenencia a cámaras de eco: 7 to 39
+- Alta pertenencia a cámaras de eco: 40 to 70
+
+.footnote[[*] Kaakinen, M., Sirola, A., Savolainen, I., &amp; Oksanen, A. (2020). Shared identity and shared information in social media: Development and validation of the identity bubble reinforcement scale. Media Psychology, 23(1).]
+
+---
+background-image: url(beamer_presentation_files/logo_usach.png)
+background-size: 90px
+background-position: 97% 2%
+class: center, middle
+
+
+
+### Creando tratamientos
+
+![](presentacion_español_files/titulares.png)
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: center, top
+
+
+### Ejemplos de titulares
+
+
+![](presentacion_español_files/headlines.png)
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: inverse, centre, middle
+
+
+## Resultados
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: center, middle
+
+
+&lt;img src="presentacion_español_files/CI_general.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: center, middle
+
+
+
+&lt;img src="presentacion_español_files/CI_EchoChamber.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+background-image: url(presentacion_español_files/OLS_General.png)
+background-size: 910px
+background-position: 97% 2%
+class: left, middle
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: inverse, center, middle
+
+
+#### Siguiendo las recomendaciones de Guay e investigadores (2023), revisamos si estos resultados son iguales tanto para noticias verdaderas (falsos negativos) y falsas (falsos positivos)
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: inverse, center, middle
+
+
+### Análisis de noticias verdaderas (falsos negativos)
+
+
+
+---
+background-image: url(presentacion_español_files/OLS_true.png)
+background-size: 910px
+background-position: 50% 50%
+class: center, middle
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: inverse, center, middle
+
+
+## Análisis de noticias falsas (falsos positivos)
+
+
+---
+background-image: url(presentacion_español_files/OLS_false.png)
+background-size: 910px
+background-position: 50% 50%
+class: center, middle
+
+
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class:left, top
+
+## Resumen de los resultados:
+
+- A la teoría de razonamiento motivado, las personas tienden más a errar más cuando los titulares de noticias están relacionados a su ideología política ✅
+
+--
+
+- A diferencia de la teoría de escepticismo motivado, las personas no califican mejor las noticias cuando son inconsistes políticamente ❌
+
+--
+
+- La pertenencia a cámaras de eco no aumentan la tendencia de razonamiento motivado y escepticismo motivado ❌
+
+
+---
+class: inverse, center, middle
+
+### Además..
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class:left, top
+
+
+- Los individuos tienen mejor desempeño calificando los titulares falsos cuando son consistentes políticamente. Sesgo de desconfirmación intra-grupal
+
+- La pertenencia a cámaras de eco aumenta este efecto en las noticias falsas 
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class:left, top
+
+## Discusión 
+
+- Encontramos evidencia de sesgos intra-grupales en base al partidismo político, apoyada por otros estudios (eg: Osmundsen et.al, 2021; Pereira et.al, 2021)
+
+- No hemos encontrado evidencia robusta de excepticismo motivado
+
+- Si hemos observado en las noticias falsas un importante sesgos de desconfirmación, _pero hacia dentro más que hacia afuera_
+
+--
+
+Limitaciones
+
+--
+
+- No se controló por interés en política
+- Peso de los titulares como "hot cognitions" son fundamentalmente hacia emociones negativas. ¿Qué ocurre con desfinformación que ensalda la postura política propia?
+
+---
+class: inversed, center, middle
+background-image: url(https://user-images.githubusercontent.com/163582/45438104-ea200600-b67b-11e8-80fa-d9f2a99a03b0.png)
+background-size: 50px
+background-position: 50% 55%
+
+# ¡Gracias!
+
+
+[fvillarroelr@udd.cl](mailto:fvillarroelr@udd.cl)
+
+
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+This slide has created with [**xaringan**](https://github.com/yihui/xaringan) and [**XaringanThemer**](https://pkg.garrickadenbuie.com/xaringanthemer/index.html)
+
+---
+class: inverted, center, middle
+
+# Appendix
+
+---
+
+**References:**
+
+- Allen, J. N. L., Martel, C., &amp; Rand, D. G. (2021). Birds of a feather don’t fact-check each other: Partisanship and the evaluation of news in Twitter’s Birdwatch crowdsourced fact-checking program [Preprint].
+
+- Bago, B., Rand, D. G., &amp; Pennycook, G. (2020). Fake news, fast and slow: Deliberation reduces belief in false (but not true) news headlines. Journal of Experimental Psychology: General, 149(8), 1608-1613. 
+
+- Castells, M. (2009). Comunicación y poder. Alianza, Madrid.
+
+- Choi, D., Chun, S., Oh, H., Han, J., &amp; Kwon, T. “Taekyoung”. (2020). Rumor Propagation is Amplified by Echo Chambers in Social Media. Scientific Reports, 10(1), 310.
+
+- Choi, M. (2016). A Concept Analysis of Digital Citizenship for Democratic Citizenship Education in the Internet Age. Theory &amp; Research in Social Education, 44(4), 565-607.
+
+- Choi, M., Cristol, D., &amp; Gimbert, B. (2018). Teachers as digital citizens: The influence of individual backgrounds, internet use and psychological characteristics on teachers’ levels of digital citizenship. Computers &amp; Education, 121, 143-161. 
+
+--- 
+class: left, top
+
+- Currarini, S., &amp; Mengel, F. (2016). Identity, homophily and in-group bias. European Economic Review, 90, 40-55. 
+
+- Fu, G., &amp; Zhang, W. (2016). Opinion formation and bi-polarization with biased assimilation and homophily. Physica A: Statistical Mechanics and Its Applications, 444, 700-712.
+
+- Halberstam, Y., &amp; Knight, B. (2016). Homophily, group size, and the diffusion of political information in social networks: Evidence from Twitter. Journal of Public Economics, 143, 73-88. 
+
+- Osmundsen, M., Bor, A., Vahlstrup, P. B., Bechmann, A., &amp; Petersen, M. B. (2021). Partisan Polarization Is the Primary Psychological Motivation behind Political Fake News Sharing on Twitter. American Political Science Review, 115(3), 999-1015. 
+
+- Pennycook, G., &amp; Rand, D. G. (2019). Lazy, not biased: Susceptibility to partisan fake news is better explained by lack of reasoning than by motivated reasoning. Cognition, 188, 39-50.
+
+- Pereira, A., Harris, E., &amp; Van Bavel, J. J. (2021). Identity concerns drive belief: The impact of partisan identity on the belief and dissemination of true and false news. Group Processes &amp; Intergroup Relations.
+
+---
+class: left, top
+
+- Taber, C. S., &amp; Lodge, M. (2006). Motivated Skepticism in the Evaluation of Political Beliefs. American Journal of Political Science, 50(3), 755-769.
+
+- Wollebæk, D., Karlsen, R., Steen-Johnsen, K., &amp; Enjolras, B. (2019). Anger, Fear, and Echo
+Chambers: The Emotional Basis for Online Behavior. Social Media + Society, 5(2).
+
+---
+background-image: url(https://raw.githubusercontent.com/francisco-vr/Homophily-and-Political-behaviour/main/Results/Tables/sample-descriptives.jpg)
+background-size: contain
+background-position: 50% 50%
+class: top, center
+
+---
+background-image: url(presentacion_español_files/logo_accp.png)
+background-size: 90px
+background-position: 97% 2%
+class: left, Top
+
+## Digital Citizenship scale
+
+- Using a Scale development by Choi&lt;sup&gt;*&lt;/sup&gt; and reduced since 34 items to 14.
+
+- Each item are with a 7 point scale (1 to 7). Total range: 14 to 98
+
+- Low levels of digital citizenship: 14 to 62
+- High levels of Digital citizenship: 63 to 98
+
+.footnote[[*] Choi, M., Glassman, M., &amp; Cristol, D. (2017). What it means to be a citizen in the internet age:
+Development of a reliable and valid digital citizenship scale. Computers &amp; Education, 107,
+100-112.]
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

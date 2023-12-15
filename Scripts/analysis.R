@@ -1,78 +1,99 @@
-## Regresion with balanced covariates
-
-#Maximum likehood 
-
-df$SC0 <-as.numeric(df$SC0)
-
-MLModel1 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
-MLModelHomo <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
-MLModelDigit <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                     NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+## Regression models. we test lineal models and ordered logit
 
 
 
 
-MLModel9 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 + Educ_2
-               + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno
-               + NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+df <-readRDS("Data/FinalData/final_fakenews.RDS")
+
 
 #OLS Estimation
 
-LiModel1 <-lm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
+LiModel1 <-lm(SC0 ~ E2Treat, data = df)
+LiModelHomo <-lm(SC0 ~ E2Treat*HomoIndex, data = df)
 
-LiModelHomo <-lm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                   NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+summary(LiModelHomo)
 
-LiModelDigit <-lm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+LiModelControls <-lm(SC0 ~ E2Treat*HomoIndex + AgeRecod + IncomeRecod + GenReBinary + ideologia
+                     + skill, data = df)
+
+summary(LiModelControls)
 
 
-#General table
+### Create table with models
 
-stargazer::stargazer(MLModel1, LiModel1,
-                     title = "Success score distinguishing fake news from real news",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
-                                          "Female", "30 to 40 years", "41 to 65 years",
-                                          "66+ years", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneral.html")
+
+#stargazer::stargazer(MLModel1, LiModel1,
+#                     title = "Success score distinguishing fake news from real news",
+#                     dep.var.labels = "Success score",
+#                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
+#                                          "Female", "30 to 40 years", "41 to 65 years",
+#                                          "66+ years", "Constant"),
+#                     star.cutoffs = c(0.05, 0.01, 0.001),
+#                     column.sep.width = "1pt",
+#                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
+#                     notes.label = "Significance levels",
+#                     type = "html",
+#                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneral.html")
+
+
+## create plot m,odel graphics
+
+plot <- plot_model(
+  LiModelControls,
+  title = "Fake news accuracy standardized coefficients",
+  show.p = TRUE,
+  type = "std2",
+  show.values = TRUE,
+  value.offset = 0.4,
+  value.size = 4,
+  dot.size = 1.8,
+  line.size = 0.5,
+  vline.color = "black",
+  axis.textsize = 12,
+  width = 0.4,
+  axis.labels = c(
+    "Inconsistent * Echo Chamber",
+    "Consistent * Echo Chamber",
+    "Digital skills",
+    "Without Ideology",
+    "Center",
+    "Left-wing",
+    "Masculine",
+    "+3.000.000",
+    "$1.000.000 - $3.000.000",
+    "$448.001 - $1.000.000",
+    "$224.001 - $448.000",
+    "+66 years",
+    "41 to 65 years",
+    "30 - 40 years",
+    "Echo Chamber Membership",
+    "Ideologically Opposite",
+    "Ideologically consistent"
+  )
+)
+
+# Ajustar el tema para cambiar el tamaño del título
+plot + theme(plot.title = element_text(size = 16, face = "bold"))
+    
+             
+#Ordeder Logit
+
 
 # with Eco Chamber 
 
-stargazer::stargazer(MLModelHomo, LiModelHomo,
-                     title = "Success score distinguishing fake news from real news",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
-                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
-                                          "Mid-High Income", "Highest Income", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegHomo.html")
+#stargazer::stargazer(MLModelHomo, LiModelHomo,
+#                     title = "Success score distinguishing fake news from real news",
+#                    dep.var.labels = "Success score",
+#                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
+#                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+#                                          "Mid-High Income", "Highest Income", "Constant"),
+#                     star.cutoffs = c(0.05, 0.01, 0.001),
+#                     column.sep.width = "1pt",
+#                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
+#                     notes.label = "Significance levels",
+#                     type = "html",
+#                     out = "beamer_presentation/beamer_presentation_files/E2RegHomo.html")
 
-
-# With digital citizenship
-
-stargazer::stargazer(MLModelDigit, LiModelDigit,
-                     title = "Success score distinguishing fake news from real news",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Digital Citizenship", "Female", "30 to 40 years",
-                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
-                                          "Mid-High Income", "Highest Income", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, Low citizenship,", "18 to 29 years, lowest income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegDigit.html")
 
 
 
@@ -80,152 +101,180 @@ stargazer::stargazer(MLModelDigit, LiModelDigit,
 ## true or false headlines regression###
 ########################################
 
-df <-readRDS("Data/DFNEW.RDS")
 
 ### TRUE HEADLINES ### 
 
-#Maximum likehood 
-df$SumTrue <-as.numeric(df$SumTrue)
-
-MLModel1TRUE <-glm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                     NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
-
-MLModelHomoTRUE <-glm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
-MLModelDigitTRUE <-glm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                     NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
-
-
 #OLS
-LiModel1TRUE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                       NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+LiModel1TRUE <-lm(SumTrue ~ E2Treat, data = df)
 
-LiModelHomoTRUE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                   NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+summary(LiModel1TRUE)
 
-LiModelDigitTRUE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                    NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+LiModelHomoTRUE <-lm(SumTrue ~ E2Treat*HomoIndex, data = df)
+
+summary(LiModelHomoTRUE)
+
+LiModelControlsTRUE <-lm(SumTrue ~ E2Treat*HomoIndex + AgeRecod + IncomeRecod + GenReBinary + ideologia
+                         + skill, data = df)
+
+summary(LiModelControlsTRUE)
 
 ## Regression
 
 #General table
 
-stargazer::stargazer(MLModel1TRUE, LiModel1TRUE,
-                     title = "Success score distinguishing True headlines",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
-                                          "Female", "30 to 40 years", "41 to 65 years",
-                                          "66+ years", "Low income", "Low - Mid Income", 
-                                          "Mid-High Income", "Highest Income", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneralTRUE.html")
+#stargazer::stargazer(MLModel1TRUE, LiModel1TRUE,
+#                     title = "Success score distinguishing True headlines",
+#                     dep.var.labels = "Success score",
+#                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
+#                                          "Female", "30 to 40 years", "41 to 65 years",
+#                                          "66+ years", "Low income", "Low - Mid Income", 
+#                                          "Mid-High Income", "Highest Income", "Constant"),
+#                     star.cutoffs = c(0.05, 0.01, 0.001),
+#                     column.sep.width = "1pt",
+#                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
+#                     notes.label = "Significance levels",
+#                     type = "html",
+#                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneralTRUE.html")
 
 # with Eco Chamber 
 
-stargazer::stargazer(MLModelHomoTRUE, LiModelHomoTRUE,
-                     title = "Success score distinguishing true headlines",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
-                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
-                                          "Mid-High Income", "Highest Income", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegHomoTRUE.html")
+#stargazer::stargazer(MLModelHomoTRUE, LiModelHomoTRUE,
+#                     title = "Success score distinguishing true headlines",
+#                     dep.var.labels = "Success score",
+#                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
+#                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+#                                          "Mid-High Income", "Highest Income", "Constant"),
+#                     star.cutoffs = c(0.05, 0.01, 0.001),
+#                     column.sep.width = "1pt",
+#                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
+#                     notes.label = "Significance levels",
+#                     type = "html",
+#                     out = "beamer_presentation/beamer_presentation_files/E2RegHomoTRUE.html")
 
+## sjplot
 
-# With digital citizenship
+plot_true <- plot_model(
+  LiModelControlsTRUE,
+  title = "Fake news accuracy standardized coefficients from true headlines",
+  show.p = TRUE,
+  type = "std2",
+  show.values = TRUE,
+  value.offset = 0.4,
+  value.size = 4,
+  dot.size = 1.8,
+  line.size = 0.5,
+  vline.color = "black",
+  axis.textsize = 12,
+  width = 0.4,
+  axis.labels = c(
+    "Inconsistent * Echo Chamber",
+    "Consistent * Echo Chamber",
+    "Digital skills",
+    "Without Ideology",
+    "Center",
+    "Left-wing",
+    "Masculine",
+    "+3.000.000",
+    "$1.000.000 - $3.000.000",
+    "$448.001 - $1.000.000",
+    "$224.001 - $448.000",
+    "+66 years",
+    "41 to 65 years",
+    "30 - 40 years",
+    "Echo Chamber Membership",
+    "Ideologically Opposite",
+    "Ideologically consistent"
+  )
+)
 
-stargazer::stargazer(MLModelDigit, LiModelDigit,
-                     title = "Success score distinguishing true headlines",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Digital Citizenship", "Female", "30 to 40 years",
-                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
-                                          "Mid-High Income", "Highest Income", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, Low citizenship,", "18 to 29 years, lowest income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegDigitTRUE.html")
+plot_true + theme(plot.title = element_text(size = 16, face = "bold"))
+
 
 ### FALSE HEADLINES ### 
 
-#Maximum likehood 
-df$SumFalse <-as.numeric(df$SumFalse)
-
-MLModel1FALSE <-glm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
-MLModelHomoFALSE <-glm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                        NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
-MLModelDigitFALSE <-glm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                         NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
-
-
 #OLS
 
-LiModel1FALSE <-lm(SumTrue ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + SexDum + Age_2 + Age_3 + Age_4, data = df)
+#OLS
+LiModel1FALSE <-lm(as.numeric(percent_false) ~ E2Treat, data = df)
 
-LiModelHomoFALSE <-lm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                       NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+summary(LiModel1FALSE)
 
-LiModelDigitFALSE <-lm(SumFalse ~ E2Treat_Afin + E2Treat_Opuesto + DigitIndex + SexDum + Age_2 + Age_3 + Age_4 +
-                        NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
+LiModelHomoFALSE <-lm(as.numeric(percent_false) ~ E2Treat*HomoIndex, data = df)
+
+summary(LiModelHomoFALSE)
+
+LiModelControlsFALSE <-lm(as.numeric(percent_false) ~ E2Treat*HomoIndex + AgeRecod + IncomeRecod + GenReBinary + ideologia
+                         + skill, data = df)
+
+summary(LiModelControlsFALSE)
+
+plot_false <- plot_model(
+  LiModelControlsFALSE,
+  title = "Percentage of Fake news accuracy from false headlines",
+  show.p = TRUE,
+  #type = "std",
+  show.values = TRUE,
+  value.offset = 0.4,
+  value.size = 4,
+  dot.size = 1.8,
+  line.size = 0.5,
+  vline.color = "black",
+  axis.textsize = 12,
+  width = 0.4,
+  axis.labels = c(
+    "Inconsistent * Echo Chamber",
+    "Consistent * Echo Chamber",
+    "Digital skills",
+    "Without Ideology",
+    "Center",
+    "Left-wing",
+    "Masculine",
+    "+3.000.000",
+    "$1.000.000 - $3.000.000",
+    "$448.001 - $1.000.000",
+    "$224.001 - $448.000",
+    "+66 years",
+    "41 to 65 years",
+    "30 - 40 years",
+    "Echo Chamber Membership",
+    "Ideologically Opposite",
+    "Ideologically consistent"
+  )
+)
+
+plot_false + theme(plot.title = element_text(size = 16, face = "bold"))
 
 ## Regression
 
 #General table
 
-stargazer::stargazer(MLModel1FALSE, LiModel1FALSE,
-                     title = "Success score distinguishing false headlines",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
-                                          "Female", "30 to 40 years", "41 to 65 years",
-                                          "66+ years", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneralFALSE.html")
+#stargazer::stargazer(MLModel1FALSE, LiModel1FALSE,
+#                     title = "Success score distinguishing false headlines",
+#                     dep.var.labels = "Success score",
+#                     covariate.labels = c("T1 Like-minded", "T2 Opposite","High Eco Chamber", "High Digital Citizenship",
+#                                          "Female", "30 to 40 years", "41 to 65 years",
+#                                          "66+ years", "Constant"),
+#                     star.cutoffs = c(0.05, 0.01, 0.001),
+#                     column.sep.width = "1pt",
+#                     notes = c("Base variables: Control Group, 18 to 29 years, Lowest Income"),
+#                     notes.label = "Significance levels",
+#                     type = "html",
+#                     out = "beamer_presentation/beamer_presentation_files/E2RegGeneralFALSE.html")
 
 # with Eco Chamber 
 
-stargazer::stargazer(MLModelHomoFALSE, LiModelHomoFALSE,
-                     title = "Success score distinguishing false headlines",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
-                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
-                                          "Mid-High Income", "Highest Income", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegHomoFALSE.html")
-
-
-# With digital citizenship
-
-stargazer::stargazer(MLModelDigitFALSE, LiModelDigitFALSE,
-                     title = "Success score distinguishing false headlines",
-                     dep.var.labels = "Success score",
-                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Digital Citizenship", "Female", "30 to 40 years",
-                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
-                                          "Mid-High Income", "Highest Income", "Constant"),
-                     star.cutoffs = c(0.05, 0.01, 0.001),
-                     column.sep.width = "1pt",
-                     notes = c("Base variables: Control Group, Low citizenship,", "18 to 29 years, lowest income"),
-                     notes.label = "Significance levels",
-                     type = "html",
-                     out = "beamer_presentation/beamer_presentation_files/E2RegDigitFALSE.html")
-
-
+#stargazer::stargazer(MLModelHomoFALSE, LiModelHomoFALSE,
+#                     title = "Success score distinguishing false headlines",
+#                     dep.var.labels = "Success score",
+#                     covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber", "Female", "30 to 40 years",
+#                                          "41 to 65 years", "66+ years", "Low income", "Low - Mid Income", 
+#                                          "Mid-High Income", "Highest Income", "Constant"),
+#                     star.cutoffs = c(0.05, 0.01, 0.001),
+#                     column.sep.width = "1pt",
+#                     notes = c("Base variables: Control Group, 18 to 29 years,", "lowest income"),
+#                     notes.label = "Significance levels",
+#                     type = "html",
+#                     out = "beamer_presentation/beamer_presentation_files/E2RegHomoFALSE.html")
 
 #Poisson estimation
 
@@ -247,40 +296,40 @@ PoModel9 <-glm(SC0 ~ E2Treat_Afin + E2Treat_Opuesto + HomoIndex + DigitIndex + S
 
 #Create regression tables
 
-cm <-c('(Intercept)' = 'Constant', 'E2Treat_Afin' = 'T1 Like-Minded', 'E2Treat_Opuesto' = 'T2 Opposite',
-       'HomoIndex' = 'High Eco Chamber', 'DigitIndex' = 'High Digital Citizenship')
+#cm <-c('(Intercept)' = 'Constant', 'E2Treat_Afin' = 'T1 Like-Minded', 'E2Treat_Opuesto' = 'T2 Opposite',
+#       'HomoIndex' = 'High Eco Chamber', 'DigitIndex' = 'High Digital Citizenship')
 
-cap <-'regression table with balanced variables'
+#cap <-'regression table with balanced variables'
 
 
-Reg1Bal <-stargazer::stargazer(MLModel1,PoModel1, MLModel2, PoModel2, MLModel3, PoModel3,MLModel4, PoModel4,
-                               title = "Success score distinguishing fake news from real news",
-                               dep.var.labels = "Success score",
-                               covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
-                                                    "High Digital citizenship","Constant"),
-                               star.cutoffs = c(0.05, 0.01, 0.001),
-                               column.sep.width = "1pt",
-                               notes = "Base variables: Control Group",
-                               notes.label = "Significance levels",
-                               type = "html",
-                               out = "beamer_presentation/beamer_presentation_files/regression_balanced.html")
+#Reg1Bal <-stargazer::stargazer(MLModel1,PoModel1, MLModel2, PoModel2, MLModel3, PoModel3,MLModel4, PoModel4,
+#                               title = "Success score distinguishing fake news from real news",
+#                               dep.var.labels = "Success score",
+#                               covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
+#                                                    "High Digital citizenship","Constant"),
+#                               star.cutoffs = c(0.05, 0.01, 0.001),
+#                               column.sep.width = "1pt",
+#                               notes = "Base variables: Control Group",
+#                               notes.label = "Significance levels",
+#                               type = "html",
+#                               out = "beamer_presentation/beamer_presentation_files/regression_balanced.html")
 
 ## Not balanced regression
 
 
-Reg1NoBal <-stargazer::stargazer(MLModel4, PoModel4, MLModel5, PoModel5, MLModel6, PoModel6, MLModel7, PoModel7, MLModel8,PoModel8, MLModel9, PoModel9,
-                                 title = "Success score distinguishing fake news from real news. Non-balanced variables",
-                                 dep.var.labels = "Success score",
-                                 covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
-                                                      "High Digital citizenship","Female", "30 to 40 years", "41 to 65 years",
-                                                      "66+ years", "Elemental School", "Secondary School", "Graduate",
-                                                      "Postgraduate","Left-wing", "Right-wing","Without Ideology", "$224.001 - $448-000",
-                                                      "$448.001 - $1.000.000", "$1.000.001 - $3.000.000", "$3.000,000+","Constant"),
-                                 star.cutoffs = c(0.05, 0.01, 0.001),
-                                 column.sep.width = "1pt",
-                                 notes.label = "Significance levels",
-                                 type = "html",
-                                 out = "beamer_presentation/beamer_presentation_files/regression-non-balanced.html")
+#Reg1NoBal <-stargazer::stargazer(MLModel4, PoModel4, MLModel5, PoModel5, MLModel6, PoModel6, MLModel7, PoModel7, MLModel8,PoModel8, MLModel9, PoModel9,
+#                                 title = "Success score distinguishing fake news from real news. Non-balanced variables",
+#                                 dep.var.labels = "Success score",
+#                                 covariate.labels = c("T1 Like-minded", "T2 Opposite", "High Eco Chamber",
+#                                                      "High Digital citizenship","Female", "30 to 40 years", "41 to 65 years",
+#                                                      "66+ years", "Elemental School", "Secondary School", "Graduate",
+#                                                      "Postgraduate","Left-wing", "Right-wing","Without Ideology", "$224.001 - $448-000",
+#                                                      "$448.001 - $1.000.000", "$1.000.001 - $3.000.000", "$3.000,000+","Constant"),
+#                                 star.cutoffs = c(0.05, 0.01, 0.001),
+#                                 column.sep.width = "1pt",
+#                                 notes.label = "Significance levels",
+#                                 type = "html",
+#                                 out = "beamer_presentation/beamer_presentation_files/regression-non-balanced.html")
 
 #Baseline Variables: T0-Control Group, Low Eco Chamber membership and Digital Citizenship,
 #\n Gender: Men, Age: 18-29 years, Education: No-Education, Ideology: Center, Income: >$224.001
@@ -298,6 +347,24 @@ to_pdf("beamer_presentation/beamer_presentation.Rmd")
 
 
 ### Ordered logit
+
+## Transform to factor
+
+df$SC0 <-factor(df$SC0, levels = c("0", "1", "2", "3", "4","5","6","7"))
+
+ol1<-polr(SC0 ~ E2Treat*HomoIndex + AgeRecod + IncomeRecod + GenReBinary + ideologia
+                  + skill, data = df, Hess = T)
+
+ol_model <- clm(SC0 ~ E2Treat * HomoIndex + AgeRecod + IncomeRecod + GenReBinary + ideologia + skill, data = df)
+
+# Obtener los intervalos de confianza
+conf_int <- confint(ol_model)
+
+print(conf_int)
+
+
+
+
 summary(ol1<-polr(as.factor(SC0) ~ E2Treat+ SexDum +AgeRecod + EducRec + ideologia + IncomeRecod + DigitIndex, data = df, Hess=TRUE))
 summary(ol2<-polr(as.factor(SC0) ~ E2Treat+ AgeRecod + ideologia + IncomeRecod , data = df, Hess=TRUE))
 summary(ol3<-polr(as.factor(SC0) ~ E2Treat+ ideologia, data = df, Hess=TRUE))
@@ -326,241 +393,4 @@ summary(frol5<-polr(as.factor(SumFalse) ~ E2Treat+ IncomeRecod, data = df, Hess=
 summary(frol5<-polr(as.factor(SumFalse) ~ E2Treat+ DigitIndex, data = df, Hess=TRUE)) ### Non significant on it's own
 
 
-###################################
-#### Ramdomization inference estimations
-#########################################
 
-
-
-#################### RI ####################
-
-df$SC0n<-as.numeric(df$SC0)
-
-### 
-declaration<-declare_ra(N=690, prob_each=c(0.34, 0.66), simple=TRUE)
-declaration
-
-#df$above_med_correct<-ifelse(df$SC0n>4, 1, 0)
-
-out <- conduct_ri(SC0n ~ E2Treat_Afin + ideologia + IncomeRecod,
-                  declaration = declaration,
-                  assignment = "E2Treat_Afin",
-                  sharp_hypothesis = 0,
-                  data = df)
-
-summary(out)
-plot(out)
-tidy(out)
-
-
-### Opuesto
-declaration<-declare_ra(N=690, prob_each=c(0.34, 0.66), simple=TRUE)
-declaration
-
-#df$above_med_correct<-ifelse(df$SC0n>4, 1, 0)
-
-out2 <- conduct_ri(SC0n ~ E2Treat_Opuesto,
-                   declaration = declaration,
-                   assignment = "E2Treat_Opuesto",
-                   sharp_hypothesis = 0,
-                   data = df)
-
-summary(out2)
-plot(out2)
-tidy(out)
-
-
-
-
-###########################
-#### interaction effects
-###########################
-library(BayesTree)
-
-set.seed(89)
-
-# Data set up including calculating ability rank
-df.b <- df
-
-
-################## Efect de noticias afines e interacción con ecochambers
-df.b$treat.het <- as.factor(df.b$E2Treat_Opuesto) #dummy tratment variable
-
-df.b$AgeRecod <- as.factor(df.b$AgeRecod)
-df.b$ideologia <- as.factor(df.b$ideologia)
-df.b$IncomeRecod <- as.factor(df.b$IncomeRecod)
-df.b$HomoIndex <- as.factor(df.b$HomoIndex)
-
-
-# Define model variables incl. outcome as column 1
-vars <- c("SC0n", "treat.het", "AgeRecod", "ideologia", "IncomeRecod",  "HomoIndex" )
-
-df.b <- df.b[,vars]
-df.b <- df.b[complete.cases(df.b),]
-
-# Separate outcome and training data
-y <- df.b$SC0n
-train <- df.b[,-1]
-
-# Gen. test data where those treated become untreated, for use in calculating ITT
-test <- train
-test$treat.het <- ifelse(test$treat.het == 1,0,ifelse(test$treat.het == 0,1,NA))
-
-# Run BART for predicted values of observed and synthetic observations
-bart.out <- bart(x.train = train, y.train = y, x.test = test)
-
-# Recover CATE estimates and format into dataframe
-# Logic: Take predictions for those actually treated and minus counterfactual
-#        Then take counterfactually treated and deduct prediction for those actually in control
-CATE <- c(bart.out$yhat.train.mean[train$treat.het == 1] - bart.out$yhat.test.mean[test$treat.het == 0],
-          bart.out$yhat.test.mean[test$treat.het == 1] - bart.out$yhat.train.mean[train$treat.het == 0])
-
-CATE_df <- data.frame(CATE = CATE)
-covars <- rbind(train[train$treat.het == 1,c(2:5)], test[test$treat.het==1,c(2:5)])
-
-CATE_df <- cbind(CATE_df,covars)
-CATE_df <- CATE_df[order(CATE_df$CATE),]
-CATE_df$id <- c(1:length(CATE))
-
-# Descriptive results reported in main text:
-mean(CATE_df$CATE)
-summary(CATE_df$CATE)
-
-# Proportion of CATEs that are negative:
-sum(CATE_df$CATE < 0)/nrow(CATE_df)
-sum(CATE_df$CATE < mean(CATE_df$CATE))/nrow(CATE_df)
-
-# Ecochamber - Homo prob below mean
-sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex =="1" )/sum(CATE_df$HomoIndex == "1")
-
-# Echochamber - Hetero prop. below mean
-sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex == "0" )/sum(CATE_df$HomoIndex =="0")
-
-
-# CATE Heterogeneity plot
-hist <- CATE_df
-
-effectsPlot <- ggplot(hist, aes(x=id, y = CATE)) +
-  geom_line() +
-  geom_hline(yintercept= 0, linetype="dashed", color="red") +
-  geom_hline(yintercept = mean(hist$CATE), color = "blue") +
-  labs(x="Individual",y = "CATE") +
-  theme_minimal() +
-  scale_x_continuous(limits = c(0,nrow(train)))
-#ggsave(effectsPlot, filename= "test.pdf")
-# Mode histogram 
-
-modePlot <- ggplot(hist, aes(x=id, fill=factor(HomoIndex))) +
-  geom_histogram(binwidth = 60,position="stack") +
-  theme(legend.position="bottom") +
-  labs(y = "Count", x = "Individual")+
-  scale_x_continuous(limits = c(0,nrow(train)))#+
-#scale_fill_discrete(name = "", labels = c("0", "Male"))
-#scale_fill_manual(name="Mode", values=colours) +
-# +
-#scale_x_continuous(limits = c(0,5220))
-
-# Combine all plots into one chart
-homoindex_het <- ggarrange(effectsPlot, modePlot,
-                           ncol = 1, nrow = 2, heights = c(2,2))
-
-#ggsave(homoindex_het_opuesto, filename = "gender_het1_alltreats.pdf", path=fig.path, device = "pdf", height = 8, width = 6, dpi = 300)
-
-
-
-
-################## Efect de noticias afines e interacción con ecochambers
-
-df.b<-df
-df.b$treat.het <- as.factor(df.b$E2Treat_Afin) #dummy tratment variable
-
-df.b$AgeRecod <- as.factor(df.b$AgeRecod)
-df.b$ideologia <- as.factor(df.b$ideologia)
-df.b$IncomeRecod <- as.factor(df.b$IncomeRecod)
-df.b$HomoIndex <- as.factor(df.b$HomoIndex)
-
-
-# Define model variables incl. outcome as column 1
-vars <- c("SC0n", "treat.het", "AgeRecod", "ideologia", "IncomeRecod",  "HomoIndex" )
-
-df.b <- df.b[,vars]
-df.b <- df.b[complete.cases(df.b),]
-
-# Separate outcome and training data
-y <- df.b$SC0n
-train <- df.b[,-1]
-
-# Gen. test data where those treated become untreated, for use in calculating ITT
-test <- train
-test$treat.het <- ifelse(test$treat.het == 1,0,ifelse(test$treat.het == 0,1,NA))
-
-# Run BART for predicted values of observed and synthetic observations
-bart.out <- bart(x.train = train, y.train = y, x.test = test)
-
-# Recover CATE estimates and format into dataframe
-# Logic: Take predictions for those actually treated and minus counterfactual
-#        Then take counterfactually treated and deduct prediction for those actually in control
-CATE <- c(bart.out$yhat.train.mean[train$treat.het == 1] - bart.out$yhat.test.mean[test$treat.het == 0],
-          bart.out$yhat.test.mean[test$treat.het == 1] - bart.out$yhat.train.mean[train$treat.het == 0])
-
-CATE_df <- data.frame(CATE = CATE)
-covars <- rbind(train[train$treat.het == 1,c(2:5)], test[test$treat.het==1,c(2:5)])
-
-CATE_df <- cbind(CATE_df,covars)
-CATE_df <- CATE_df[order(CATE_df$CATE),]
-CATE_df$id <- c(1:length(CATE))
-
-# Descriptive results reported in main text:
-mean(CATE_df$CATE)
-summary(CATE_df$CATE)
-
-# Proportion of CATEs that are negative:
-sum(CATE_df$CATE < 0)/nrow(CATE_df)
-sum(CATE_df$CATE < mean(CATE_df$CATE))/nrow(CATE_df)
-
-# Ecochamber - Homo prob below mean
-sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex =="1" )/sum(CATE_df$HomoIndex == "1")
-
-# Echochamber - Hetero prop. below mean
-sum(CATE_df$CATE < mean(CATE_df$CATE) & CATE_df$HomoIndex == "0" )/sum(CATE_df$HomoIndex =="0")
-
-
-# CATE Heterogeneity plot
-hist <- CATE_df
-
-effectsPlot <- ggplot(hist, aes(x=id, y = CATE)) +
-  geom_line() +
-  geom_hline(yintercept= 0, linetype="dashed", color="red") +
-  geom_hline(yintercept = mean(hist$CATE), color = "blue") +
-  labs(x="Individual",y = "CATE") +
-  theme_minimal() +
-  scale_x_continuous(limits = c(0,nrow(train)))
-#ggsave(effectsPlot, filename= "test.pdf")
-# Mode histogram 
-
-modePlot <- ggplot(hist, aes(x=id, fill=factor(HomoIndex))) +
-  geom_histogram(binwidth = 60,position="stack") +
-  theme(legend.position="bottom") +
-  labs(y = "Count", x = "Individual")+
-  scale_x_continuous(limits = c(0,nrow(train)))#+
-#scale_fill_discrete(name = "", labels = c("0", "Male"))
-#scale_fill_manual(name="Mode", values=colours) +
-# +
-#scale_x_continuous(limits = c(0,5220))
-
-# Combine all plots into one chart
-homoindex_het <- ggarrange(effectsPlot, modePlot,
-                           ncol = 1, nrow = 2, heights = c(2,2))
-
-homoindex_het
-#ggsave(homoindex_het_afin, filename = "gender_het1_alltreats.pdf", path=fig.path, device = "pdf", height = 8, width = 6, dpi = 300)
-
-
-test <-multinom(E2Treat ~ HomoIndex + DigitIndex + SexDum + Age_1 + Age_2 + Age_3 + Age_4 + Educ_1 + Educ_2
-                + Educ_3 + Educ_4 + Educ_5 + ideologia_Izquierda + ideologia_Derecha + ideologia_Ninguno + ideologia_centro +
-                + NivEco_1 + NivEco_2 + NivEco_3 + NivEco_4 + NivEco_5, data = df)
-summary(test)
-
-stargazer::stargazer(test)
-
-table(df$E2Treat)

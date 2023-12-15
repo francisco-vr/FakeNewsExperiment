@@ -1,5 +1,5 @@
 ---
-title: "Belief in fake news. Echo chambers and digital citizenship Effects identifying fake news"
+title: "hola"
 subtitle: "Evidence from Chile"
 author: Francisco Villarroel - Denise Laroze 
 institute: "CICS, UDD / FAE - USACH"
@@ -55,13 +55,14 @@ pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, 
 }
 ```
 
-### Trust in my Fake News, Scepticism about yours: Experimental Evidence on how Ideological Congruence and Echo Chambers alter Beliefs in Fake News
+### Trust in my fake news, sckeptical about yours: experimental evidence on how ideological congruence and echo chambers alter beliefs in fake news
 
 <br>
 <br>
 
 #### Francisco Villarroel (UDD/USACH, Chile) 
 #### Denise Laroze (USACH, Chile)
+#### Vicente Espinoza (COES, Chile)
 
 
 <br>
@@ -70,6 +71,7 @@ pacman::p_load(cowplot, ggplot2, tidyverse, dplyr, patchwork, kableExtra, MASS, 
 ```{r,echo=FALSE, fig.align='center', out.width="25%"}
 
 knitr::include_graphics("beamer_presentation_files/logo_usach.png")
+knitr::include_graphics("beamer_presentation_files/Logo CICS corto-01 (1).png")
 ```
 
 
@@ -102,8 +104,6 @@ Are echo chambers and group polarization causing problems in processing informat
 <br>
 
 This leads us to analyze how people and their partisanship interpret the information circulating in social media.
-
-
 
 ]
 
